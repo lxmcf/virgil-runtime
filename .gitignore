@@ -1,0 +1,7 @@
+build/
+builddir/
+subprojects/
+
+*~
+
+.DS_Store
