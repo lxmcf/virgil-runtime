@@ -26,9 +26,13 @@ add_project_arguments (valac_arguments, language: 'vala')
 add_project_arguments (cc_arguments, language: 'c')
 
 project_source = files (
-    'src/main.vala',
+    'src/main.vala',    # Used for testings
 
-    'src/Runtime/Window.vala',
+    'src/Engine/GameObject.vala',
+    'src/Engine/Vector2.vala',
+    'src/Engine/VirgilScript.vala',
+
+    'src/Runtime/Window.vala'
 )
 
 project_dependency = [
@@ -47,5 +51,8 @@ executable (
 
     dependencies: [
         project_dependency
-    ]
+    ],
+
+    vala_header: 'virgil.h',
+    vala_vapi: 'virgil.vapi',
 )

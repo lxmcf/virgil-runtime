@@ -25,6 +25,7 @@
  *  Mario Daniel Ruiz Saavedra <desiderantes93@gmail.com>
  *  Gontzal Uriarte <txasatonga@gmail.com>
  *  Pedro H. Lara Campos <root@pedrohlc.com>
+ *	Alex Macafee <lxmcf20@gmail.com>
  */
 
 
@@ -1478,7 +1479,7 @@ namespace SDL {
 		 * @return true if the hint was set. false otherwise.
 		 */
 		public static bool set_hint_enabled (string name, bool hint_value) {
-			return set_hint(name, hint_value ? "1" : "0");
+			return set_hint (name, hint_value ? "1" : "0");
 		}
 
 		/**
@@ -1555,7 +1556,7 @@ namespace SDL {
 		public uint32 type;
 
 		[CCode (cname = "SDL_RWread")]
-		public size_t read (void* ptr, size_t size, size_t maxnum);
+		public size_t read (void* pointer, size_t size, size_t maxnum);
 
 		[Version (since = "2.0.0")]
 		[CCode (cname = "SDL_ReadU8")]
@@ -1580,29 +1581,29 @@ namespace SDL {
 		public uint64 read_le64 ();
 
 		[CCode (cname = "SDL_RWwrite")]
-		public size_t write (void* ptr, size_t size, size_t num);
+		public size_t write (void* pointer, size_t size, size_t num);
 
 		[Version (since = "2.0.0")]
 		[CCode (cname = "SDL_WriteU8")]
-		public size_t write_u8 (uint8 val);
+		public size_t write_u8 (uint8 @value);
 
 		[CCode (cname = "SDL_WriteBE16")]
-		public size_t write_be16 (uint16 val);
+		public size_t write_be16 (uint16 @value);
 
 		[CCode (cname = "SDL_WriteLE16")]
-		public size_t write_le16 (uint16 val);
+		public size_t write_le16 (uint16 @value);
 
 		[CCode (cname = "SDL_WriteBE32")]
-		public size_t write_be32 (uint32 val);
+		public size_t write_be32 (uint32 @value);
 
 		[CCode (cname = "SDL_WriteLE32")]
-		public size_t write_le32 (uint32 val);
+		public size_t write_le32 (uint32 @value);
 
 		[CCode (cname = "SDL_WriteBE64")]
-		public size_t write_be64 (uint64 val);
+		public size_t write_be64 (uint64 @value);
 
 		[CCode (cname = "SDL_WriteLE64")]
-		public size_t write_le64 (uint64 val);
+		public size_t write_le64 (uint64 @value);
 
 		[CCode (cname = "SDL_RWseek")]
 		public int64 seek (int64 offset, SDL.RWFlags flag);
@@ -3246,10 +3247,10 @@ namespace SDL {
 			public static void reset_attributes ();
 
 			[CCode (cname = "SDL_GL_SetAttribute")]
-			public static int set_attribute (Video.GL.Attributes attr, int val);
+			public static int set_attribute (Video.GL.Attributes attr, int @value);
 
 			[CCode (cname = "SDL_GL_GetAttribute")]
-			public static int get_attribute (Video.GL.Attributes attr, out int val);
+			public static int get_attribute (Video.GL.Attributes attr, out int @value);
 
 			[CCode (cname = "SDL_GL_MakeCurrent")]
 			public static int make_current (Video.Window window, Video.GL.Context context);
