@@ -1,21 +1,24 @@
-using Virgil.Engine;
+// TODO: Remove class and move into main execution point
+// TODO: Split event handling to and event manager
 
-namespace Virgil.Runtime {
-    public class Window {
+namespace Virgil.Engine {
+    internal class Window {
         private SDL.Video.Window? _sdl_window;
         private SDL.Video.Renderer? _sdl_renderer;
         private SDL.Event _event;
 
         private bool _should_close;
 
-        private static Window? _instance;
-
         public Window (string title, int width, int height, uint32 window_flags, uint32 renderer_flags) {
-            _sdl_window = new SDL.Video.Window (title, 0, 0, width, height, window_flags);
+            EngineState engine_state = EngineState.instance;
+
+            _sdl_window = new SDL.Video.Window (title, SDL.Video.Window.POS_CENTERED, SDL.Video.Window.POS_CENTERED, width, height, window_flags);
             if (_sdl_window == null) {
                 printerr ("%s", SDL.get_error ());
                 return;
             }
+
+            engine_state.sdl_window = _sdl_window;
 
             _sdl_renderer = new SDL.Video.Renderer (_sdl_window, -1, renderer_flags);
             if (_sdl_renderer == null) {
@@ -23,8 +26,9 @@ namespace Virgil.Runtime {
                 return;
             }
 
+            engine_state.sdl_renderer = _sdl_renderer;
+
             _should_close = false;
-            _instance = this;
         }
 
         ~Window () {
@@ -32,10 +36,7 @@ namespace Virgil.Runtime {
             _sdl_window.destroy ();
         }
 
-        public Window? get_instance () {
-            return _instance;
-        }
-
+        // TODO: Split out into 'core' events and 'window' events
         public void poll_events () {
             _sdl_renderer.clear ();
 
@@ -113,17 +114,34 @@ namespace Virgil.Runtime {
             _should_close = should_close;
         }
 
+        // TODO: Move to methods, not user facing!
         private signal void on_move (int x, int y);
         private signal void on_resize (int width, int height);
         private signal void on_close ();
         private signal void on_focus (bool focused);
         private signal void on_maximise (bool maximised);
 
-        private signal void on_mouse_button (int x, int y, int button, int action, int clicks);
-        private signal void on_mouse_cursor (int x, int y);
+        private signal void on_mouse_button (int x, int y, int button, int action, int clicks) {
+            EngineState engine_state = EngineState.instance;
+
+            engine_state.input_manager.update_mouse_button (button, action);
+        }
+
+        private signal void on_mouse_cursor (int x, int y) {
+            EngineState engine_state = EngineState.instance;
+
+            engine_state.input_manager.update_mouse_position (x, y);
+        }
+
         private signal void on_mouse_enter (bool entered);
         private signal void on_mouse_scroll (int xscroll, int yscroll);
 
-        private signal void on_key (int state, int repeat, int key);
+        private signal void on_key (int state, int repeat, int keycode) {
+            if (repeat == 0) {
+                EngineState engine_state = EngineState.instance;
+
+                engine_state.input_manager.update_keyboard_key (keycode, state);
+            }
+        }
     }
 }

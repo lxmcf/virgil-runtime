@@ -550,6 +550,9 @@ namespace SDL {
 		[CCode (cname = "SDL_HINT_TIMER_RESOLUTION")]
 		public const string TIMER_RESOLUTION;
 
+		[CCode (cname = "SDL_HINT_VIDEODRIVER")]
+		public const string VIDEO_DRIVER;
+
 		/**
 		 * If set to 1, then do not allow high-DPI windows. ("Retina" on Mac).
 		 *
@@ -1886,7 +1889,7 @@ namespace SDL {
 	}// SysWMEvent
 
 	[CCode (has_target = true, instance_pos = 0)]
-	public delegate int EventFilter (ref SDL.Event ev);
+	public delegate int EventFilter (ref SDL.Event event);
 
 	[CCode (cname = "SDL_Event", has_type_id = false, has_target = false, destroy_function = "", cheader_filename = "SDL2/SDL_events.h")]
 	[SimpleType]
@@ -1938,13 +1941,13 @@ namespace SDL {
 		public static void flush_events (uint32 min_type, uint32 max_type);
 
 		[CCode (cname = "SDL_PollEvent")]
-		public static int poll (out SDL.Event ev);
+		public static int poll (out SDL.Event event);
 
 		[CCode (cname = "SDL_WaitEvent")]
-		public static int wait (out SDL.Event ev);
+		public static int wait (out SDL.Event event);
 
 		[CCode (cname = "SDL_WaitEventTimeout")]
-		public static int wait_inms (out SDL.Event ev, int timeout);
+		public static int wait_inms (out SDL.Event event, int timeout);
 
 		[CCode (cname = "SDL_PushEvent")]
 		public static int push (SDL.Event? ev);
@@ -2857,7 +2860,7 @@ namespace SDL {
 			public const uint POS_UNDEFINED;
 
 			[CCode (cname = "SDL_WINDOWPOS_CENTERED_MASK")]
-			public const uint POS_CENTERED;
+			public const int POS_CENTERED;
 
 			[CCode (cname = "SDL_NONSHAPEABLE_WINDOW", cheader_filename = "SDL2/SDL_shape.h")]
 			public const int8 SDL_NONSHAPEABLE_WINDOW;
@@ -2950,25 +2953,25 @@ namespace SDL {
 			public void set_position (int x, int y);
 
 			[CCode (cname = "SDL_GetWindowPosition")]
-			public void get_position (out int x, out int y); //TODO: create a beautilful method
+			public void get_position (out int x, out int y);
 
 			[CCode (cname = "SDL_SetWindowSize")]
 			public void set_size (int width, int height);
 
 			[CCode (cname = "SDL_GetWindowSize")]
-			public void get_size (out int width, out int height); //TODO: create a beautilful method
+			public void get_size (out int width, out int height);
 
 			[CCode (cname = "SDL_SetWindowMinimumSize")]
 			public void set_minsize (int width, int height);
 
 			[CCode (cname = "SDL_GetWindowMinimumSize")]
-			public void get_minsize (out int width, out int height); //TODO: create a beautilful method
+			public void get_minsize (out int width, out int height);
 
 			[CCode (cname = "SDL_SetWindowMaximumSize")]
 			public void set_maxsize (int width, int height);
 
 			[CCode (cname = "SDL_GetWindowMaximumSize")]
-			public void get_maxsize (out int width, out int height); //TODO: create a beautilful method
+			public void get_maxsize (out int width, out int height);
 
 			[Version (since = "2.0.0")]
 			[CCode (cname = "SDL_SetWindowBordered")]
