@@ -42,7 +42,5 @@ namespace Virgil {
         public bool equals (Vector2 vector) {
             return (x == vector.x && y == vector.y);
         }
-
-        // TODO: Impliment normalising
     }
 }

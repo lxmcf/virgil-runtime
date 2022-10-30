@@ -3,42 +3,49 @@
 
 namespace Virgil.Engine {
     internal class Window {
-        private SDL.Video.Window? _sdl_window;
-        private SDL.Video.Renderer? _sdl_renderer;
+        public SDL.Video.Window? sdl_window;
+        public SDL.Video.Renderer? sdl_renderer;
+
         private SDL.Event _event;
 
         private bool _should_close;
 
-        public Window (string title, int width, int height, uint32 window_flags, uint32 renderer_flags) {
-            EngineState engine_state = EngineState.instance;
+        //  Singleton
+        private static Window? _instance;
+        public static Window instance {
+            get {
+                if (_instance != null) {
+                    return _instance;
+                } else {
+                    _instance = new Window ("Virgil Runtime", 640, 360);
+                    return _instance;
+                }
+            }
+        }
 
-            _sdl_window = new SDL.Video.Window (title, SDL.Video.Window.POS_CENTERED, SDL.Video.Window.POS_CENTERED, width, height, window_flags);
-            if (_sdl_window == null) {
-                printerr ("%s", SDL.get_error ());
-                return;
+        public Window (string title, int width, int height) {
+            sdl_window = new SDL.Video.Window (title, SDL.Video.Window.POS_CENTERED, SDL.Video.Window.POS_CENTERED, width, height, 0);
+            if (sdl_window == null) {
+                error ("%s", SDL.get_error ());
             }
 
-            engine_state.sdl_window = _sdl_window;
-
-            _sdl_renderer = new SDL.Video.Renderer (_sdl_window, -1, renderer_flags);
-            if (_sdl_renderer == null) {
-                printerr ("%s", SDL.get_error ());
-                return;
+            sdl_renderer = new SDL.Video.Renderer (sdl_window, -1, SDL.Video.RendererFlags.ACCELERATED);
+            if (sdl_renderer == null) {
+                error ("%s", SDL.get_error ());
             }
-
-            engine_state.sdl_renderer = _sdl_renderer;
 
             _should_close = false;
+            _instance = this;
         }
 
         ~Window () {
-            _sdl_renderer.destroy ();
-            _sdl_window.destroy ();
+            sdl_renderer.destroy ();
+            sdl_window.destroy ();
         }
 
         // TODO: Split out into 'core' events and 'window' events
         public void poll_events () {
-            _sdl_renderer.clear ();
+            sdl_renderer.clear ();
 
             while (SDL.Event.poll (out _event) == 1) {
                 switch (_event.type) {
@@ -76,20 +83,10 @@ namespace Virgil.Engine {
                                 on_resize (_event.window.data1, _event.window.data2);
                             break; // RESIZED
 
-                            case SDL.WindowEventType.FOCUS_GAINED:
-                            case SDL.WindowEventType.FOCUS_LOST:
-                                on_focus ((_event.window.event == SDL.WindowEventType.FOCUS_GAINED) ? true : false);
-                            break; // FOCUS_LOST
-
                             case SDL.WindowEventType.MAXIMIZED:
                             case SDL.WindowEventType.MINIMIZED:
                                 on_maximise ((_event.window.event == SDL.WindowEventType.MAXIMIZED) ? true : false);
                             break; // MAXIMIZED && MINIMIZED
-
-                            case SDL.WindowEventType.ENTER:
-                            case SDL.WindowEventType.LEAVE:
-                                on_mouse_enter ((_event.window.event == SDL.WindowEventType.ENTER) ? true : false);
-                            break; // ENTER && LEAVE
 
                             default:
                                 break;
@@ -103,7 +100,7 @@ namespace Virgil.Engine {
         }
 
         public void present () {
-            _sdl_renderer.present ();
+            sdl_renderer.present ();
         }
 
         public bool should_close () {
@@ -118,29 +115,31 @@ namespace Virgil.Engine {
         private signal void on_move (int x, int y);
         private signal void on_resize (int width, int height);
         private signal void on_close ();
-        private signal void on_focus (bool focused);
         private signal void on_maximise (bool maximised);
 
         private signal void on_mouse_button (int x, int y, int button, int action, int clicks) {
-            EngineState engine_state = EngineState.instance;
+            InputManager input_manager = InputManager.instance;
 
-            engine_state.input_manager.update_mouse_button (button, action);
+                input_manager.update_mouse_button (button, action);
         }
 
         private signal void on_mouse_cursor (int x, int y) {
-            EngineState engine_state = EngineState.instance;
+            InputManager input_manager = InputManager.instance;
 
-            engine_state.input_manager.update_mouse_position (x, y);
+                input_manager.update_mouse_position (x, y);
         }
 
-        private signal void on_mouse_enter (bool entered);
-        private signal void on_mouse_scroll (int xscroll, int yscroll);
+        private signal void on_mouse_scroll (int xscroll, int yscroll) {
+            InputManager input_manager = InputManager.instance;
+
+            input_manager.update_mouse_axis (xscroll, yscroll);
+        }
 
         private signal void on_key (int state, int repeat, int keycode) {
             if (repeat == 0) {
-                EngineState engine_state = EngineState.instance;
+                InputManager input_manager = InputManager.instance;
 
-                engine_state.input_manager.update_keyboard_key (keycode, state);
+                input_manager.update_keyboard_key (keycode, state);
             }
         }
     }

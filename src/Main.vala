@@ -4,7 +4,7 @@ namespace Virgil.Engine {
 
         SDL.init (SDL.InitFlag.VIDEO);
 
-        Window window = new Window (args[0], 640, 360, 0, SDL.Video.RendererFlags.ACCELERATED);
+        Window window = new Window ("Virgil Runtime", 640, 360);
 
         GameLoader loader = new GameLoader ();
         InputManager input = new InputManager ();
@@ -13,7 +13,11 @@ namespace Virgil.Engine {
         float current_frame_time = (float)SDL.Timer.get_ticks () / 1000.0f;
 
         try {
+#if WINDOWS // TODO: Need to work out something cleaner and global
+            loader.register_game ("game.dll");
+#else
             loader.register_game ("game.so");
+#endif
 
             loader.init_game ();
         } catch (GameRegisterError e) {
@@ -22,23 +26,21 @@ namespace Virgil.Engine {
 
         loader.load_game_content ();
 
+        // TODO: Create time manager class
         while (!window.should_close ()) {
             current_frame_time = (float)SDL.Timer.get_ticks () / 1000.0f;
-            float delta = current_frame_time - last_frame_time;
-
-            last_frame_time = current_frame_time;
 
             window.poll_events ();
 
             //  MAIN UPDATE LOOP
-            loader.update_game (delta);
+            loader.update_game (current_frame_time - last_frame_time);
 
             //  MAIN RENDER LOOP
             loader.draw_game ();
 
             window.present ();
 
-            SDL.Timer.delay (1); // Prevent max CPU utilisation and provide something for DT
+            last_frame_time = current_frame_time;
         }
 
         loader.unload_game_content ();

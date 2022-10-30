@@ -5,18 +5,17 @@ namespace Virgil {
         private GameObject? _parent;
 
         private List<Script> _scripts;
+        private List<GameObject> _children;
 
-        private string _uuid;
-
-        public string uuid {
-            get { return _uuid; }
-        }
+        public Vector2 position;
 
         public GameObject () {
-            _uuid = Uuid.string_random ();
-
             _parent = null;
+
             _scripts = new List<Script>();
+            _children = new List<GameObject> ();
+
+            position = new Vector2 (0.0f, 0.0f);
 
             create ();
         }
@@ -26,7 +25,7 @@ namespace Virgil {
         }
 
         internal void create () {
-            update (); // HACK: Disable warning
+
         }
 
         internal void update () {

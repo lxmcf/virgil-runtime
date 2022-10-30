@@ -54,18 +54,20 @@ project_source = files (
 
     # PUBLIC INTERFACES
 
+    # PUBLIC RUNTIME API
+
     # INTERNAL API
     'src/Engine/Window.vala',
-    'src/Engine/EngineState.vala',
     'src/Engine/GameLoader.vala',
     'src/Engine/InputManager.vala',
-    'src/Engine/TextureManager.vala',
+
+    # INTERNAL INTERFACES
 )
 
 project_dependency = [
     dependency ('gobject-2.0'),
     dependency ('gmodule-2.0'), # Will include GLIB
-    dependency ('SDL2'),
+    dependency ('SDL2', static: true),
 
     cc.find_library ('m'),
     valac.find_library ('stb_image', dirs: vapi_dir)
@@ -84,13 +86,18 @@ temp_lib = executable (
         include_directories ('include')
     ],
 
+    # Install header and VAPI for development
+    install: true,
+    install_dir: [ false, true, true ],
+
     export_dynamic: true,
 
     vala_header: 'virgil.h',
     vala_vapi: 'virgil.vapi'
 )
 
-# HACK: intellisense for the sandbox
+# HACK: Intellisense for the sandbox
+# NOTE: Need to run ninja twice to get here...
 vapi_dep = []
 
 if (import ('fs').is_file ('build/virgil.vapi'))
@@ -105,11 +112,10 @@ shared_module (
     ),
 
     name_prefix: '',
-    link_with: temp_lib,
 
     dependencies: [
-        project_dependency,
-        vapi_dep
+        vapi_dep,
+        dependency ('gmodule-2.0'), # Will include GLIB
     ],
 
     include_directories: [

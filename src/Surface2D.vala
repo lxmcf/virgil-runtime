@@ -1,10 +1,8 @@
-using SDL.Video;
-
 using Virgil.Engine;
 
 namespace Virgil {
     public class Surface2D {
-        private Texture? _texture;
+        private SDL.Video.Texture? _texture;
 
         private int _width;
         private int _height;
@@ -14,16 +12,16 @@ namespace Virgil {
         }
 
         public void draw (Vector2 position) {
-            EngineState engine_state = EngineState.instance;
+            Window window = Window.instance;
 
-            engine_state.sdl_renderer.copy (_texture, null, { (int)position.x, (int)position.y, _width, _height });
+            window.sdl_renderer.copy (_texture, null, { (int)position.x, (int)position.y, _width, _height });
         }
 
         private void _create_blank_texture (int width, int height) {
-            EngineState engine_state = EngineState.instance;
+            Window window = Window.instance;
 
-            _texture = Texture.create (engine_state.sdl_renderer, PixelRAWFormat.ABGR8888,TextureAccess.TARGET, width, height);
-            _texture.set_blend_mode (BlendMode.BLEND);
+            _texture = SDL.Video.Texture.create (window.sdl_renderer, SDL.Video.PixelRAWFormat.ABGR8888, SDL.Video.TextureAccess.TARGET, width, height);
+            _texture.set_blend_mode (SDL.Video.BlendMode.BLEND);
 
             _width = width;
             _height = height;

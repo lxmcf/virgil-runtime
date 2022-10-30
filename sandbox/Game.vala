@@ -1,6 +1,8 @@
 using Virgil;
 using Virgil.Input;
 
+using Virgil;
+
 public class MyGame : Game {
     Texture2D test_texture;
 
@@ -15,6 +17,10 @@ public class MyGame : Game {
     }
 
     public override void update (float delta_time) {
+        if (check_key_pressed (KeyCode.ESCAPE)) {
+            Game.quit ();
+        }
+
         int xaxis = (int)check_key (KeyCode.CHAR_D) - (int)check_key (KeyCode.CHAR_A);
         int yaxis = (int)check_key (KeyCode.CHAR_S) - (int)check_key (KeyCode.CHAR_W);
 
@@ -27,7 +33,6 @@ public class MyGame : Game {
     public override void draw () {
         test_texture.draw (position);
     }
-
 }
 
 [ModuleInit]
