@@ -1,6 +1,5 @@
 namespace Virgil {
-    // NOTE: Consider moving to struct
-    public class Vector2 {
+    public struct Vector2 {
         public float x;
         public float y;
 
@@ -10,37 +9,52 @@ namespace Virgil {
             }
         }
 
-        public float dot (Vector2 vector) {
-            return (x * vector.x) + (y * vector.y);
-        }
-
         public Vector2 (float x, float y) {
             this.x = x;
             this.y = y;
         }
 
-        public void subtract (Vector2 vector) {
-            x -= vector.x;
-            y -= vector.y;
+        public Point to_point () {
+            return {
+                (int)x,
+                (int)y
+            };
         }
 
-        public void multiply (Vector2 vector) {
-            x *= vector.x;
-            y *= vector.y;
+        public static Vector2 subtract (Vector2 vector1, Vector2 vector2) {
+            return {
+                vector1.x -= vector2.x,
+                vector1.y -= vector2.y
+            };
         }
 
-        public void divide (Vector2 vector) {
-            x /= vector.x;
-            y /= vector.y;
+        public static Vector2 multiply (Vector2 vector1, Vector2 vector2) {
+            return {
+                vector1.x *= vector2.x,
+                vector1.y *= vector2.y
+            };
         }
 
-        public void add (Vector2 vector) {
-            x += vector.x;
-            y += vector.y;
+        public static Vector2 divide (Vector2 vector1, Vector2 vector2) {
+            return {
+                vector1.x /= vector2.x,
+                vector1.y /= vector2.y
+            };
         }
 
-        public bool equals (Vector2 vector) {
-            return (x == vector.x && y == vector.y);
+        public static Vector2 add (Vector2 vector1, Vector2 vector2) {
+            return {
+                vector1.x += vector2.x,
+                vector1.y += vector2.y
+            };
+        }
+
+        public static float dot (Vector2 vector1, Vector2 vector2) {
+            return (vector1.x * vector2.x) + (vector1.y * vector2.y);
+        }
+
+        public static bool equals (Vector2 vector1, Vector2 vector2) {
+            return (vector1.x == vector2.x && vector1.y == vector2.y);
         }
     }
 }

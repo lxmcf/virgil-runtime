@@ -7,5 +7,9 @@ namespace Virgil {
             this.x = x;
             this.y = y;
         }
+
+        public Vector2 to_vector2 () {
+            return { x, y };
+        }
     }
 }

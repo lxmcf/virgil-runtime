@@ -1,39 +1,76 @@
-using Uuid;
+using Virgil.Engine.Interface;
+using Virgil.Scenes;
 
 namespace Virgil {
     public class GameObject {
-        private GameObject? _parent;
+        private unowned GameObject? _parent;
+        private unowned Scene? _parent_scene;
 
         private List<Script> _scripts;
         private List<GameObject> _children;
 
-        public Vector2 position;
+        public Transform transform;
 
         public GameObject () {
             _parent = null;
+            _parent_scene = null;
 
             _scripts = new List<Script>();
             _children = new List<GameObject> ();
 
-            position = new Vector2 (0.0f, 0.0f);
+            transform = {
+                { 0.0f, 0.0f },
+                { 1.0f, 1.0f },
+
+                0.0
+            };
 
             create ();
         }
 
-        ~GameObject () {
-            cleanup ();
-        }
-
-        internal void create () {
+        public void create () {
 
         }
 
-        internal void update () {
+        public void update (float delta_time) {
 
         }
 
-        internal void cleanup () {
+        public void draw () {
 
+        }
+
+        public void cleanup () {
+
+        }
+
+        protected void set_parent (GameObject? object) {
+            if (object == null) {
+                Transform parent_transform = _parent.transform;
+
+                transform.position = Vector2.add (transform.position, parent_transform.position);
+                transform.scale = Vector2.add (transform.scale, parent_transform.scale);
+
+                transform.rotation += parent_transform.rotation;
+            }
+
+            _parent = object;
+        }
+
+        internal void process_update (float delta_time) {
+            update (delta_time);
+
+            foreach (GameObject object in _children) {
+                object.process_update (delta_time);
+            }
+        }
+
+        internal void process_draw () {
+            draw ();
+
+            foreach (GameObject object in _children) {
+                object.draw ();
+            }
         }
     }
 }

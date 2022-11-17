@@ -12,7 +12,6 @@ namespace Virgil.Engine {
     private delegate Type RegisterGameFunction (Module module);
 
     internal class GameLoader {
-        //  TODO: Allow multiple loaded 'games' and 'modules'
         private Game? _registered_game;
         private Module? _module;
 
@@ -25,7 +24,7 @@ namespace Virgil.Engine {
             _did_register = false;
         }
 
-        public void register_game (string file) throws GameRegisterError {
+        public void register (string file) throws GameRegisterError {
             bool supported = Module.supported ();
 
             if (!supported) {
@@ -58,34 +57,24 @@ namespace Virgil.Engine {
 
             _did_register = true;
 
-            if (!_did_register) return;
+            game.init ();
         }
 
-        public void init_game () {
-            if (!_did_register) return;
-
-            _registered_game.init ();
-        }
-
-        public void update_game (float delta_time) {
+        public void run (float delta_time) {
             if (!_did_register) return;
 
             _registered_game.update (delta_time);
-        }
-
-        public void draw_game () {
-            if (!_did_register) return;
 
             _registered_game.draw ();
         }
 
-        public void load_game_content () {
+        public void load_content () {
             if (!_did_register) return;
 
             _registered_game.load_content ();
         }
 
-        public void unload_game_content () {
+        public void unload_content () {
             if (!_did_register) return;
 
             _registered_game.unload_content ();

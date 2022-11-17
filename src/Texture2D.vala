@@ -1,7 +1,7 @@
 using Virgil.Engine;
 
 namespace Virgil {
-    public class Texture2D{
+    public class Texture2D {
         private SDL.Video.Texture? _texture;
 
         private int _width;
@@ -31,6 +31,20 @@ namespace Virgil {
             Window window = Window.instance;
 
             window.sdl_renderer.copy (_texture, null, { (int)position.x + origin.x, (int)position.y + origin.y, _width, _height });
+        }
+
+        [Version (experimental = true, experimental_until = "1.0")]
+        public void draw_to_transform (Transform transform) {
+            Window window = Window.instance;
+
+            SDL.Video.Rect output_rect = {
+                (int)transform.position.x,
+                (int)transform.position.y,
+                _width,
+                _height
+            };
+
+            window.sdl_renderer.copyex (_texture, null, output_rect, transform.rotation, null, SDL.Video.RendererFlip.NONE);
         }
 
         public void set_origin (Point point) {

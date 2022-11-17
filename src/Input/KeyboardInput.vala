@@ -2,7 +2,7 @@ using Virgil.Engine;
 
 namespace Virgil.Input {
     public const int KEY_DOWN = 1;
-    public const int KEY_UP = 9;
+    public const int KEY_UP = 0;
 
     public static bool check_key (KeyCode keycode) {
         InputManager input_manager = InputManager.instance;

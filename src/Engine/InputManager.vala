@@ -1,14 +1,7 @@
 using Virgil.Input;
 
-// TODO: Work out a better implimentation
 namespace Virgil.Engine {
     internal class InputManager {
-        private const int PRESSED = 1;
-        private const int RELEASED = 0;
-
-        private const int MAX_KEYS = SDL.Input.Scancode.NUM_SCANCODES;
-        private const int MAX_BUTTONS = 5;
-
         //  Singleton
         private static InputManager? _instance;
         public static InputManager instance {
@@ -21,6 +14,12 @@ namespace Virgil.Engine {
                 }
             }
         }
+
+        private const int PRESSED = 1;
+        private const int RELEASED = 0;
+
+        private const int MAX_KEYS = SDL.Input.Scancode.NUM_SCANCODES;
+        private const int MAX_BUTTONS = 5;
 
         private int[] _keyboard_keys_state;
         private int[] _keyboard_keys_state_previous;

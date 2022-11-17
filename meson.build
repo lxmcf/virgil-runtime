@@ -2,13 +2,14 @@ project (
     'virgil', [ 'vala', 'c' ],
     version: '1.0.0',
     default_options: [
-        # 'buildtype=release',
+        'buildtype=release',
     ]
 )
 
 # Variables
 source_dir = meson.current_source_dir ()
 vapi_dir = source_dir / 'vapi'
+operating_system = build_machine.system ()
 
 # Build variables
 project_source = []
@@ -28,6 +29,15 @@ cc_arguments = [
     '-DSTB_IMAGE_IMPLEMENTATION'
 ]
 
+
+if operating_system == 'windows' or operating_system == 'cygwin'
+    valac_arguments += '--define=VIRGIL_PLATFORM_WINDOWS'
+elif operating_system == 'linux'
+    valac_arguments += '--define=VIRGIL_PLATFORM_LINUX'
+elif
+    valac_arguments += '--define=VIRGIL_PLATFORM_UNKNOWN'
+endif
+
 add_project_arguments (valac_arguments, language: 'vala')
 add_project_arguments (cc_arguments, language: 'c')
 
@@ -36,7 +46,6 @@ project_source = files (
     'src/Main.vala',
 
     # PUBLIC API
-    'src/Scenes/SceneManager.vala',
     'src/Scenes/Scene.vala',
 
     'src/Input/KeyCode.vala',
@@ -45,8 +54,10 @@ project_source = files (
     'src/Input/MouseInput.vala',
 
     'src/Script.vala',
+    'src/HashMap.vala',
     'src/GameObject.vala',
     'src/Vector2.vala',
+    'src/Transform.vala',
     'src/Texture2D.vala',
     'src/Surface2D.vala',
     'src/Point.vala',
@@ -60,8 +71,13 @@ project_source = files (
     'src/Engine/Window.vala',
     'src/Engine/GameLoader.vala',
     'src/Engine/InputManager.vala',
+    'src/Engine/SceneManager.vala',
+    'src/Engine/EventManager.vala',
 
     # INTERNAL INTERFACES
+    'src/Engine/Interface/ICreateble.vala',
+    'src/Engine/Interface/IDrawable.vala',
+    'src/Engine/Interface/IRunnable.vala',
 )
 
 project_dependency = [
@@ -86,10 +102,6 @@ temp_lib = executable (
         include_directories ('include')
     ],
 
-    # Install header and VAPI for development
-    install: true,
-    install_dir: [ false, true, true ],
-
     export_dynamic: true,
 
     vala_header: 'virgil.h',
@@ -102,23 +114,24 @@ vapi_dep = []
 
 if (import ('fs').is_file ('build/virgil.vapi'))
     vapi_dep = [ valac.find_library ('virgil', dirs: meson.current_source_dir () / 'build') ]
+
+    shared_module (
+        'game',
+
+        files (
+            'sandbox/Game.vala',
+            # 'sandbox/TestScene.vala',
+        ),
+
+        name_prefix: '',
+
+        dependencies: [
+            vapi_dep,
+            dependency ('gmodule-2.0'), # Will include GLIB
+        ],
+
+        include_directories: [
+            include_directories('.')
+        ]
+    )
 endif
-
-shared_module (
-    'game',
-
-    files (
-        'sandbox/Game.vala'
-    ),
-
-    name_prefix: '',
-
-    dependencies: [
-        vapi_dep,
-        dependency ('gmodule-2.0'), # Will include GLIB
-    ],
-
-    include_directories: [
-        include_directories('.')
-    ]
-)
