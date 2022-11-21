@@ -7,11 +7,7 @@ namespace Virgil.Scenes {
         public int id { get; private set; }
 
         public Scene () {
-            SceneManager manager = SceneManager.instance;
-
             _objects = new List<GameObject> ();
-
-            id = manager.add_scene (this);
         }
 
         protected void instantiate (GameObject object, Vector2 position = Vector2 (0.0f, 0.0f)) {

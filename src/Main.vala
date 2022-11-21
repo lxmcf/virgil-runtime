@@ -1,52 +1,45 @@
+using Raylib;
+
 namespace Virgil.Engine {
     internal static int main (string[] args) {
-        //  SDL.Hint.set_hint (SDL.Hint.VIDEO_DRIVER, "x11"); /* Temp */
-
-        SDL.init (SDL.InitFlag.VIDEO);
+        set_trace_log_level (Raylib.TraceLogLevel.ALL);
 
         Window window = new Window ("Virgil Runtime", 640, 360);
 
         GameLoader current_game = new GameLoader ();
-        InputManager input = new InputManager ();
         SceneManager scene = new SceneManager ();
 
-        EventManager event = new EventManager (window, input);
+        string game_prefix = "";
 
-        float last_frame_time = 0.0f;
-        float current_frame_time = (float)SDL.Timer.get_ticks () / 1000.0f;
+        for (int i = 0; i < args.length; i++) {
+            if (args[i] == "--test-build") game_prefix = "build/";
+        }
 
         try {
 #if VIRGIL_PLATFORM_WINDOWS // TODO: Need to work out something cleaner and global
-            current_game.register ("game.dll");
+            current_game.register (game_prefix + "game.dll");
 #else
-            current_game.register ("game.so");
+            current_game.register (game_prefix + "game.so");
 #endif
         } catch (GameRegisterError e) {
             warning ("%s\n", e.message);
         }
+
         current_game.load_content ();
 
-        // TODO: Create time manager class
         while (!window.should_close ()) {
-            current_frame_time = (float)SDL.Timer.get_ticks () / 1000.0f;
-
             window.clear ();
-            event.poll ();
 
             //  MAIN UPDATE LOOP
-            current_game.run (current_frame_time - last_frame_time);
-            scene.run (current_frame_time - last_frame_time);
+            current_game.run (get_frame_time ());
+            scene.run (get_frame_time ());
 
             window.present ();
-
-            last_frame_time = current_frame_time;
         }
 
         current_game.unload_content ();
 
         window.close ();
-
-        SDL.quit ();
 
         return 0;
     }

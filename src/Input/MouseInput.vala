@@ -8,38 +8,20 @@ namespace Virgil.Input {
     public const int SCROLL_DOWN = -1;
 
     public static bool check_mouse_button (MouseButton button) {
-        InputManager input_manager = InputManager.instance;
-
-        return input_manager.is_mouse_button_down (button);
+        return Raylib.is_mouse_button_down ((Raylib.MouseButton)button);
     }
 
     public static bool check_mouse_button_released (MouseButton button) {
-        InputManager input_manager = InputManager.instance;
-
-        return input_manager.is_mouse_button_released (button);
+        return Raylib.is_mouse_button_released ((Raylib.MouseButton)button);
     }
 
     public static bool check_mouse_button_pressed (MouseButton button) {
-        InputManager input_manager = InputManager.instance;
-
-        return input_manager.is_mouse_button_pressed (button);
+        return Raylib.is_mouse_button_pressed ((Raylib.MouseButton)button);
     }
 
-    public static Point get_mouse_position () {
-        InputManager input_manager = InputManager.instance;
+    public static Vector2 get_mouse_position () {
+        Raylib.Vector2 position = Raylib.get_mouse_position ();
 
-        return input_manager.get_mouse_position ();
-    }
-
-    public static int get_mouse_scroll_horizontal () {
-        InputManager input_manager = InputManager.instance;
-
-        return input_manager.get_mouse_scroll_horizontal ();
-    }
-
-    public static int get_mouse_scroll_vertical () {
-        InputManager input_manager = InputManager.instance;
-
-        return input_manager.get_mouse_scroll_vertical ();
+        return { position.x, position.y };
     }
 }

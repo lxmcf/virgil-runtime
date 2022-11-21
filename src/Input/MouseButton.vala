@@ -1,10 +1,11 @@
 namespace Virgil.Input {
     public enum MouseButton {
-        UNKOWN  = 0,
-        LEFT    = 1,
-        MIDDLE  = 2,
-        RIGHT   = 3,
-        X1      = 4,
-        X2      = 5
+        LEFT = 0,
+        RIGHT = 1,
+        MIDDLE = 2,
+        SIDE = 3,
+        EXTRA = 4,
+        FORWARD = 5,
+        BACK = 6,
     }
 }

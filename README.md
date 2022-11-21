@@ -2,8 +2,9 @@
 
 <p align="center">
 <
-    <a href="#what-is-virgil">Description</a>|
-    <a href="#compiling">Compiling</a>|
+    <a href="#what-is-virgil">Description</a> |
+    <a href="#dependencies">Dependencies</a> |
+    <a href="#compiling">Compiling</a> |
     <a href="#how-to-use">Compiling</a>
 >
 </p>
@@ -12,7 +13,17 @@
 
 ---
 
-Virgil is the result of 'if it ain't broken, break it and reinvent the wheel lmao', a basic 2D game engine built using [SDL2](https://www.libsdl.org/index.php) and [Vala](https://vala.dev/) aimed at begginers to experienced developers running a Linux desktop.
+Virgil is the result of 'if it ain't broken, break it and reinvent the wheel lmao', a basic 2D game engine built using [Raylib](https://www.raylib.com/) and [Vala](https://vala.dev/) aimed at begginers to experienced developers running a Linux desktop.
+
+### Dependencies
+
+---
+
+- `raylib`
+
+Virgil uses very minimal depencies and due to being base on Raylib, has no runtime dependencies!
+
+To install raylib, follow the instructions [HERE](https://www.raylib.com/) then come back and continue reading on...
 
 ### Compiling
 

@@ -23,6 +23,7 @@ cc = meson.get_compiler ('c')
 # Compiler arguments
 valac_arguments = [
     '--vapidir', vapi_dir,
+    '--ccode'
 ]
 
 cc_arguments = [
@@ -70,23 +71,22 @@ project_source = files (
     # INTERNAL API
     'src/Engine/Window.vala',
     'src/Engine/GameLoader.vala',
-    'src/Engine/InputManager.vala',
     'src/Engine/SceneManager.vala',
-    'src/Engine/EventManager.vala',
 
     # INTERNAL INTERFACES
-    'src/Engine/Interface/ICreateble.vala',
-    'src/Engine/Interface/IDrawable.vala',
-    'src/Engine/Interface/IRunnable.vala',
+    # 'src/Engine/Interface/ICreateble.vala',
+    # 'src/Engine/Interface/IDrawable.vala',
+    # 'src/Engine/Interface/IRunnable.vala',
 )
 
 project_dependency = [
     dependency ('gobject-2.0'),
     dependency ('gmodule-2.0'), # Will include GLIB
-    dependency ('SDL2', static: true),
+
+    valac.find_library ('raylib', dirs: vapi_dir),
 
     cc.find_library ('m'),
-    valac.find_library ('stb_image', dirs: vapi_dir)
+    cc.find_library ('raylib')
 ]
 
 temp_lib = executable (
@@ -96,10 +96,6 @@ temp_lib = executable (
 
     dependencies: [
         project_dependency
-    ],
-
-    include_directories: [
-        include_directories ('include')
     ],
 
     export_dynamic: true,
@@ -119,8 +115,7 @@ if (import ('fs').is_file ('build/virgil.vapi'))
         'game',
 
         files (
-            'sandbox/Game.vala',
-            # 'sandbox/TestScene.vala',
+            'sandbox/Game.vala'
         ),
 
         name_prefix: '',

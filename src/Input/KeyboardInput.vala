@@ -5,26 +5,18 @@ namespace Virgil.Input {
     public const int KEY_UP = 0;
 
     public static bool check_key (KeyCode keycode) {
-        InputManager input_manager = InputManager.instance;
-
-        return input_manager.get_key_state (keycode) == KEY_DOWN;
+        return Raylib.is_key_down ((Raylib.KeyboardKey)keycode);
     }
 
     public static int check_key_state (KeyCode keycode) {
-        InputManager input_manager = InputManager.instance;
-
-        return input_manager.get_key_state (keycode);
+        return (int)Raylib.is_key_down ((Raylib.KeyboardKey)keycode);
     }
 
     public static bool check_key_released (KeyCode keycode) {
-        InputManager input_manager = InputManager.instance;
-
-        return input_manager.is_keyboard_key_released (keycode);
+        return Raylib.is_key_released ((Raylib.KeyboardKey)keycode);
     }
 
     public static bool check_key_pressed (KeyCode keycode) {
-        InputManager input_manager = InputManager.instance;
-
-        return input_manager.is_keyboard_key_pressed (keycode);
+        return Raylib.is_key_pressed ((Raylib.KeyboardKey)keycode);
     }
 }

@@ -1,4 +1,3 @@
-using Virgil.Engine.Interface;
 using Virgil.Scenes;
 
 namespace Virgil {
@@ -15,14 +14,14 @@ namespace Virgil {
             _parent = null;
             _parent_scene = null;
 
-            _scripts = new List<Script>();
+            _scripts = new List<Script> ();
             _children = new List<GameObject> ();
 
             transform = {
                 { 0.0f, 0.0f },
-                { 1.0f, 1.0f },
 
-                0.0
+                1.0f,
+                0.0f
             };
 
             create ();
@@ -49,8 +48,8 @@ namespace Virgil {
                 Transform parent_transform = _parent.transform;
 
                 transform.position = Vector2.add (transform.position, parent_transform.position);
-                transform.scale = Vector2.add (transform.scale, parent_transform.scale);
 
+                transform.scale += _parent.transform.scale;
                 transform.rotation += parent_transform.rotation;
             }
 

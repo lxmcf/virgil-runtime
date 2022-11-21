@@ -2,19 +2,6 @@ using Virgil.Scenes;
 
 namespace Virgil.Engine {
     internal class SceneManager {
-        //  Singleton
-        private static SceneManager? _instance;
-        public static SceneManager instance {
-            get {
-                if (_instance != null) {
-                    return _instance;
-                } else {
-                    _instance = new SceneManager ();
-                    return _instance;
-                }
-            }
-        }
-
         private List<Scene> _scenes;
 
         private unowned Scene? _active_scene;
