@@ -27,20 +27,16 @@ namespace Virgil {
             create ();
         }
 
-        public void create () {
+        public void create () { }
 
-        }
+        public void update (float delta_time) { }
 
-        public void update (float delta_time) {
+        public void draw () { }
 
-        }
+        public void cleanup () { }
 
-        public void draw () {
-
-        }
-
-        public void cleanup () {
-
+        protected void add_child (owned GameObject child) {
+            _children.append (child);
         }
 
         protected void set_parent (GameObject? object) {

@@ -12,6 +12,10 @@ namespace Virgil {
             //  TODO: Create texture manager to free textures
         }
 
+        public void unload () {
+            Raylib.unload_texture (_texture);
+        }
+
         public void draw (Vector2 position) {
             Raylib.draw_texture_vector (_texture, { position.x, position.y }, Raylib.WHITE);
         }

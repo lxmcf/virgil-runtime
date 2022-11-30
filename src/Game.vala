@@ -10,14 +10,5 @@ namespace Virgil {
         // Content
         public virtual void load_content () { }
         public virtual void unload_content () { }
-
-        //  Processing methods
-        public virtual void process_update (float delta_time) {
-            update (delta_time);
-        }
-
-        public virtual void process_draw () {
-            draw ();
-        }
     }
 }

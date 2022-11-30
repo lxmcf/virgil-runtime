@@ -4,10 +4,14 @@ namespace Virgil.Scenes {
     public class Scene {
         private List<GameObject> _objects;
 
-        public int id { get; private set; }
+        public uint id { get; internal set; }
 
         public Scene () {
             _objects = new List<GameObject> ();
+        }
+
+        internal void register () {
+
         }
 
         protected void instantiate (GameObject object, Vector2 position = Vector2 (0.0f, 0.0f)) {

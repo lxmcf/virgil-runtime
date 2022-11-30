@@ -10,7 +10,7 @@ namespace Virgil {
         public bool add_item (string key, owned T item) {
             ulong index = hash_sdbm (key) % _data.length;
 
-            if (_data[index] == null) return false;
+            if (_data[index] != null) return false;
 
             _data[index] = item;
 

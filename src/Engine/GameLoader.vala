@@ -64,6 +64,10 @@ namespace Virgil.Engine {
             if (!_did_register) return;
 
             _registered_game.update (delta_time);
+        }
+
+        public void draw () {
+            if (!_did_register) return;
 
             _registered_game.draw ();
         }

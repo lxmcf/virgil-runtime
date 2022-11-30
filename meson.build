@@ -22,8 +22,7 @@ cc = meson.get_compiler ('c')
 
 # Compiler arguments
 valac_arguments = [
-    '--vapidir', vapi_dir,
-    '--ccode'
+    '--vapidir', vapi_dir
 ]
 
 cc_arguments = [
@@ -48,6 +47,7 @@ project_source = files (
 
     # PUBLIC API
     'src/Scenes/Scene.vala',
+    'src/Scenes/SceneManager.vala',
 
     'src/Input/KeyCode.vala',
     'src/Input/MouseButton.vala',
@@ -71,12 +71,8 @@ project_source = files (
     # INTERNAL API
     'src/Engine/Window.vala',
     'src/Engine/GameLoader.vala',
-    'src/Engine/SceneManager.vala',
-
-    # INTERNAL INTERFACES
-    # 'src/Engine/Interface/ICreateble.vala',
-    # 'src/Engine/Interface/IDrawable.vala',
-    # 'src/Engine/Interface/IRunnable.vala',
+    'src/Engine/SceneLoader.vala',
+    'src/Engine/Runtime.vala',
 )
 
 project_dependency = [
