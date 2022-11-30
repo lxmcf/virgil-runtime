@@ -45,10 +45,6 @@ project_source = files (
     # ENTRY POINT
     'src/Main.vala',
 
-    # PUBLIC API
-    'src/Scenes/Scene.vala',
-    'src/Scenes/SceneManager.vala',
-
     'src/Input/KeyCode.vala',
     'src/Input/MouseButton.vala',
     'src/Input/KeyboardInput.vala',
@@ -71,8 +67,6 @@ project_source = files (
     # INTERNAL API
     'src/Engine/Window.vala',
     'src/Engine/GameLoader.vala',
-    'src/Engine/SceneLoader.vala',
-    'src/Engine/Runtime.vala',
 )
 
 project_dependency = [

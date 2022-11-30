@@ -1,9 +1,6 @@
-using Virgil.Scenes;
-
 namespace Virgil {
     public class GameObject {
         private unowned GameObject? _parent;
-        private unowned Scene? _parent_scene;
 
         private List<Script> _scripts;
         private List<GameObject> _children;
@@ -12,7 +9,6 @@ namespace Virgil {
 
         public GameObject () {
             _parent = null;
-            _parent_scene = null;
 
             _scripts = new List<Script> ();
             _children = new List<GameObject> ();
@@ -52,20 +48,8 @@ namespace Virgil {
             _parent = object;
         }
 
-        internal void process_update (float delta_time) {
-            update (delta_time);
-
-            foreach (GameObject object in _children) {
-                object.process_update (delta_time);
-            }
-        }
-
-        internal void process_draw () {
-            draw ();
-
-            foreach (GameObject object in _children) {
-                object.draw ();
-            }
+        public unowned List<GameObject> get_children () {
+            return _children;
         }
     }
 }

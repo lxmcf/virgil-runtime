@@ -6,10 +6,6 @@ namespace Virgil {
             _texture = Raylib.load_render_texture (width, height);
         }
 
-        ~Surface2D () {
-            //  TODO: Create texture manager to free textures
-        }
-
         public void draw (Vector2 position) {
             Raylib.draw_texture (_texture.texture, (int)position.x, (int)position.y, Raylib.WHITE);
         }

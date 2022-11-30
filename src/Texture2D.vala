@@ -8,10 +8,6 @@ namespace Virgil {
             _texture = Raylib.load_texture (filename);
         }
 
-        ~Texture2D () {
-            //  TODO: Create texture manager to free textures
-        }
-
         public void unload () {
             Raylib.unload_texture (_texture);
         }

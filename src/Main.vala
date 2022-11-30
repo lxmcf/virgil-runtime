@@ -7,7 +7,6 @@ namespace Virgil.Engine {
         Window window = new Window ("Virgil Runtime", 640, 360);
 
         GameLoader current_game = new GameLoader ();
-        SceneLoader scene = new SceneLoader ();
 
         string game_prefix = "";
 
@@ -31,12 +30,10 @@ namespace Virgil.Engine {
         while (!window.should_close ()) {
             //  MAIN UPDATE LOOP
             current_game.run (get_frame_time ());
-            scene.run (get_frame_time ());
 
             window.clear ();
 
             current_game.draw ();
-            scene.draw ();
 
             window.present ();
         }
