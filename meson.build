@@ -50,12 +50,14 @@ project_source = files (
     'src/Input/KeyboardInput.vala',
     'src/Input/MouseInput.vala',
 
-    'src/Script.vala',
-    'src/HashMap.vala',
     'src/GameObject.vala',
+    'src/Component.vala',
     'src/Vector2.vala',
+    'src/Rectangle.vala',
+    'src/Colour.vala',
     'src/Transform.vala',
     'src/Texture2D.vala',
+    'src/Shapes.vala',
     'src/Surface2D.vala',
     'src/Point.vala',
     'src/Game.vala',
@@ -95,12 +97,8 @@ temp_lib = executable (
 )
 
 # HACK: Intellisense for the sandbox
-# NOTE: Need to run ninja twice to get here...
-vapi_dep = []
-
+# NOTE: Need to run ninja twice to get here, maybe move to subproject
 if (import ('fs').is_file ('build/virgil.vapi'))
-    vapi_dep = [ valac.find_library ('virgil', dirs: meson.current_source_dir () / 'build') ]
-
     shared_module (
         'game',
 
@@ -111,7 +109,7 @@ if (import ('fs').is_file ('build/virgil.vapi'))
         name_prefix: '',
 
         dependencies: [
-            vapi_dep,
+            valac.find_library ('virgil', dirs: meson.current_source_dir () / 'build'),
             dependency ('gmodule-2.0'), # Will include GLIB
         ],
 

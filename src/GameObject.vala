@@ -1,17 +1,18 @@
 namespace Virgil {
     public class GameObject {
-        private unowned GameObject? _parent;
-
-        private List<Script> _scripts;
+        private bool is_parented;
+        private List<Component> _components;
         private List<GameObject> _children;
 
+        public unowned GameObject parent;
         public Transform transform;
 
         public GameObject () {
-            _parent = null;
+            parent = null;
 
-            _scripts = new List<Script> ();
+            _components = new List<Component> ();
             _children = new List<GameObject> ();
+            is_parented = false;
 
             transform = {
                 { 0.0f, 0.0f },
@@ -20,32 +21,75 @@ namespace Virgil {
                 0.0f
             };
 
-            create ();
+            start ();
         }
 
-        public void create () { }
+        //  NOTE: API NOT FINAL
+        //----------------------------------------------------------------------------------
+        // User defined functions
+        //----------------------------------------------------------------------------------
+        protected void start () { }
 
-        public void update (float delta_time) { }
+        protected void update (float delta_time) { }
 
-        public void draw () { }
+        protected void draw () { }
 
-        public void cleanup () { }
+        //----------------------------------------------------------------------------------
+        // Public update functions
+        //----------------------------------------------------------------------------------
+        public void run_update () {
+            foreach (Component component in _components) {
+                component.update ();
+            }
 
-        protected void add_child (owned GameObject child) {
+            update (Raylib.get_frame_time ());
+
+            foreach (GameObject child in _children) {
+                child.run_update ();
+            }
+        }
+
+        public void run_draw () {
+            draw ();
+
+            foreach (GameObject child in _children) {
+                child.run_draw ();
+            }
+        }
+
+        //----------------------------------------------------------------------------------
+        // Public API
+        //----------------------------------------------------------------------------------
+        public void add_child (owned GameObject child) {
             _children.append (child);
         }
 
-        protected void set_parent (GameObject? object) {
-            if (object == null) {
-                Transform parent_transform = _parent.transform;
+        public void set_parent (GameObject object) {
+            Transform parent_transform = parent.transform;
+
+            transform.position = Vector2.add (transform.position, parent_transform.position);
+
+            transform.scale += parent.transform.scale;
+            transform.rotation += parent_transform.rotation;
+
+            parent = object;
+
+            is_parented = true;
+        }
+
+        public void remove_parent (bool relative = true) {
+            if (!is_parented) return;
+
+            is_parented = false;
+
+            if (relative) {
+                Transform parent_transform = parent.transform;
 
                 transform.position = Vector2.add (transform.position, parent_transform.position);
 
-                transform.scale += _parent.transform.scale;
                 transform.rotation += parent_transform.rotation;
+                transform.scale += parent_transform.scale;
             }
-
-            _parent = object;
         }
 
         public unowned List<GameObject> get_children () {

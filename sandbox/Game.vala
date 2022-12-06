@@ -8,7 +8,7 @@ namespace Sandbox {
         Vector2 position;
         float speed;
 
-        public override void init () {
+        public override void start () {
             test_texture = new Texture2D ("data/sprites/test_planet.png");
 
             position = Vector2 (0.0f, 0.0f);

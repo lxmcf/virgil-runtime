@@ -57,7 +57,7 @@ namespace Virgil.Engine {
 
             _did_register = true;
 
-            game.init ();
+            game.start ();
         }
 
         public void run (float delta_time) {

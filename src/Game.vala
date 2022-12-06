@@ -3,7 +3,7 @@ using Virgil.Engine;
 namespace Virgil {
     public class Game : Object {
         //  Core methods
-        public virtual void init () { }
+        public virtual void start () { }
         public virtual void update (float delta_time) { }
         public virtual void draw () { }
 

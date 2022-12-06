@@ -17,7 +17,7 @@ namespace Virgil.Engine {
         }
 
         public void clear () {
-            clear_background ({ 60, 60, 60, 255 });
+            clear_background ({ 32, 32, 32, 255 });
 
             begin_drawing ();
         }

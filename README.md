@@ -13,7 +13,7 @@
 
 ---
 
-Virgil is the result of 'if it ain't broken, break it and reinvent the wheel lmao', a basic 2D game engine built using [Raylib](https://www.raylib.com/) and [Vala](https://vala.dev/) aimed at begginers to experienced developers running a Linux desktop.
+Virgil is the result of 'if it ain't broken, break it and reinvent the wheel lmao', a basic 2D game engine built using [Raylib](https://www.raylib.com/) and [Vala](https://vala.dev/) aimed at beginners to experienced developers running a Linux desktop (Windows coming soon™).
 
 ### Dependencies
 
@@ -53,7 +53,7 @@ To create a basic application that print's 'Hello World!' to the console...
 using Virgil;
 
 public class MyNewGame : Game {
-    public override void init () {
+    public override void start () {
         print ("Hello World!"\n);
     }
 }
@@ -66,6 +66,7 @@ public Type register_game (Module module) {
 
 Now you can build this using the command line as follows:
 
-```bash
+<!-- Powershell is just for syntax highlighting -->
+```powershell
 valac -o game.so --pkg gmodule-2.0 -X -fPIC -X --shared virgil.vapi Game.vala --library Game
 ```
