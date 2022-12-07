@@ -3,7 +3,10 @@ namespace Virgil {
         public unowned GameObject object { get; private set; }
         public unowned Transform transform { get; private set; }
 
+        public unowned ComponentGroup group { get; private set; }
+
         public virtual void start () { }
         public virtual void update () { }
+
     }
 }
