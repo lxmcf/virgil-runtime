@@ -1,4 +1,4 @@
-namespace Virgil.Engine {
+namespace Virgil.Runtime {
     internal errordomain GameRegisterError {
         NOT_SUPPORTED,
         UNEXPECTED_TYPE,
@@ -31,33 +31,30 @@ namespace Virgil.Engine {
                 throw new GameRegisterError.NOT_SUPPORTED ("Modules are not supported");
             }
 
-            Module game_module = Module.open (GLib.Environment.get_current_dir () + "/" + file, ModuleFlags.MASK);
-            if (game_module == null) {
+            _module = Module.open (GLib.Environment.get_current_dir () + "/" + file, ModuleFlags.MASK);
+            if (_module == null) {
                 throw new GameRegisterError.FAILED (Module.error ());
             }
 
             void* method;
             string method_name = "register_game";
 
-            game_module.symbol (method_name, out method);
+            _module.symbol (method_name, out method);
             if (method == null) {
                 throw new GameRegisterError.NO_REGISTRATION_FUNCTION (method_name + " not found!");
             }
 
             RegisterGameFunction register_game = (RegisterGameFunction)method;
-            Type type = register_game (game_module);
+            Type type = register_game (_module);
             if (!type.is_a (typeof (Game))) {
                 throw new GameRegisterError.UNEXPECTED_TYPE (type.name () + " is not a valid game type!");
             }
 
-            Game game = (Game)Object.new (type);
-
-            _registered_game = game;
-            _module = (owned)game_module;
+            _registered_game = (Game)Object.new (type);
 
             _did_register = true;
 
-            game.start ();
+            _registered_game.start ();
         }
 
         public void run (float delta_time) {

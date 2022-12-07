@@ -1,3 +1,5 @@
+using Virgil.Runtime;
+
 namespace Virgil {
     public class GameObject {
         private bool is_parented;
@@ -37,7 +39,7 @@ namespace Virgil {
         //----------------------------------------------------------------------------------
         // Public update functions
         //----------------------------------------------------------------------------------
-        public void run_update () {
+        public void update_object () {
             foreach (Component component in _components) {
                 component.update ();
             }
@@ -45,15 +47,17 @@ namespace Virgil {
             update (Raylib.get_frame_time ());
 
             foreach (GameObject child in _children) {
-                child.run_update ();
+                child.update_object ();
             }
         }
 
-        public void run_draw () {
+        public void draw_object () {
+            if (get_draw_state () == DrawState.WAITING) return;
+
             draw ();
 
             foreach (GameObject child in _children) {
-                child.run_draw ();
+                child.draw_object ();
             }
         }
 
@@ -62,6 +66,14 @@ namespace Virgil {
         //----------------------------------------------------------------------------------
         public void add_child (owned GameObject child) {
             _children.append (child);
+        }
+
+        public void remove_child (GameObject child) {
+            _children.remove (child);
+        }
+
+        public unowned List<GameObject> get_children () {
+            return _children;
         }
 
         public void set_parent (GameObject object) {
@@ -92,8 +104,8 @@ namespace Virgil {
             }
         }
 
-        public unowned List<GameObject> get_children () {
-            return _children;
+        public void add_component (owned Component component) {
+            _components.append (component);
         }
     }
 }

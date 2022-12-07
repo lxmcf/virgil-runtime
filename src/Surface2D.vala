@@ -1,3 +1,5 @@
+using Virgil.Runtime;
+
 namespace Virgil {
     public class Surface2D {
         private Raylib.RenderTexture2D _texture;
@@ -7,6 +9,8 @@ namespace Virgil {
         }
 
         public void draw (Vector2 position) {
+            if (get_draw_state () == DrawState.WAITING) return;
+
             Raylib.draw_texture (_texture.texture, (int)position.x, (int)position.y, Raylib.WHITE);
         }
     }

@@ -25,10 +25,7 @@ valac_arguments = [
     '--vapidir', vapi_dir
 ]
 
-cc_arguments = [
-    '-DSTB_IMAGE_IMPLEMENTATION'
-]
-
+cc_arguments = [ ]
 
 if operating_system == 'windows' or operating_system == 'cygwin'
     valac_arguments += '--define=VIRGIL_PLATFORM_WINDOWS'
@@ -42,9 +39,7 @@ add_project_arguments (valac_arguments, language: 'vala')
 add_project_arguments (cc_arguments, language: 'c')
 
 project_source = files (
-    # ENTRY POINT
-    'src/Main.vala',
-
+    # PUBLIC API
     'src/Input/KeyCode.vala',
     'src/Input/MouseButton.vala',
     'src/Input/KeyboardInput.vala',
@@ -52,6 +47,7 @@ project_source = files (
 
     'src/GameObject.vala',
     'src/Component.vala',
+    'src/ComponentGroup.vala',
     'src/Vector2.vala',
     'src/Rectangle.vala',
     'src/Colour.vala',
@@ -62,13 +58,15 @@ project_source = files (
     'src/Point.vala',
     'src/Game.vala',
 
-    # PUBLIC INTERFACES
+    # PUBLIC COMPONENTS
+    'src/Camera2D.vala',
 
-    # PUBLIC RUNTIME API
-
-    # INTERNAL API
-    'src/Engine/Window.vala',
-    'src/Engine/GameLoader.vala',
+    # RUNTIME API
+    'src/Runtime/Runtime.vala',
+    'src/Runtime/Window.vala',
+    'src/Runtime/GameLoader.vala',
+    'src/Runtime/DrawState.vala',
+    'src/Runtime/Main.vala',
 )
 
 project_dependency = [
@@ -111,10 +109,6 @@ if (import ('fs').is_file ('build/virgil.vapi'))
         dependencies: [
             valac.find_library ('virgil', dirs: meson.current_source_dir () / 'build'),
             dependency ('gmodule-2.0'), # Will include GLIB
-        ],
-
-        include_directories: [
-            include_directories('.')
         ]
     )
 endif

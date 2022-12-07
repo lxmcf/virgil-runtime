@@ -1,5 +1,3 @@
-using Virgil.Engine;
-
 namespace Virgil.Input {
     public const int SCROLL_LEFT = -1;
     public const int SCROLL_RIGHT = 1;
@@ -23,5 +21,9 @@ namespace Virgil.Input {
         Raylib.Vector2 position = Raylib.get_mouse_position ();
 
         return { position.x, position.y };
+    }
+
+    public float get_mouse_scroll () {
+        return Raylib.get_mouse_wheel_move ();
     }
 }

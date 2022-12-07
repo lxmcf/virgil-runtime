@@ -1,15 +1,9 @@
-using Virgil.Engine;
-
 namespace Virgil.Input {
     public const int KEY_DOWN = 1;
     public const int KEY_UP = 0;
 
     public static bool check_key (KeyCode keycode) {
         return Raylib.is_key_down ((Raylib.KeyboardKey)keycode);
-    }
-
-    public static int check_key_state (KeyCode keycode) {
-        return (int)Raylib.is_key_down ((Raylib.KeyboardKey)keycode);
     }
 
     public static bool check_key_released (KeyCode keycode) {

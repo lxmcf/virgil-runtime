@@ -1,6 +1,6 @@
 using Raylib;
 
-namespace Virgil.Engine {
+namespace Virgil.Runtime {
     internal static int main (string[] args) {
         set_trace_log_level (Raylib.TraceLogLevel.ALL);
 
@@ -27,8 +27,7 @@ namespace Virgil.Engine {
 
         current_game.load_content ();
 
-        while (!window.should_close ()) {
-            //  MAIN UPDATE LOOP
+        while (!window.should_close () || Game.should_close) {
             current_game.run (get_frame_time ());
 
             window.clear ();

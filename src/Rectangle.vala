@@ -21,12 +21,7 @@ namespace Virgil {
             get { return y + height; }
         }
 
-        public Rectangle (int x, int y, int width, int height) {
-            this.x = x;
-            this.y = y;
-
-            this.width = width;
-            this.height = height;
-        }
+        public const Rectangle SQUARE_32 = { 0, 0, 32, 32 };
+        public const Rectangle SQUARE_64 = { 0, 0, 64, 64 };
     }
 }

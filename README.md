@@ -48,7 +48,8 @@ Congratulations! you shoud now see the 'sandbox' application and are well on you
 
 To create a basic application that print's 'Hello World!' to the console...
 
-```vala
+<!-- C# for nicer syntax highlighting -->
+```csharp
 // filename: Game.vala
 using Virgil;
 

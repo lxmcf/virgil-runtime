@@ -1,15 +1,10 @@
 using Raylib;
 
-namespace Virgil.Engine {
+//  NOTE: leftover from SDL
+namespace Virgil.Runtime {
     internal class Window {
-        private bool _should_close;
-        private string _title;
-
         public Window (string title, int width, int height) {
             init_window (width, height, title);
-
-            _should_close = false;
-            _title = title;
         }
 
         public void close () {
@@ -20,14 +15,18 @@ namespace Virgil.Engine {
             clear_background ({ 32, 32, 32, 255 });
 
             begin_drawing ();
+
+            set_draw_state (DrawState.DRAWING);
         }
 
         public void present () {
             end_drawing ();
+
+            set_draw_state (DrawState.WAITING);
         }
 
         public bool should_close () {
-            return _should_close || window_should_close ();
+            return window_should_close ();
         }
     }
 }
