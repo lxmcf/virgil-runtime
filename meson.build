@@ -47,7 +47,6 @@ project_source = files (
 
     'src/GameObject.vala',
     'src/Component.vala',
-    'src/ComponentGroup.vala',
     'src/Vector2.vala',
     'src/Rectangle.vala',
     'src/Colour.vala',
@@ -62,7 +61,6 @@ project_source = files (
     'src/Camera2D.vala',
 
     # RUNTIME API
-    'src/Runtime/Runtime.vala',
     'src/Runtime/Window.vala',
     'src/Runtime/GameLoader.vala',
     'src/Runtime/DrawState.vala',
@@ -101,7 +99,8 @@ if (import ('fs').is_file ('build/virgil.vapi'))
         'game',
 
         files (
-            'sandbox/Game.vala'
+            'sandbox/Game.vala',
+            'sandbox/Player.vala'
         ),
 
         name_prefix: '',

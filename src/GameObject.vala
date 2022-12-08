@@ -30,34 +30,33 @@ namespace Virgil {
         //----------------------------------------------------------------------------------
         // User defined functions
         //----------------------------------------------------------------------------------
-        protected void start () { }
+        protected virtual void start () { }
 
-        protected void update (float delta_time) { }
+        protected virtual void update (float delta_time) { }
 
-        protected void draw () { }
+        protected virtual void draw () { }
 
         //----------------------------------------------------------------------------------
         // Public update functions
         //----------------------------------------------------------------------------------
         public void update_object () {
             foreach (Component component in _components) {
-                component.update ();
+                ((Camera2D)component).update ();
             }
 
             update (Raylib.get_frame_time ());
-
-            foreach (GameObject child in _children) {
-                child.update_object ();
-            }
         }
 
         public void draw_object () {
-            if (get_draw_state () == DrawState.WAITING) return;
+            foreach (Component component in _components) {
+                component.begin_draw ();
+            }
+
 
             draw ();
 
-            foreach (GameObject child in _children) {
-                child.draw_object ();
+            foreach (Component component in _components) {
+                component.end_draw ();
             }
         }
 
@@ -105,7 +104,32 @@ namespace Virgil {
         }
 
         public void add_component (owned Component component) {
+            Type desired_component = Type.from_instance (component);
+
+            foreach (Component item in _components) {
+                Type current_component = Type.from_instance (item);
+
+                if (current_component == desired_component) return;
+            }
+
             _components.append (component);
+        }
+
+        //  NOTE: Really want this to be the final API, unsure how to work it in vala
+        //  public void add_component_exp<T> () { }
+
+        public T get_component<T> () {
+            Type desired_component = typeof (T);
+
+            foreach (Component item in _components) {
+                Type current_component = Type.from_instance (item);
+
+                if (current_component == desired_component) {
+                    return item;
+                }
+            }
+
+            return null;
         }
     }
 }
