@@ -58,7 +58,8 @@ project_source = files (
     'src/Game.vala',
 
     # PUBLIC COMPONENTS
-    'src/Camera2D.vala',
+    'src/Components/Camera2D.vala',
+    'src/Components/TextureRenderer.vala',
 
     # RUNTIME API
     'src/Runtime/Window.vala',

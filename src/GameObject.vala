@@ -9,6 +9,8 @@ namespace Virgil {
         public unowned GameObject parent;
         public Transform transform;
 
+        public string name;
+
         public GameObject () {
             parent = null;
 
@@ -17,11 +19,14 @@ namespace Virgil {
             is_parented = false;
 
             transform = {
-                { 0.0f, 0.0f },
+                { 0.0f, 0.0f }, // Position
+                { 1.0f, 1.0f }, // Scale
 
-                1.0f,
                 0.0f
             };
+
+            Type type = Type.from_instance (this);
+            name = type.name ();
 
             start ();
         }
@@ -41,7 +46,7 @@ namespace Virgil {
         //----------------------------------------------------------------------------------
         public void update_object () {
             foreach (Component component in _components) {
-                ((Camera2D)component).update ();
+                component.update ();
             }
 
             update (Raylib.get_frame_time ());
@@ -54,6 +59,10 @@ namespace Virgil {
 
 
             draw ();
+
+            foreach (Component component in _components) {
+                component.draw ();
+            }
 
             foreach (Component component in _components) {
                 component.end_draw ();
@@ -79,8 +88,8 @@ namespace Virgil {
             Transform parent_transform = parent.transform;
 
             transform.position = Vector2.add (transform.position, parent_transform.position);
+            transform.scale = Vector2.add (transform.scale, parent_transform.scale);
 
-            transform.scale += parent.transform.scale;
             transform.rotation += parent_transform.rotation;
 
             parent = object;
@@ -97,9 +106,9 @@ namespace Virgil {
                 Transform parent_transform = parent.transform;
 
                 transform.position = Vector2.add (transform.position, parent_transform.position);
+                transform.scale = Vector2.add (transform.scale, parent_transform.scale);
 
                 transform.rotation += parent_transform.rotation;
-                transform.scale += parent_transform.scale;
             }
         }
 
@@ -111,6 +120,8 @@ namespace Virgil {
 
                 if (current_component == desired_component) return;
             }
+
+            component.object = this;
 
             _components.append (component);
         }
