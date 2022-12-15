@@ -1,8 +1,19 @@
 namespace Virgil {
-    public struct Transform {
-        Vector2 position;
-        Vector2 scale;
+    public class Transform {
+        public Vector2 position;
+        public Vector2 scale;
 
-        float rotation;
+        public float rotation;
+
+        public Transform () {
+            position = { 0.0f, 0.0f };
+            scale = { 1.0f, 1.0f };
+
+            rotation = 0.0f;
+        }
+
+        public void translate (Vector2 vector) {
+            position = Vector2.add (position, vector);
+        }
     }
 }

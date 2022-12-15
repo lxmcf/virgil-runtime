@@ -10,12 +10,20 @@ namespace Virgil {
 
         public override void draw () {
             if (_texture == null) return;
+
+            Rectangle destination = {
+                (int)transform.position.x,
+                (int)transform.position.y,
+                (int)(_texture.width * transform.scale.x),
+                (int)(_texture.height * transform.scale.y)
+            };
+
             _texture.draw_ext (
                 _texture.get_rectangle (),
-                { (int)transform.position.x, (int)transform.position.y, (int)(_texture.width * transform.scale.x), (int)(_texture.height * transform.scale.y) },
+                destination,
                 { 0, 0 },
                 0,
-                Colour.WHITE
+                _colour
             );
         }
 

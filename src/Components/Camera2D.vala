@@ -4,7 +4,7 @@ namespace Virgil {
 
         private GameObject? _target;
 
-        public Camera2D () {
+        public override void start () {
             _camera = { };
             _camera.rotation = 0.0f;
             _camera.zoom = 1.0f;
@@ -34,6 +34,10 @@ namespace Virgil {
 
         public void set_target (GameObject? target) {
             _target = target;
+        }
+
+        public void set_zoom (float zoom) {
+            _camera.zoom = zoom;
         }
     }
 }

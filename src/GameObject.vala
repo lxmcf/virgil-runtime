@@ -2,33 +2,25 @@ using Virgil.Runtime;
 
 namespace Virgil {
     public class GameObject {
-        private bool is_parented;
         private List<Component> _components;
-        private List<GameObject> _children;
 
-        public unowned GameObject parent;
         public Transform transform;
 
         public string name;
 
         public GameObject () {
-            parent = null;
-
             _components = new List<Component> ();
-            _children = new List<GameObject> ();
-            is_parented = false;
 
-            transform = {
-                { 0.0f, 0.0f }, // Position
-                { 1.0f, 1.0f }, // Scale
-
-                0.0f
-            };
+            transform = new Transform ();
 
             Type type = Type.from_instance (this);
             name = type.name ();
 
             start ();
+        }
+
+        ~GameObject () {
+            warning ("GameObject destroyed!");
         }
 
         //  NOTE: API NOT FINAL
@@ -57,7 +49,6 @@ namespace Virgil {
                 component.begin_draw ();
             }
 
-
             draw ();
 
             foreach (Component component in _components) {
@@ -72,46 +63,6 @@ namespace Virgil {
         //----------------------------------------------------------------------------------
         // Public API
         //----------------------------------------------------------------------------------
-        public void add_child (owned GameObject child) {
-            _children.append (child);
-        }
-
-        public void remove_child (GameObject child) {
-            _children.remove (child);
-        }
-
-        public unowned List<GameObject> get_children () {
-            return _children;
-        }
-
-        public void set_parent (GameObject object) {
-            Transform parent_transform = parent.transform;
-
-            transform.position = Vector2.add (transform.position, parent_transform.position);
-            transform.scale = Vector2.add (transform.scale, parent_transform.scale);
-
-            transform.rotation += parent_transform.rotation;
-
-            parent = object;
-
-            is_parented = true;
-        }
-
-        public void remove_parent (bool relative = true) {
-            if (!is_parented) return;
-
-            is_parented = false;
-
-            if (relative) {
-                Transform parent_transform = parent.transform;
-
-                transform.position = Vector2.add (transform.position, parent_transform.position);
-                transform.scale = Vector2.add (transform.scale, parent_transform.scale);
-
-                transform.rotation += parent_transform.rotation;
-            }
-        }
-
         public void add_component (owned Component component) {
             Type desired_component = Type.from_instance (component);
 
@@ -122,6 +73,7 @@ namespace Virgil {
             }
 
             component.object = this;
+            component.start ();
 
             _components.append (component);
         }

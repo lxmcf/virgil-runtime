@@ -6,6 +6,9 @@ project (
     ]
 )
 
+# Build defines
+export_plugins = false
+
 # Variables
 source_dir = meson.current_source_dir ()
 vapi_dir = source_dir / 'vapi'
@@ -64,7 +67,6 @@ project_source = files (
     # RUNTIME API
     'src/Runtime/Window.vala',
     'src/Runtime/GameLoader.vala',
-    'src/Runtime/DrawState.vala',
     'src/Runtime/Main.vala',
 )
 

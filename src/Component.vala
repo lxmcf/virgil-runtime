@@ -3,7 +3,9 @@ namespace Virgil {
         public unowned GameObject object { get; internal set; }
         public unowned Transform transform { get { return object.transform; } }
 
-        public string name;
+        public string name { get; private set; }
+
+        public bool enabled;
 
         public Component () {
             Type type = Type.from_instance (this);
