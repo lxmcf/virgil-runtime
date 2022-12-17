@@ -9,6 +9,7 @@ namespace Sandbox {
             speed = 200.0f;
 
             add_component (new TextureRenderer ());
+            add_component (new Collider2D ());
 
             TextureRenderer tr = get_component<TextureRenderer> ();
             tr.set_texture (new Texture2D ("data/sprites/test_planet.png"));
@@ -21,10 +22,8 @@ namespace Sandbox {
             Vector2 movement_vector = { (xaxis * speed) * delta_time, (yaxis * speed) * delta_time };
 
             transform.translate (movement_vector);
-
-            if (check_key_pressed (KeyCode.SPACE)) {
-                //  add_child (new Player ());
-            }
         }
+
+        public override void draw () { }
     }
 }

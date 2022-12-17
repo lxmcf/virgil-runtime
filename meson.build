@@ -63,6 +63,7 @@ project_source = files (
     # PUBLIC COMPONENTS
     'src/Components/Camera2D.vala',
     'src/Components/TextureRenderer.vala',
+    'src/Components/Collider2D.vala',
 
     # RUNTIME API
     'src/Runtime/Window.vala',

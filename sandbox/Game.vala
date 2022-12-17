@@ -3,10 +3,14 @@ using Virgil.Input;
 
 namespace Sandbox {
     public class TestGame : Game {
-        Player player;
+        GameObject player;
 
         public override void start () {
-            player = new Player ();
+            player = new GameObject ();
+
+            player.transform.position = { 32.0f, 32.0f };
+
+            player.add_child (new Player ());
         }
 
         public override void update (float delta_time) {

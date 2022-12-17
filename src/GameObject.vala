@@ -3,6 +3,9 @@ using Virgil.Runtime;
 namespace Virgil {
     public class GameObject {
         private List<Component> _components;
+        private List<GameObject> _children;
+
+        private GameObject? _parent;
 
         public Transform transform;
 
@@ -10,8 +13,11 @@ namespace Virgil {
 
         public GameObject () {
             _components = new List<Component> ();
+            _children = new List<GameObject> ();
 
             transform = new Transform ();
+
+            _parent = null;
 
             Type type = Type.from_instance (this);
             name = type.name ();
@@ -20,7 +26,7 @@ namespace Virgil {
         }
 
         ~GameObject () {
-            warning ("GameObject destroyed!");
+            warning ("GameObject [%s] destroyed!", name);
         }
 
         //  NOTE: API NOT FINAL
@@ -42,6 +48,10 @@ namespace Virgil {
             }
 
             update (Raylib.get_frame_time ());
+
+            foreach (GameObject child in _children) {
+                child.update_object ();
+            }
         }
 
         public void draw_object () {
@@ -50,6 +60,10 @@ namespace Virgil {
             }
 
             draw ();
+
+            foreach (GameObject child in _children) {
+                child.draw_object ();
+            }
 
             foreach (Component component in _components) {
                 component.draw ();
@@ -93,6 +107,18 @@ namespace Virgil {
             }
 
             return null;
+        }
+
+        public GameObject add_child (GameObject object) {
+            _children.append (object);
+
+            object.set_parent (this);
+
+            return object;
+        }
+
+        public void set_parent (GameObject? object) {
+            _parent = object;
         }
     }
 }
