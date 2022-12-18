@@ -33,11 +33,14 @@ namespace Virgil {
         //----------------------------------------------------------------------------------
         // User defined functions
         //----------------------------------------------------------------------------------
-        protected virtual void start () { }
+        public virtual void start () { }
 
-        protected virtual void update (float delta_time) { }
+        public virtual void update (float delta_time) { }
 
-        protected virtual void draw () { }
+        public virtual void draw () { }
+
+        //  NOTE: Not final
+        public virtual void collide_2D (Collider2D collider) { }                                                        // vala-lint=naming-convention
 
         //----------------------------------------------------------------------------------
         // Public update functions
@@ -83,7 +86,11 @@ namespace Virgil {
             foreach (Component item in _components) {
                 Type current_component = Type.from_instance (item);
 
-                if (current_component == desired_component) return;
+                if (current_component == desired_component) {
+                    warning ("Component of type %s already added to GameObject!", current_component.name ());
+
+                    return;
+                }
             }
 
             component.object = this;

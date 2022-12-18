@@ -104,7 +104,8 @@ if (import ('fs').is_file ('build/virgil.vapi'))
 
         files (
             'sandbox/Game.vala',
-            'sandbox/Player.vala'
+            'sandbox/Player.vala',
+            'sandbox/Box.vala'
         ),
 
         name_prefix: '',

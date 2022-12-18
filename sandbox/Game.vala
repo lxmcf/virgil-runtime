@@ -11,6 +11,7 @@ namespace Sandbox {
             player.transform.position = { 32.0f, 32.0f };
 
             player.add_child (new Player ());
+            player.add_child (new Box ());
         }
 
         public override void update (float delta_time) {
