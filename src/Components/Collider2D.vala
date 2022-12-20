@@ -3,42 +3,40 @@ namespace Virgil {
         private static List<Collider2D> _active_colliders = new List<Collider2D> ();
         private uint id;
 
-        public Rectangle rect;
-        public Colour colour;
+        protected Colour colour;
+        protected Vector2 position;
 
         ~Collider2D () {
             _active_colliders.remove (this);
-
-            warning ("%s destroyed!", name);
         }
 
         public override void start () {
             id = _active_colliders.length ();
             _active_colliders.append (this);
 
-            rect = {
-                0, 0, 64, 64
-            };
-
             colour = Colour.WHITE;
+
+            setup ();
         }
 
         public override void update () {
-            rect.x = (int)transform.position.x;
-            rect.y = (int)transform.position.y;
-
             colour = Colour.WHITE;
+
+            position = transform.position;
 
             foreach (Collider2D collider in _active_colliders) {
                 if (id == collider.id) continue;
-                if (Raylib.check_collision_rectangles ({ rect.x, rect.y, rect.width, rect.height }, { collider.rect.x, collider.rect.y, collider.rect.width, collider.rect.height })) {
+
+                if (process_collision (collider)) {
+                    object.collide_2D (collider);
                     colour = Colour.RED;
                 }
             }
         }
 
-        public override void draw () {
-            draw_rectangle_outline (rect, colour);
-        }
+        //  FIXME: Not final
+        public virtual bool process_collision (Collider2D collider) { return false; }
+
+        public virtual void setup () { }
     }
 }

@@ -64,6 +64,8 @@ project_source = files (
     'src/Components/Camera2D.vala',
     'src/Components/TextureRenderer.vala',
     'src/Components/Collider2D.vala',
+    'src/Components/CircleCollider2D.vala',
+    'src/Components/RectangleCollider2D.vala',
 
     # RUNTIME API
     'src/Runtime/Window.vala',
@@ -98,7 +100,7 @@ temp_lib = executable (
 
 # HACK: Intellisense for the sandbox
 # NOTE: Need to run ninja twice to get here, maybe move to subproject
-if (import ('fs').is_file ('build/virgil.vapi'))
+# if (import ('fs').is_file ('build/virgil.vapi'))
     shared_module (
         'game',
 
@@ -115,4 +117,4 @@ if (import ('fs').is_file ('build/virgil.vapi'))
             dependency ('gmodule-2.0'), # Will include GLIB
         ]
     )
-endif
+# endif

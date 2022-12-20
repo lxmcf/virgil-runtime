@@ -33,6 +33,7 @@ namespace Virgil.Runtime {
             window.clear ();
 
             current_game.draw ();
+            Raylib.draw_fps (8, 8);
 
             window.present ();
         }
