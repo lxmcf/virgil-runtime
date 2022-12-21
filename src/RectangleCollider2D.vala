@@ -11,6 +11,8 @@ namespace Virgil {
         public override bool process_collision (Collider2D collider) {
             string collider_type = Type.from_instance (collider).name ();
 
+            if (collider is RectangleCollider2D)
+
             switch (collider_type) {
                 case "VirgilRectangleCollider2D":
                     RectangleCollider2D rectangle = (RectangleCollider2D)collider;
@@ -27,10 +29,6 @@ namespace Virgil {
             }
 
             return false;
-        }
-
-        public override void draw () {
-            draw_rectangle_outline ({ (int)transform.position.x, (int)transform.position.y, width, height }, colour);
         }
     }
 }

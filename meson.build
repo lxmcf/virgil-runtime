@@ -48,6 +48,8 @@ project_source = files (
     'src/Input/KeyboardInput.vala',
     'src/Input/MouseInput.vala',
 
+    'src/Graphics/Shader.vala',
+
     'src/GameObject.vala',
     'src/Component.vala',
     'src/Vector2.vala',
@@ -61,11 +63,11 @@ project_source = files (
     'src/Game.vala',
 
     # PUBLIC COMPONENTS
-    'src/Components/Camera2D.vala',
-    'src/Components/TextureRenderer.vala',
-    'src/Components/Collider2D.vala',
-    'src/Components/CircleCollider2D.vala',
-    'src/Components/RectangleCollider2D.vala',
+    'src/Camera2D.vala',
+    'src/TextureRenderer.vala',
+    'src/Collider2D.vala',
+    'src/CircleCollider2D.vala',
+    'src/RectangleCollider2D.vala',
 
     # RUNTIME API
     'src/Runtime/Window.vala',

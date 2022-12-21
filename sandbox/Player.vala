@@ -4,6 +4,7 @@ using Virgil.Input;
 namespace Sandbox {
     public class Player : GameObject {
         public float speed;
+        float direction;
 
         public override void start () {
             speed = 200.0f;
@@ -19,9 +20,11 @@ namespace Sandbox {
             int xaxis = (int)check_key (KeyCode.CHAR_D) - (int)check_key (KeyCode.CHAR_A);
             int yaxis = (int)check_key (KeyCode.CHAR_S) - (int)check_key (KeyCode.CHAR_W);
 
-            Vector2 movement_vector = { (xaxis * speed) * delta_time, (yaxis * speed) * delta_time };
+            if (xaxis != 0 || yaxis != 0) {
+                direction = Vector2.direction ({ 0.0f, 0.0f }, { xaxis, yaxis });
 
-            transform.translate (movement_vector);
+                transform.translate (Vector2.length_direction (speed * delta_time, direction));
+            }
         }
 
         public override void draw () { }
