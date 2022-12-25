@@ -10,7 +10,7 @@ namespace Sandbox {
             speed = 200.0f;
 
             add_component (new TextureRenderer ());
-            add_component (new CircleCollider2D ());
+            add_component (new RectangleCollider2D ());
 
             TextureRenderer tr = get_component<TextureRenderer> ();
             tr.set_texture (new Texture2D ("data/sprites/test_planet.png"));

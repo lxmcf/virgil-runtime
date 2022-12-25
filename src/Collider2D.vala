@@ -4,6 +4,7 @@ namespace Virgil {
         private uint id;
 
         protected Vector2 position;
+        protected Colour _colour;
 
         ~Collider2D () {
             _active_colliders.remove (this);
@@ -13,17 +14,22 @@ namespace Virgil {
             id = _active_colliders.length ();
             _active_colliders.append (this);
 
+            _colour = Colour.WHITE;
+
             setup ();
         }
 
         public override void update () {
-            position = transform.position;
+            position = object.get_relative_position ();
+            _colour = Colour.WHITE;
 
             foreach (Collider2D collider in _active_colliders) {
                 if (id == collider.id) continue;
 
                 if (process_collision (collider)) {
                     object.collide_2D (collider);
+
+                    _colour = Colour.RED;
                 }
             }
         }

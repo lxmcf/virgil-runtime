@@ -25,10 +25,6 @@ namespace Virgil {
             start ();
         }
 
-        ~GameObject () {
-            warning ("GameObject [%s] destroyed!", name);
-        }
-
         //  NOTE: API NOT FINAL
         //----------------------------------------------------------------------------------
         // User defined functions
@@ -126,6 +122,16 @@ namespace Virgil {
 
         public void set_parent (GameObject? object) {
             _parent = object;
+        }
+
+        public Vector2 get_relative_position () {
+            Vector2 position = transform.position;
+
+            if (_parent != null) {
+                position = Vector2.add (position, _parent.get_relative_position ());
+            }
+
+            return position;
         }
     }
 }

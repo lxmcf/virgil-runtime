@@ -11,9 +11,11 @@ namespace Virgil {
         public override void draw () {
             if (_texture == null) return;
 
+            Vector2 position = object.get_relative_position ();
+
             Rectangle destination = {
-                (int)transform.position.x,
-                (int)transform.position.y,
+                (int)position.x,
+                (int)position.y,
                 (int)(_texture.width * transform.scale.x),
                 (int)(_texture.height * transform.scale.y)
             };

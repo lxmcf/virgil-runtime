@@ -30,5 +30,11 @@ namespace Virgil {
 
             return false;
         }
+
+        public override void draw () {
+            Vector2 position = object.get_relative_position ();
+
+            draw_rectangle_outline ({ (int)position.x, (int)position.y, width, height }, _colour);
+        }
     }
 }
