@@ -68,19 +68,20 @@ namespace Virgil {
             float direction_x = vector2.x - vector1.x;
             float direction_y = vector2.y - vector1.y;
 
-            float direction = Math.atan2f (direction_x, direction_y) * (180 / (float)Math.PI);
+            float degrees = Math.atan2f (direction_y, direction_x) * Raylib.RAD2DEG;
 
-            return direction + (direction < 0 ? 360.0f : 0.0f) - 90;
+            return (degrees <= 0) ? Math.fabsf (-degrees) : 360.0f - degrees;
+
         }
 
         //  FIXME: This is super slow...
         [Version (experimental = true)]
         public static Vector2 length_direction (float length, float rotation) {
-            float adjusted_direction = rotation * ((float)Math.PI / 180);
+            float adjusted_direction = rotation * Raylib.DEG2RAD;
 
             return {
-                length * Math.cosf (-adjusted_direction),
-                length * Math.sinf (-adjusted_direction)
+                length * Math.cosf (adjusted_direction),
+                -length * Math.sinf (adjusted_direction)
             };
         }
     }
