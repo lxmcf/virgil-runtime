@@ -1,4 +1,5 @@
 namespace Virgil.Graphics {
+    [Version (experimental = true)]
     public class Shader {
         private const int SHADER_VERTEX = 1;
         private const int SHADER_FRAGMENT = 2;

@@ -62,6 +62,8 @@ namespace Virgil {
 
             foreach (GameObject child in _children) {
                 child.draw_object ();
+
+                draw_line (get_relative_position (), child.get_relative_position ());
             }
 
             foreach (Component component in _components) {
@@ -124,14 +126,35 @@ namespace Virgil {
             _parent = object;
         }
 
+        public GameObject get_root_parent () {
+            GameObject? root_parent = _parent;
+
+            if (_parent != null) {
+                root_parent = _parent.get_root_parent ();
+            }
+
+            return (root_parent == null) ? this : root_parent;
+        }
+
         public Vector2 get_relative_position () {
             Vector2 position = transform.position;
 
             if (_parent != null) {
+                position = Vector2.rotate (position, get_relative_rotation ());
                 position = Vector2.add (position, _parent.get_relative_position ());
             }
 
             return position;
+        }
+
+        public float get_relative_rotation () {
+            float rotation = transform.rotation;
+
+            if (_parent != null) {
+                rotation += _parent.get_relative_rotation ();
+            }
+
+            return rotation;
         }
     }
 }

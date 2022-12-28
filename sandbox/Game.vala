@@ -10,24 +10,32 @@ namespace Sandbox {
 
         public override void start () {
             root = new GameObject ();
-            root.add_component (new RectangleCollider2D ());
+
+            root.add_component (new TextureRenderer ());
+
+            TextureRenderer tr = root.get_component<TextureRenderer> ();
+            tr.set_texture (new Texture2D ("data/sprites/test_square.png"));
 
             root.transform.position = { 32.0f, 32.0f };
 
             root.add_child (new Player ());
-            root.add_child (new Box ());
         }
 
         public override void update (float delta_time) {
             root.update_object ();
 
-            int xaxis = (int)check_key (KeyCode.RIGHT) - (int)check_key (KeyCode.LEFT);
-            int yaxis = (int)check_key (KeyCode.DOWN) - (int)check_key (KeyCode.UP);
+            int xaxis = (int)check_key (KeyCode.CHAR_D) - (int)check_key (KeyCode.CHAR_A);
+            int yaxis = (int)check_key (KeyCode.CHAR_S) - (int)check_key (KeyCode.CHAR_W);
+            int rotate = (int)check_key (KeyCode.CHAR_E) - (int)check_key (KeyCode.CHAR_Q);
 
             if (xaxis != 0 || yaxis != 0) {
                 direction = Vector2.direction ({ 0.0f, 0.0f }, { xaxis, yaxis });
 
                 root.transform.translate (Vector2.length_direction (200.0f * delta_time, direction));
+            }
+
+            if (rotate != 0) {
+                root.transform.rotation += (100.0f * delta_time) * rotate;
             }
         }
 

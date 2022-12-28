@@ -23,8 +23,8 @@ namespace Virgil {
             _texture.draw_ext (
                 _texture.get_rectangle (),
                 destination,
-                { 0, 0 },
-                0,
+                { _texture.width / 2, _texture.height / 2 },
+                object.get_relative_rotation (),
                 _colour
             );
         }

@@ -24,5 +24,9 @@ namespace Virgil {
 
             return false;
         }
+
+        public override void draw () {
+            draw_circle_outline (position, radius);
+        }
     }
 }

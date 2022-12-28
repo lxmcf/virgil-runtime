@@ -49,6 +49,16 @@ namespace Virgil {
             };
         }
 
+        public static Vector2 rotate (Vector2 vector, float degrees) {
+            float sin = Math.sinf (degrees * Raylib.DEG2RAD);
+            float cos = Math.cosf (degrees * Raylib.DEG2RAD);
+
+            return {
+                (cos * vector.x) - (sin * vector.y),
+                (sin * vector.x) + (cos * vector.y)
+            };
+        }
+
         public static float dot (Vector2 vector1, Vector2 vector2) {
             return (vector1.x * vector2.x) + (vector1.y * vector2.y);
         }
@@ -74,8 +84,6 @@ namespace Virgil {
 
         }
 
-        //  FIXME: This is super slow...
-        [Version (experimental = true)]
         public static Vector2 length_direction (float length, float rotation) {
             float adjusted_direction = rotation * Raylib.DEG2RAD;
 
