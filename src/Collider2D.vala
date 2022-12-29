@@ -4,6 +4,8 @@ namespace Virgil {
         private uint id;
 
         protected Vector2 position;
+        protected Vector2 offset;
+
         protected Colour _colour;
 
         ~Collider2D () {
@@ -16,11 +18,13 @@ namespace Virgil {
 
             _colour = Colour.WHITE;
 
+            offset = { 0.0f, 0.0f };
+
             setup ();
         }
 
         public override void update () {
-            position = object.get_relative_position ();
+            position = Vector2.subtract (object.relative_transform.position, offset);
             _colour = Colour.WHITE;
 
             foreach (Collider2D collider in _active_colliders) {

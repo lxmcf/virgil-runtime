@@ -4,6 +4,8 @@ namespace Virgil {
     public class Texture2D {
         private Raylib.Texture2D _texture;
 
+        public Vector2 origin;
+
         public int width {
             get { return _texture.width; }
         }
@@ -14,6 +16,11 @@ namespace Virgil {
 
         public Texture2D (string filename) {
             _texture = Raylib.load_texture (filename);
+
+            origin = {
+                width / 2,
+                height / 2
+            };
         }
 
         public void unload () {
@@ -41,6 +48,10 @@ namespace Virgil {
 
         public Rectangle get_rectangle () {
             return { 0, 0, _texture.width, _texture.height };
+        }
+
+        public void set_origin (float x, float y) {
+            origin = { x, y };
         }
     }
 }

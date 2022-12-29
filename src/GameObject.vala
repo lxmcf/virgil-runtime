@@ -7,7 +7,9 @@ namespace Virgil {
 
         private GameObject? _parent;
 
+        //  TODO: Move this to a matrix instead
         public Transform transform;
+        public Transform relative_transform { get; private set; }
 
         public string name;
 
@@ -16,6 +18,7 @@ namespace Virgil {
             _children = new List<GameObject> ();
 
             transform = new Transform ();
+            relative_transform = new Transform ();
 
             _parent = null;
 
@@ -47,6 +50,16 @@ namespace Virgil {
             }
 
             update (Raylib.get_frame_time ());
+
+            relative_transform.position = transform.position;
+            relative_transform.rotation = transform.rotation;
+            relative_transform.scale = transform.scale;
+
+            if (_parent != null) {
+                relative_transform.position = get_relative_position ();
+                relative_transform.rotation = get_relative_rotation ();
+                relative_transform.scale = get_relative_scale ();
+            }
 
             foreach (GameObject child in _children) {
                 child.update_object ();
@@ -136,25 +149,35 @@ namespace Virgil {
             return (root_parent == null) ? this : root_parent;
         }
 
-        public Vector2 get_relative_position () {
+        internal Vector2 get_relative_position () {
             Vector2 position = transform.position;
 
             if (_parent != null) {
-                position = Vector2.rotate (position, get_relative_rotation ());
+                position = Vector2.rotate (position, get_relative_rotation () - transform.rotation);
                 position = Vector2.add (position, _parent.get_relative_position ());
             }
 
             return position;
         }
 
-        public float get_relative_rotation () {
+        internal float get_relative_rotation () {
             float rotation = transform.rotation;
 
             if (_parent != null) {
                 rotation += _parent.get_relative_rotation ();
             }
 
-            return rotation;
+            return rotation % 360;
+        }
+
+        internal Vector2 get_relative_scale () {
+            Vector2 scale = transform.scale;
+
+            if (_parent != null) {
+                scale = Vector2.multiply (scale, _parent.get_relative_scale ());
+            }
+
+            return scale;
         }
     }
 }

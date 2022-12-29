@@ -11,20 +11,20 @@ namespace Virgil {
         public override void draw () {
             if (_texture == null) return;
 
-            Vector2 position = object.get_relative_position ();
+            Vector2 position = object.relative_transform.position;
 
             Rectangle destination = {
                 (int)position.x,
                 (int)position.y,
-                (int)(_texture.width * transform.scale.x),
-                (int)(_texture.height * transform.scale.y)
+                (int)(_texture.width * object.relative_transform.scale.x),
+                (int)(_texture.height * object.relative_transform.scale.y)
             };
 
             _texture.draw_ext (
                 _texture.get_rectangle (),
                 destination,
-                { _texture.width / 2, _texture.height / 2 },
-                object.get_relative_rotation (),
+                { _texture.origin.x, _texture.origin.y },
+                object.relative_transform.rotation,
                 _colour
             );
         }

@@ -6,6 +6,11 @@ namespace Virgil {
         public override void setup () {
             width = 64;
             height = 64;
+
+            offset = {
+                width / 2,
+                height / 2
+            };
         }
 
         public override bool process_collision (Collider2D collider) {
@@ -32,8 +37,6 @@ namespace Virgil {
         }
 
         public override void draw () {
-            Vector2 position = object.get_relative_position ();
-
             draw_rectangle_outline ({ (int)position.x, (int)position.y, width, height }, _colour);
         }
     }
