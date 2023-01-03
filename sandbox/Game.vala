@@ -17,7 +17,6 @@ namespace Sandbox {
             tr.set_texture (new Texture2D ("data/sprites/test_square.png"));
 
             root.transform.position = { 32.0f, 32.0f };
-
             root.add_child (new Player ());
         }
 

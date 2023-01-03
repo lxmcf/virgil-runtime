@@ -110,7 +110,7 @@ namespace Virgil {
             _components.append (component);
         }
 
-        //  NOTE: Really want this to be the final API, unsure how to work it in vala
+        //  NOTE: Really want this to be the final API, unsure how to work it in vala without inheriting GLib.Object
         //  public void add_component_exp<T> () { }
 
         public T get_component<T> () {

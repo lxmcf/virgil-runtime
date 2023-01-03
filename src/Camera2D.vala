@@ -9,13 +9,17 @@ namespace Virgil {
             _camera.rotation = 0.0f;
             _camera.zoom = 1.0f;
             _camera.target = { 0.0f, 0.0f };
+
+            Rectangle window = Game.get_window_rectangle ();
+
+            _camera.offset = { window.width / 2, window.height / 2 };
         }
 
         public override void update () {
             if (_target != null) {
                 _camera.target = {
-                    _target.transform.position.x ,
-                    _target.transform.position.y
+                    _target.relative_transform.position.x,
+                    _target.relative_transform.position.y
                 };
             }
         }
