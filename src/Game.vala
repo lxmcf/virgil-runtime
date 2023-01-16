@@ -2,6 +2,29 @@ namespace Virgil {
     public class Game : Object {
         internal static bool should_close;
 
+        public GameObject root { get; private set; }
+
+        //----------------------------------------------------------------------------------
+        // Internal API
+        //----------------------------------------------------------------------------------
+        internal void do_start () {
+            root = new GameObject ();
+
+            start ();
+        }
+
+        internal void do_update (float delta_time) {
+            root.update_object ();
+
+            update (delta_time);
+        }
+
+        internal void do_draw () {
+            root.draw_object ();
+
+            draw ();
+        }
+
         //----------------------------------------------------------------------------------
         // Public API
         //----------------------------------------------------------------------------------

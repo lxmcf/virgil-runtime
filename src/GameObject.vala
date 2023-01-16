@@ -28,23 +28,10 @@ namespace Virgil {
             start ();
         }
 
-        //  NOTE: API NOT FINAL
         //----------------------------------------------------------------------------------
-        // User defined functions
+        // Internal API
         //----------------------------------------------------------------------------------
-        public virtual void start () { }
-
-        public virtual void update (float delta_time) { }
-
-        public virtual void draw () { }
-
-        //  NOTE: Not final
-        public virtual void collide_2D (Collider2D collider) { }                                                        // vala-lint=naming-convention
-
-        //----------------------------------------------------------------------------------
-        // Public update functions
-        //----------------------------------------------------------------------------------
-        public void update_object () {
+        internal void update_object () {
             foreach (Component component in _components) {
                 component.update ();
             }
@@ -66,7 +53,7 @@ namespace Virgil {
             }
         }
 
-        public void draw_object () {
+        internal void draw_object () {
             foreach (Component component in _components) {
                 component.begin_draw ();
             }
@@ -87,6 +74,19 @@ namespace Virgil {
                 component.end_draw ();
             }
         }
+
+        //  NOTE: API NOT FINAL
+        //----------------------------------------------------------------------------------
+        // Public API
+        //----------------------------------------------------------------------------------
+        public virtual void start () { }
+
+        public virtual void update (float delta_time) { }
+
+        public virtual void draw () { }
+
+        //  NOTE: Not final
+        public virtual void collide_2D (Collider2D collider) { }                                                        // vala-lint=naming-convention
 
         //----------------------------------------------------------------------------------
         // Public API

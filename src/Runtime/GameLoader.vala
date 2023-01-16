@@ -54,19 +54,19 @@ namespace Virgil.Runtime {
 
             _did_register = true;
 
-            _registered_game.start ();
+            _registered_game.do_start ();
         }
 
         public void run (float delta_time) {
             if (!_did_register) return;
 
-            _registered_game.update (delta_time);
+            _registered_game.do_update (delta_time);
         }
 
         public void draw () {
             if (!_did_register) return;
 
-            _registered_game.draw ();
+            _registered_game.do_draw ();
         }
 
         public void load_content () {

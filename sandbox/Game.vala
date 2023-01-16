@@ -4,13 +4,9 @@ using Virgil.Graphics;
 
 namespace Sandbox {
     public class TestGame : Game {
-        GameObject root;
-
         float direction;
 
         public override void start () {
-            root = new GameObject ();
-
             root.add_component (new TextureRenderer ());
 
             TextureRenderer tr = root.get_component<TextureRenderer> ();
@@ -21,8 +17,6 @@ namespace Sandbox {
         }
 
         public override void update (float delta_time) {
-            root.update_object ();
-
             int xaxis = (int)check_key (KeyCode.CHAR_D) - (int)check_key (KeyCode.CHAR_A);
             int yaxis = (int)check_key (KeyCode.CHAR_S) - (int)check_key (KeyCode.CHAR_W);
 
@@ -45,9 +39,7 @@ namespace Sandbox {
             }
         }
 
-        public override void draw () {
-            root.draw_object ();
-        }
+        public override void draw () { }
     }
 }
 
