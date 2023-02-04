@@ -12,6 +12,7 @@ namespace Virgil {
         public Transform relative_transform { get; private set; }
 
         public string name;
+        public bool enabled;
 
         public GameObject () {
             _components = new List<Component> ();

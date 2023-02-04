@@ -49,6 +49,7 @@ project_source = files (
     'src/Input/MouseInput.vala',
 
     'src/Graphics/Shader.vala',
+    'src/Graphics/Font.vala',
 
     'src/GameObject.vala',
     'src/Component.vala',
@@ -57,6 +58,7 @@ project_source = files (
     'src/Colour.vala',
     'src/Transform.vala',
     'src/Texture2D.vala',
+    'src/RenderTexture.vala',
     'src/Shapes.vala',
     'src/Surface2D.vala',
     'src/Point.vala',
@@ -74,6 +76,8 @@ project_source = files (
     'src/Runtime/GameLoader.vala',
     'src/Runtime/Main.vala',
 )
+
+warning (source_dir / operating_system)
 
 project_dependency = [
     dependency ('gobject-2.0'),

@@ -21,35 +21,35 @@ namespace Virgil {
             };
         }
 
-        public static Vector2 subtract (Vector2 vector1, Vector2 vector2) {
+        public inline static Vector2 subtract (Vector2 vector1, Vector2 vector2) {
             return {
                 vector1.x -= vector2.x,
                 vector1.y -= vector2.y
             };
         }
 
-        public static Vector2 multiply (Vector2 vector1, Vector2 vector2) {
+        public inline static Vector2 multiply (Vector2 vector1, Vector2 vector2) {
             return {
                 vector1.x *= vector2.x,
                 vector1.y *= vector2.y
             };
         }
 
-        public static Vector2 divide (Vector2 vector1, Vector2 vector2) {
+        public inline static Vector2 divide (Vector2 vector1, Vector2 vector2) {
             return {
                 vector1.x /= vector2.x,
                 vector1.y /= vector2.y
             };
         }
 
-        public static Vector2 add (Vector2 vector1, Vector2 vector2) {
+        public inline static Vector2 add (Vector2 vector1, Vector2 vector2) {
             return {
                 vector1.x += vector2.x,
                 vector1.y += vector2.y
             };
         }
 
-        public static Vector2 rotate (Vector2 vector, float degrees) {
+        public inline static Vector2 rotate (Vector2 vector, float degrees) {
             float sin = Math.sinf (degrees * Raylib.DEG2RAD);
             float cos = Math.cosf (degrees * Raylib.DEG2RAD);
 
@@ -59,22 +59,22 @@ namespace Virgil {
             };
         }
 
-        public static float dot (Vector2 vector1, Vector2 vector2) {
+        public inline static float dot (Vector2 vector1, Vector2 vector2) {
             return (vector1.x * vector2.x) + (vector1.y * vector2.y);
         }
 
-        public static bool equals (Vector2 vector1, Vector2 vector2) {
+        public inline static bool equals (Vector2 vector1, Vector2 vector2) {
             return (vector1.x == vector2.x && vector1.y == vector2.y);
         }
 
-        public static float distance (Vector2 vector1, Vector2 vector2) {
+        public inline static float distance (Vector2 vector1, Vector2 vector2) {
             float direction_x = vector2.x - vector1.x;
             float direction_y = vector2.y - vector1.y;
 
             return Math.sqrtf ((direction_x * direction_x) + (direction_y * direction_y));
         }
 
-        public static float direction (Vector2 vector1, Vector2 vector2) {
+        public inline static float direction (Vector2 vector1, Vector2 vector2) {
             float direction_x = vector2.x - vector1.x;
             float direction_y = vector2.y - vector1.y;
 
@@ -84,7 +84,7 @@ namespace Virgil {
 
         }
 
-        public static Vector2 length_direction (float length, float rotation) {
+        public inline static Vector2 length_direction (float length, float rotation) {
             float adjusted_direction = rotation * Raylib.DEG2RAD;
 
             return {

@@ -18,6 +18,7 @@ namespace Virgil {
 
             if (collider is RectangleCollider2D)
 
+            //  TODO: Remove strings and replace with enums
             switch (collider_type) {
                 case "VirgilRectangleCollider2D":
                     RectangleCollider2D rectangle = (RectangleCollider2D)collider;

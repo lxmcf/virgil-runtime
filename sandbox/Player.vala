@@ -35,8 +35,6 @@ namespace Sandbox {
 
             if (rotate != 0) {
                 transform.rotation += (100.0f * delta_time) * rotate;
-
-                print ("Rotation: %f\n", transform.rotation);
             }
 
             if (scale != 0) {

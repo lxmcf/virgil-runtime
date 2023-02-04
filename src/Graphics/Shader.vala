@@ -15,7 +15,8 @@ namespace Virgil.Graphics {
         }
 
         public Shader.from_file (string filename) {
-            FileStream? stream = FileStream.open (GLib.Environment.get_current_dir () + "/" + filename, "r");
+            string adjusted_filename = GLib.Environment.get_current_dir () + "/" + filename;
+            FileStream? stream = FileStream.open (adjusted_filename, "r");
 
             if (stream == null) return;
 
