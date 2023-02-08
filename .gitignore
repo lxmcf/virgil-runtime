@@ -1,7 +1,9 @@
 build/
 builddir/
+build-aux/
 subprojects/
 
 *~
 
 .DS_Store
+out.txt

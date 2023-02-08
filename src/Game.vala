@@ -49,16 +49,15 @@ namespace Virgil {
             Raylib.set_window_size (width, height);
         }
 
-        public static void set_window_rectangle (Rectangle rectangle) {
-            Raylib.set_window_position (rectangle.x, rectangle.y);
-
-            Raylib.set_window_size (rectangle.width, rectangle.height);
+        public static void set_window_position (int x, int y) {
+            Raylib.set_window_position (x, y);
         }
+
 
         public static Rectangle get_window_rectangle () {
             Raylib.Vector2 position = Raylib.get_window_position ();
 
-            return { (int)position.x, (int)position.y, Raylib.get_screen_width (), Raylib.get_screen_height () };
+            return { position.x, position.y, Raylib.get_screen_width (), Raylib.get_screen_height () };
         }
     }
 }

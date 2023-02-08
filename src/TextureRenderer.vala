@@ -14,10 +14,10 @@ namespace Virgil {
             Vector2 position = object.relative_transform.position;
 
             Rectangle destination = {
-                (int)position.x,
-                (int)position.y,
-                (int)(_texture.width * object.relative_transform.scale.x),
-                (int)(_texture.height * object.relative_transform.scale.y)
+                position.x,
+                position.y,
+                (_texture.width * object.relative_transform.scale.x),
+                (_texture.height * object.relative_transform.scale.y)
             };
 
             _texture.draw_ext (
@@ -27,8 +27,6 @@ namespace Virgil {
                 object.relative_transform.rotation,
                 _colour
             );
-
-            //  _texture.draw (position);
         }
 
         public void set_texture (Texture2D? texture) {

@@ -23,6 +23,9 @@ namespace Virgil {
             }
 
             _camera.zoom += Input.get_mouse_scroll () * 0.05f;
+
+            if (_camera.zoom > 3.0f) _camera.zoom = 3.0f;
+            else if (_camera.zoom < 0.1f) _camera.zoom = 0.1f;
         }
 
         public override void begin_draw () {

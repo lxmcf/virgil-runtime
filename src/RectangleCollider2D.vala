@@ -8,8 +8,8 @@ namespace Virgil {
             height = 64;
 
             offset = {
-                (float)width / 2.0f,
-                (float)height / 2.0f
+                width / 2,
+                height / 2
             };
         }
 
@@ -20,8 +20,8 @@ namespace Virgil {
                     RectangleCollider2D rectangle = (RectangleCollider2D)collider;
 
                     return Raylib.check_collision_rectangles (
-                        { (int)rectangle.position.x, (int)rectangle.position.y, rectangle.width, rectangle.height },
-                        { (int)position.x, (int)position.y, width, height }
+                        { rectangle.position.x, rectangle.position.y, rectangle.width, rectangle.height },
+                        { position.x, position.y, width, height }
                     );
 
                 case "VirgilCircleCollider2D":
@@ -34,7 +34,7 @@ namespace Virgil {
         }
 
         public override void draw () {
-            draw_rectangle_outline ({ (int)position.x, (int)position.y, width, height }, _colour);
+            draw_rectangle_outline ({ position.x, position.y, width, height }, _colour);
         }
     }
 }

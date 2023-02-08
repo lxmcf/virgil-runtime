@@ -1,27 +1,27 @@
 namespace Virgil {
     public struct Rectangle {
-        public int x;
-        public int y;
-        public int width;
-        public int height;
+        public float x;
+        public float y;
+        public float width;
+        public float height;
 
-        public int left {
+        public float left {
             get { return x; }
         }
 
-        public int right {
+        public float right {
             get { return x + width; }
         }
 
-        public int top {
+        public float top {
             get { return y; }
         }
 
-        public int bottom {
+        public float bottom {
             get { return y + height; }
         }
 
-        public const Rectangle SQUARE_32 = { 0, 0, 32, 32 };
-        public const Rectangle SQUARE_64 = { 0, 0, 64, 64 };
+        public const Rectangle SQUARE_32 = { 0.0f, 0.0f, 32.0f, 32.0f };
+        public const Rectangle SQUARE_64 = { 0.0f, 0.0f, 64.0f, 64.0f };
     }
 }
