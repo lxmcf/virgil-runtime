@@ -3,6 +3,7 @@ using Raylib;
 namespace Virgil.Runtime {
     internal static int main (string[] args) {
         set_trace_log_level (Raylib.TraceLogLevel.ALL);
+        //  set_target_fps (60);
 
         Window window = new Window ("Virgil Runtime", 640, 360);
 

@@ -8,18 +8,14 @@ namespace Virgil {
             height = 64;
 
             offset = {
-                width / 2,
-                height / 2
+                (float)width / 2.0f,
+                (float)height / 2.0f
             };
         }
 
         public override bool process_collision (Collider2D collider) {
-            string collider_type = Type.from_instance (collider).name ();
-
-            if (collider is RectangleCollider2D)
-
             //  TODO: Remove strings and replace with enums
-            switch (collider_type) {
+            switch (collider.name) {
                 case "VirgilRectangleCollider2D":
                     RectangleCollider2D rectangle = (RectangleCollider2D)collider;
 
@@ -31,7 +27,7 @@ namespace Virgil {
                 case "VirgilCircleCollider2D":
                     CircleCollider2D circle = (CircleCollider2D)collider;
 
-                    return Raylib.check_collision_circle_rectangle ({ circle.position.x, circle.position.y }, circle.radius, { (int)transform.position.x, (int)transform.position.y, width, height });
+                    return Raylib.check_collision_circle_rectangle ({ circle.position.x, circle.position.y }, circle.radius, { (int)position.x, (int)position.y, width, height });
             }
 
             return false;

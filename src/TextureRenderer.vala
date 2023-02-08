@@ -27,10 +27,24 @@ namespace Virgil {
                 object.relative_transform.rotation,
                 _colour
             );
+
+            //  _texture.draw (position);
         }
 
         public void set_texture (Texture2D? texture) {
             _texture = texture;
+        }
+
+        public int get_texture_width () {
+            if (_texture == null) return 0;
+
+            return _texture.width;
+        }
+
+        public int get_texture_height () {
+            if (_texture == null) return 0;
+
+            return _texture.height;
         }
     }
 }

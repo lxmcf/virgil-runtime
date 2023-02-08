@@ -8,6 +8,11 @@ namespace Sandbox {
 
         public override void start () {
             root.add_component (new TextureRenderer ());
+            root.add_component (new RectangleCollider2D ());
+
+            root.add_component (new Camera2D ());
+            //  Camera2D camera = root.get_component<Camera2D> ();
+            //  camera.set_target (root);
 
             TextureRenderer tr = root.get_component<TextureRenderer> ();
             tr.set_texture (new Texture2D ("data/sprites/test_square.png"));
@@ -39,7 +44,9 @@ namespace Sandbox {
             }
         }
 
-        public override void draw () { }
+        public override void draw () {
+
+        }
     }
 }
 

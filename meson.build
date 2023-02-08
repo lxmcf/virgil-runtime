@@ -1,9 +1,6 @@
 project (
     'virgil', [ 'vala', 'c' ],
     version: '1.0.0',
-    default_options: [
-        'buildtype=release',
-    ]
 )
 
 # Build defines

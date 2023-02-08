@@ -12,7 +12,7 @@ namespace Sandbox {
             transform.translate ({ 128.0f, 0.0f });
 
             add_component (new TextureRenderer ());
-            add_component (new RectangleCollider2D ());
+            add_component (new CircleCollider2D ());
 
             TextureRenderer tr = get_component<TextureRenderer> ();
             tr.set_texture (new Texture2D ("data/sprites/test_square.png"));
@@ -41,6 +41,10 @@ namespace Sandbox {
                 transform.scale.x += (5.0f * delta_time) * scale;
                 transform.scale.y += (5.0f * delta_time) * scale;
             }
+        }
+
+        public override void draw () {
+            draw_circle ({ 64.0f, 64.0f }, 16, Colour.BLUE);
         }
     }
 }

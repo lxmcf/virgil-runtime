@@ -5,23 +5,24 @@ namespace Virgil {
         private GameObject? _target;
 
         public override void start () {
-            _camera = { };
             _camera.rotation = 0.0f;
             _camera.zoom = 1.0f;
             _camera.target = { 0.0f, 0.0f };
 
+            _target = object;
+
             Rectangle window = Game.get_window_rectangle ();
 
-            _camera.offset = { window.width / 2, window.height / 2 };
+            _camera.offset = { window.width / 2.0f, window.height / 2 };
         }
 
         public override void update () {
             if (_target != null) {
-                _camera.target = {
-                    _target.relative_transform.position.x,
-                    _target.relative_transform.position.y
-                };
+                _camera.target.x = _target.relative_transform.position.x;
+                _camera.target.y = _target.relative_transform.position.y;
             }
+
+            _camera.zoom += Input.get_mouse_scroll () * 0.05f;
         }
 
         public override void begin_draw () {

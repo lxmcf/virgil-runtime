@@ -25,6 +25,7 @@ namespace Virgil {
 
         public override void update () {
             position = Vector2.subtract (object.relative_transform.position, offset);
+
             _colour = Colour.WHITE;
 
             foreach (Collider2D collider in _active_colliders) {

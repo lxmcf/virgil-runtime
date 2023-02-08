@@ -22,7 +22,7 @@ Virgil is the result of 'if it ain't broken, break it and reinvent the wheel lma
 
 - `raylib`
 
-Virgil uses very minimal depencies and due to being base on Raylib, has no runtime dependencies!
+Virgil uses very minimal depencies and due to being base on Raylib; has no runtime dependencies!
 
 To install raylib, follow the instructions [HERE](https://www.raylib.com/) then come back and continue reading on...
 
