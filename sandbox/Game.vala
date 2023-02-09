@@ -10,10 +10,6 @@ namespace Sandbox {
             root.add_component (new TextureRenderer ());
             root.add_component (new RectangleCollider2D ());
 
-            root.add_component (new Camera2D ());
-            //  Camera2D camera = root.get_component<Camera2D> ();
-            //  camera.set_target (root);
-
             TextureRenderer tr = root.get_component<TextureRenderer> ();
             tr.set_texture (new Texture2D ("data/sprites/test_square.png"));
 
@@ -22,11 +18,11 @@ namespace Sandbox {
         }
 
         public override void update (float delta_time) {
-            int xaxis = (int)check_key (KeyCode.CHAR_D) - (int)check_key (KeyCode.CHAR_A);
-            int yaxis = (int)check_key (KeyCode.CHAR_S) - (int)check_key (KeyCode.CHAR_W);
+            int xaxis = check_key_raw (KeyCode.CHAR_D) - check_key_raw (KeyCode.CHAR_A);
+            int yaxis = check_key_raw (KeyCode.CHAR_S) - check_key_raw (KeyCode.CHAR_W);
 
-            int rotate = (int)check_key (KeyCode.CHAR_E) - (int)check_key (KeyCode.CHAR_Q);
-            int scale = (int)check_key (KeyCode.CHAR_Z) - (int)check_key (KeyCode.CHAR_X);
+            int rotate = check_key_raw (KeyCode.CHAR_E) - check_key_raw (KeyCode.CHAR_Q);
+            int scale = check_key_raw (KeyCode.CHAR_Z) - check_key_raw (KeyCode.CHAR_X);
 
             if (xaxis != 0 || yaxis != 0) {
                 direction = Vector2.direction ({ 0.0f, 0.0f }, { xaxis, yaxis });

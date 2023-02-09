@@ -6,6 +6,8 @@ namespace Virgil {
         protected Vector2 position;
         protected Vector2 offset;
 
+        protected Vector2 adjusted_offset;
+
         protected Colour _colour;
 
         ~Collider2D () {
@@ -19,12 +21,18 @@ namespace Virgil {
             _colour = Colour.WHITE;
 
             offset = { 0.0f, 0.0f };
+            adjusted_offset = offset;
 
             setup ();
         }
 
         public override void update () {
-            position = Vector2.subtract (object.relative_transform.position, offset);
+            adjusted_offset = Vector2.multiply (offset, object.relative_transform.scale);
+            adjusted_offset = Vector2.abs (adjusted_offset);
+
+            position = Vector2.subtract (object.relative_transform.position, adjusted_offset);
+
+            adjust_collider ();
 
             _colour = Colour.WHITE;
 
@@ -43,5 +51,7 @@ namespace Virgil {
         public virtual bool process_collision (Collider2D collider) { return false; }
 
         public virtual void setup () { }
+
+        public virtual void adjust_collider () { }
     }
 }

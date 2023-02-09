@@ -11,6 +11,7 @@ namespace Virgil {
             Type type = Type.from_instance (this);
 
             name = type.name ();
+            enabled = true;
         }
 
         public virtual void start () { }

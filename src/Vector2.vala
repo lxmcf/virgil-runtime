@@ -1,5 +1,7 @@
 namespace Virgil {
     public struct Vector2 {
+        public const Vector2 ZERO = { 0.0f, 0.0f };
+
         public float x;
         public float y;
 
@@ -9,15 +11,10 @@ namespace Virgil {
             }
         }
 
-        public Vector2 (float x, float y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public Point to_point () {
+        public inline static Vector2 abs (Vector2 vector) {
             return {
-                (int)x,
-                (int)y
+                Math.fabsf (vector.x),
+                Math.fabsf (vector.y)
             };
         }
 

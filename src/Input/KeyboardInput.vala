@@ -6,6 +6,10 @@ namespace Virgil.Input {
         return Raylib.is_key_down ((Raylib.KeyboardKey)keycode);
     }
 
+    public static int check_key_raw (KeyCode keycode) {
+        return (int)Raylib.is_key_down ((Raylib.KeyboardKey)keycode);
+    }
+
     public static bool check_key_released (KeyCode keycode) {
         return Raylib.is_key_released ((Raylib.KeyboardKey)keycode);
     }

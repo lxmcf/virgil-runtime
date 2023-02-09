@@ -34,13 +34,12 @@ namespace Virgil {
         //----------------------------------------------------------------------------------
         internal void update_object () {
             foreach (Component component in _components) {
+                if (!component.enabled) continue;
+
                 component.update ();
             }
 
             update (Raylib.get_frame_time ());
-
-            if (transform.scale.x < 0.0f) transform.scale.x = 0.0f;
-            if (transform.scale.y < 0.0f) transform.scale.y = 0.0f;
 
             relative_transform.position = transform.position;
             relative_transform.rotation = transform.rotation;
@@ -59,6 +58,8 @@ namespace Virgil {
 
         internal void draw_object () {
             foreach (Component component in _components) {
+                if (!component.enabled) continue;
+
                 component.begin_draw ();
             }
 
@@ -71,10 +72,14 @@ namespace Virgil {
             }
 
             foreach (Component component in _components) {
+                if (!component.enabled) continue;
+
                 component.draw ();
             }
 
             foreach (Component component in _components) {
+                if (!component.enabled) continue;
+
                 component.end_draw ();
             }
         }
@@ -112,6 +117,27 @@ namespace Virgil {
             component.start ();
 
             _components.append (component);
+        }
+
+        public T add_component_return <T> (owned Component component) {
+            Type desired_component = Type.from_instance (component);
+
+            foreach (Component item in _components) {
+                Type current_component = Type.from_instance (item);
+
+                if (current_component == desired_component) {
+                    warning ("Component of type %s already added to GameObject!", current_component.name ());
+
+                    return item;
+                }
+            }
+
+            component.object = this;
+            component.start ();
+
+            _components.append (component);
+
+            return component;
         }
 
         //  NOTE: Really want this to be the final API, unsure how to work it in vala without inheriting GLib.Object

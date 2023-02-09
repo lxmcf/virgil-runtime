@@ -58,7 +58,6 @@ project_source = files (
     'src/RenderTexture.vala',
     'src/Shapes.vala',
     'src/Surface2D.vala',
-    'src/Point.vala',
     'src/Game.vala',
 
     # PUBLIC COMPONENTS
