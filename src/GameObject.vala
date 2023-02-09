@@ -39,6 +39,9 @@ namespace Virgil {
 
             update (Raylib.get_frame_time ());
 
+            if (transform.scale.x < 0.0f) transform.scale.x = 0.0f;
+            if (transform.scale.y < 0.0f) transform.scale.y = 0.0f;
+
             relative_transform.position = transform.position;
             relative_transform.rotation = transform.rotation;
             relative_transform.scale = transform.scale;

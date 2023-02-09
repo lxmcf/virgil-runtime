@@ -11,13 +11,19 @@ namespace Virgil {
                 case "VirgilRectangleCollider2D":
                     RectangleCollider2D rectangle = (RectangleCollider2D)collider;
 
-                    return Raylib.check_collision_circle_rectangle ({ position.x, position.y }, radius, { rectangle.position.x, rectangle.position.y, rectangle.width, rectangle.height });
+                    return Raylib.check_collision_circle_rectangle (
+                        { position.x, position.y }, radius,                                                 // Circle
+                        { rectangle.position.x, rectangle.position.y, rectangle.size.x, rectangle.size.y }  // Rectangle
+                    );
 
 
                 case "VirgilCircleCollider2D":
                     CircleCollider2D circle = (CircleCollider2D)collider;
 
-                    return Raylib.check_collision_circles ({ position.x, position.y }, radius, { circle.position.x, circle.position.y }, circle.radius);
+                    return Raylib.check_collision_circles (
+                        { position.x, position.y }, radius,
+                        { circle.position.x, circle.position.y }, circle.radius
+                    );
             }
 
             return false;

@@ -13,17 +13,16 @@ namespace Virgil {
 
             Vector2 position = object.relative_transform.position;
 
-            Rectangle destination = {
-                position.x,
-                position.y,
-                (_texture.width * object.relative_transform.scale.x),
-                (_texture.height * object.relative_transform.scale.y)
-            };
+            Vector2 adjusted_origin = Vector2.multiply (_texture.origin, object.relative_transform.scale);
+            float adjusted_width = _texture.width * object.relative_transform.scale.x;
+            float adjusted_height = _texture.height * object.relative_transform.scale.y;
+
+            Rectangle destination = { position.x, position.y, adjusted_width, adjusted_height };
 
             _texture.draw_ext (
                 _texture.get_rectangle (),
                 destination,
-                { _texture.origin.x, _texture.origin.y },
+                adjusted_origin,
                 object.relative_transform.rotation,
                 _colour
             );
