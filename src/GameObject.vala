@@ -7,11 +7,10 @@ namespace Virgil {
 
         private GameObject? _parent;
 
-        //  TODO: Move this to a matrix instead
         public Transform transform;
         public Transform relative_transform { get; private set; }
 
-        public string name;
+        public string name { get; private set; }
         public bool enabled;
 
         public GameObject () {
@@ -41,14 +40,14 @@ namespace Virgil {
 
             update (Raylib.get_frame_time ());
 
-            relative_transform.position = transform.position;
-            relative_transform.rotation = transform.rotation;
-            relative_transform.scale = transform.scale;
-
             if (_parent != null) {
                 relative_transform.position = get_relative_position ();
                 relative_transform.rotation = get_relative_rotation ();
                 relative_transform.scale = get_relative_scale ();
+            } else {
+                relative_transform.position = transform.position;
+                relative_transform.rotation = transform.rotation;
+                relative_transform.scale = transform.scale;
             }
 
             foreach (GameObject child in _children) {
@@ -68,7 +67,7 @@ namespace Virgil {
             foreach (GameObject child in _children) {
                 child.draw_object ();
 
-                draw_line (get_relative_position (), child.get_relative_position ());
+                //  draw_line (get_relative_position (), child.get_relative_position ());
             }
 
             foreach (Component component in _components) {
@@ -82,6 +81,37 @@ namespace Virgil {
 
                 component.end_draw ();
             }
+        }
+
+        internal Vector2 get_relative_position () {
+            Vector2 position = transform.position;
+
+            if (_parent != null) {
+                position = Vector2.rotate (position, get_relative_rotation () - transform.rotation);
+                position = Vector2.add (position, _parent.get_relative_position ());
+            }
+
+            return position;
+        }
+
+        internal float get_relative_rotation () {
+            float rotation = transform.rotation;
+
+            if (_parent != null) {
+                rotation += _parent.get_relative_rotation ();
+            }
+
+            return rotation % 360;
+        }
+
+        internal Vector2 get_relative_scale () {
+            Vector2 scale = transform.scale;
+
+            if (_parent != null) {
+                scale = Vector2.multiply (scale, _parent.get_relative_scale ());
+            }
+
+            return scale;
         }
 
         //  NOTE: API NOT FINAL
@@ -177,37 +207,6 @@ namespace Virgil {
             }
 
             return (root_parent == null) ? this : root_parent;
-        }
-
-        internal Vector2 get_relative_position () {
-            Vector2 position = transform.position;
-
-            if (_parent != null) {
-                position = Vector2.rotate (position, get_relative_rotation () - transform.rotation);
-                position = Vector2.add (position, _parent.get_relative_position ());
-            }
-
-            return position;
-        }
-
-        internal float get_relative_rotation () {
-            float rotation = transform.rotation;
-
-            if (_parent != null) {
-                rotation += _parent.get_relative_rotation ();
-            }
-
-            return rotation % 360;
-        }
-
-        internal Vector2 get_relative_scale () {
-            Vector2 scale = transform.scale;
-
-            if (_parent != null) {
-                scale = Vector2.multiply (scale, _parent.get_relative_scale ());
-            }
-
-            return scale;
         }
     }
 }
