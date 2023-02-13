@@ -23,7 +23,7 @@ namespace Virgil {
             };
         }
 
-        public void unload () {
+        ~Texture2D () {
             Raylib.unload_texture (_texture);
         }
 
@@ -52,6 +52,10 @@ namespace Virgil {
 
         public void set_origin (float x, float y) {
             origin = { x, y };
+        }
+
+        internal Raylib.Texture2D get_raylib_target () {
+            return _texture;
         }
     }
 }

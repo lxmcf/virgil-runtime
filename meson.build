@@ -3,9 +3,6 @@ project (
     version: '1.0.0',
 )
 
-# Build defines
-export_plugins = false
-
 # Variables
 source_dir = meson.current_source_dir ()
 vapi_dir = source_dir / 'vapi'
@@ -46,6 +43,7 @@ project_source = files (
     'src/Input/MouseInput.vala',
 
     'src/Graphics/Shader.vala',
+    'src/Graphics/ShaderDataType.vala',
     'src/Graphics/Font.vala',
 
     'src/GameObject.vala',
@@ -72,8 +70,6 @@ project_source = files (
     'src/Runtime/GameLoader.vala',
     'src/Runtime/Main.vala',
 )
-
-warning (source_dir / operating_system)
 
 project_dependency = [
     dependency ('gobject-2.0'),
@@ -102,7 +98,7 @@ temp_lib = executable (
 
 # HACK: Intellisense for the sandbox
 # NOTE: Need to run ninja twice to get here, maybe move to subproject
-# if (import ('fs').is_file ('build/virgil.vapi'))
+if (import ('fs').is_file ('build/virgil.vapi'))
     shared_module (
         'game',
 
@@ -119,4 +115,4 @@ temp_lib = executable (
             dependency ('gmodule-2.0'), # Will include GLIB
         ]
     )
-# endif
+endif

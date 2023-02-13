@@ -14,6 +14,10 @@ namespace Virgil {
             _render_texture = Raylib.load_render_texture (width, height);
         }
 
+        ~RenderTexture () {
+            Raylib.unload_render_texture (_render_texture);
+        }
+
         public void set_target () {
             Raylib.begin_texture_mode (_render_texture);
         }

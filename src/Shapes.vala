@@ -1,6 +1,3 @@
-//  { colour.r, colour.g, colour.b, colour.a }
-//  Colour colour = Colour.WHITE
-
 namespace Virgil {
     public static void draw_pixel (Vector2 position, Colour colour = Colour.WHITE) {
         Raylib.draw_pixel_vector (

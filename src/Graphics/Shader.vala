@@ -54,16 +54,37 @@ namespace Virgil.Graphics {
             Raylib.unload_shader (_shader);
         }
 
-        public void begin () {
+        public void set_target () {
             if (_shader == null) return;
 
             Raylib.begin_shader_mode (_shader);
         }
 
-        public void end () {
+        public void reset_target () {
             if (_shader == null) return;
 
             Raylib.end_shader_mode ();
+        }
+
+        public int get_uniform_location (string uniform) {
+            return Raylib.get_shader_location (_shader, uniform);
+        }
+
+        public int get_attribute_location (string attribute) {
+            return Raylib.get_shader_location_attribute (_shader, attribute);
+        }
+
+        //  TODO: Change syntax to be set_value<T> (int location, T value);
+        public void set_value (int location, void* value, ShaderDataType type) {
+            Raylib.set_shader_value (_shader, location, value, (Raylib.ShaderUniformDataType)type);
+        }
+
+        public void set_value_array (int location, void* value, ShaderDataType type, int count) {
+            Raylib.set_shader_value_vector (_shader, location, value, (Raylib.ShaderUniformDataType)type, count);
+        }
+
+        public void set_texture (int location, Texture2D texture) {
+            Raylib.set_shader_value_texture (_shader, location, texture.get_raylib_target ());
         }
     }
 }

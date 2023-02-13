@@ -1,4 +1,5 @@
 namespace Virgil {
+    //  TODO: Replace functions with raymath
     public struct Vector2 {
         public const Vector2 ZERO = { 0.0f, 0.0f };
 

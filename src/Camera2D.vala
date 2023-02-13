@@ -21,11 +21,6 @@ namespace Virgil {
                 _camera.target.x = _target.relative_transform.position.x;
                 _camera.target.y = _target.relative_transform.position.y;
             }
-
-            _camera.zoom += Input.get_mouse_scroll () * 0.05f;
-
-            if (_camera.zoom > 3.0f) _camera.zoom = 3.0f;
-            else if (_camera.zoom < 0.1f) _camera.zoom = 0.1f;
         }
 
         public override void begin_draw () {
@@ -46,6 +41,10 @@ namespace Virgil {
 
         public void set_zoom (float zoom) {
             _camera.zoom = zoom;
+        }
+
+        public float get_zoom () {
+            return _camera.zoom;
         }
     }
 }

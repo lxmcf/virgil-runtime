@@ -66,8 +66,6 @@ namespace Virgil {
 
             foreach (GameObject child in _children) {
                 child.draw_object ();
-
-                //  draw_line (get_relative_position (), child.get_relative_position ());
             }
 
             foreach (Component component in _components) {
