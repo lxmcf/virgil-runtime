@@ -1,13 +1,12 @@
-using Raylib;
-
 namespace Virgil.Runtime {
     internal static int main (string[] args) {
-        set_trace_log_level (Raylib.TraceLogLevel.ALL);
-        //  set_target_fps (60);
+        Raylib.set_trace_log_level (Raylib.TraceLogLevel.ALL);
 
         Window window = new Window ("Virgil Runtime", 640, 360);
 
         GameLoader current_game = new GameLoader ();
+
+        FontCache.init ();
 
         string game_prefix = "";
 
@@ -29,7 +28,7 @@ namespace Virgil.Runtime {
         current_game.load_content ();
 
         while (!window.should_close () || Game.should_close) {
-            current_game.run (get_frame_time ());
+            current_game.run (Raylib.get_frame_time ());
 
             window.clear ();
 
@@ -39,6 +38,8 @@ namespace Virgil.Runtime {
         }
 
         current_game.unload_content ();
+
+        FontCache.clear ();
 
         window.close ();
 

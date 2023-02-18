@@ -46,6 +46,9 @@ project_source = files (
     'src/Graphics/ShaderDataType.vala',
     'src/Graphics/Font.vala',
 
+    # 'src/Audio/Sound.vala',
+    # 'src/Audio/Music.vala',
+
     'src/GameObject.vala',
     'src/Component.vala',
     'src/Vector2.vala',
@@ -67,6 +70,8 @@ project_source = files (
 
     # RUNTIME API
     'src/Runtime/Window.vala',
+    'src/Runtime/FontCache.vala',
+    'src/Runtime/SoundCache.vala',
     'src/Runtime/GameLoader.vala',
     'src/Runtime/Main.vala',
 )

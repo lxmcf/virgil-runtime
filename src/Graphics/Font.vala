@@ -1,35 +1,52 @@
+using Virgil.Runtime;
+
 namespace Virgil.Graphics {
     public class Font {
-        private Raylib.Font _font;
+        private unowned Raylib.Font _font;
+        private string _file;
 
         public float size;
         public float spacing;
 
         public Font (string filename) {
-            _font = Raylib.load_font (filename);
+            Raylib.Font font = Raylib.load_font (filename);
+            _file = filename;
 
-            size = (float)_font.baseSize;
+            this.size = (float)font.baseSize;
             spacing = 2.0f;
 
-            Raylib.set_texture_filter (_font.texture, Raylib.TextureFilter.POINT);
+            Raylib.set_texture_filter (font.texture, Raylib.TextureFilter.POINT);
+
+            _font = FontCache.register (font);
         }
 
         public Font.from_ttf (string filename, int size) {
             int[] characters = { };
 
             //  Load default character set
-            _font = Raylib.load_font_ext (filename, size, characters);
+            Raylib.Font font = Raylib.load_font_ext (filename, size, characters);
+            _file = filename;
 
             this.size = (float)size;
             spacing = 2.0f;
+
+            Raylib.set_texture_filter (font.texture, Raylib.TextureFilter.POINT);
+
+            _font = FontCache.register (font);
         }
 
-        ~Font () {
-            Raylib.unload_font (_font);
+        public Vector2 get_text_size (string text) {
+            return get_text_size_ext (text, (int)size);
+        }
+
+        public Vector2 get_text_size_ext (string text, int size) {
+            Raylib.Vector2 text_size = Raylib.measure_text_ext (_font, text, (float)size, spacing);
+
+            return { text_size.x, text_size.y };
         }
 
         public void draw_text (string text, Vector2 position, Colour colour = Colour.WHITE) {
-            Raylib.draw_text_ext (_font, text, { position.x, position.y }, size, spacing, Raylib.RED);
+            Raylib.draw_text_ext (_font, text, { position.x, position.y }, size, spacing, { colour.r, colour.g, colour.b, colour.a });
         }
     }
 }

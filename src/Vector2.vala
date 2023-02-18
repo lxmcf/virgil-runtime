@@ -2,6 +2,7 @@ namespace Virgil {
     //  TODO: Replace functions with raymath
     public struct Vector2 {
         public const Vector2 ZERO = { 0.0f, 0.0f };
+        public const Vector2 ONE = { 1.0f, 1.0f };
 
         public float x;
         public float y;
@@ -17,6 +18,21 @@ namespace Virgil {
                 Math.fabsf (vector.x),
                 Math.fabsf (vector.y)
             };
+        }
+
+        public inline static Vector2 normalise (Vector2 vector) {
+            float length = vector.length;
+
+            if (length > 0) {
+                float adjusted_length = 1.0f / length;
+
+                return {
+                    vector.x * adjusted_length,
+                    vector.y * adjusted_length
+                };
+            }
+
+            return Vector2.ZERO;
         }
 
         public inline static Vector2 subtract (Vector2 vector1, Vector2 vector2) {

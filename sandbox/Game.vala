@@ -1,10 +1,14 @@
 using Virgil;
 using Virgil.Input;
 using Virgil.Graphics;
+using Virgil.Audio;
 
 namespace Sandbox {
     public class TestGame : Game {
         float direction;
+
+        Font test_font;
+        //  Sound sound;
 
         public override void start () {
             root.add_component (new TextureRenderer ());
@@ -15,6 +19,9 @@ namespace Sandbox {
 
             root.transform.position = { 32.0f, 32.0f };
             root.add_child (new Player ());
+
+            test_font = new Font.from_ttf ("data/font.ttf", 16);
+            //  sound = new Sound ("data/sound.ogg");
         }
 
         public override void update (float delta_time) {
@@ -38,10 +45,14 @@ namespace Sandbox {
                 root.transform.scale.x += (5.0f * delta_time) * scale;
                 root.transform.scale.y += (5.0f * delta_time) * scale;
             }
+
+            if (check_key_pressed (KeyCode.BACKSPACE)) {
+                //  sound.play ();
+            }
         }
 
         public override void draw () {
-
+            test_font.draw_text ("Hello world!", Vector2.ZERO);
         }
     }
 }

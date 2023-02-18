@@ -5,10 +5,13 @@ namespace Virgil.Runtime {
     internal class Window {
         public Window (string title, int width, int height) {
             init_window (width, height, title);
+
+            init_audio_device ();
         }
 
         public void close () {
             close_window ();
+            close_audio_device ();
         }
 
         public void clear () {
