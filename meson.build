@@ -46,8 +46,8 @@ project_source = files (
     'src/Graphics/ShaderDataType.vala',
     'src/Graphics/Font.vala',
 
-    # 'src/Audio/Sound.vala',
-    # 'src/Audio/Music.vala',
+    'src/Audio/Sound.vala',
+    'src/Audio/Music.vala',
 
     'src/GameObject.vala',
     'src/Component.vala',
@@ -98,12 +98,15 @@ temp_lib = executable (
     export_dynamic: true,
 
     vala_header: 'virgil.h',
-    vala_vapi: 'virgil.vapi'
+    vala_vapi: 'virgil.vapi',
+
+    install : true,
+    install_dir : meson.current_source_dir ()
 )
 
 # HACK: Intellisense for the sandbox
 # NOTE: Need to run ninja twice to get here, maybe move to subproject
-if (import ('fs').is_file ('build/virgil.vapi'))
+# if (import ('fs').is_file ('build/virgil.vapi'))
     shared_module (
         'game',
 
@@ -113,11 +116,13 @@ if (import ('fs').is_file ('build/virgil.vapi'))
             'sandbox/Box.vala'
         ),
 
+        link_with: temp_lib,
         name_prefix: '',
 
         dependencies: [
-            valac.find_library ('virgil', dirs: meson.current_source_dir () / 'build'),
+            # valac.find_library ('virgil', dirs: meson.current_source_dir () / 'build'),
+            dependency ('gobject-2.0'),
             dependency ('gmodule-2.0'), # Will include GLIB
         ]
     )
-endif
+# endif
