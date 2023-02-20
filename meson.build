@@ -10,7 +10,7 @@ operating_system = build_machine.system ()
 
 # Build variables
 project_source = []
-project_dependency = []
+project_dependencies = []
 project_include = []
 
 # Compilers
@@ -19,7 +19,8 @@ cc = meson.get_compiler ('c')
 
 # Compiler arguments
 valac_arguments = [
-    '--vapidir', vapi_dir
+    '--vapidir', vapi_dir,
+    # '--profile', 'posix'
 ]
 
 cc_arguments = [ ]
@@ -71,12 +72,12 @@ project_source = files (
     # RUNTIME API
     'src/Runtime/Window.vala',
     'src/Runtime/FontCache.vala',
-    'src/Runtime/SoundCache.vala',
+    'src/Runtime/AudioCache.vala',
     'src/Runtime/GameLoader.vala',
     'src/Runtime/Main.vala',
 )
 
-project_dependency = [
+project_dependencies = [
     dependency ('gobject-2.0'),
     dependency ('gmodule-2.0'), # Will include GLIB
 
@@ -86,43 +87,42 @@ project_dependency = [
     cc.find_library ('raylib')
 ]
 
-temp_lib = executable (
+project_lib = executable (
     meson.project_name (),
 
     project_source,
 
     dependencies: [
-        project_dependency
+        project_dependencies
     ],
 
     export_dynamic: true,
 
     vala_header: 'virgil.h',
     vala_vapi: 'virgil.vapi',
-
-    install : true,
-    install_dir : meson.current_source_dir ()
 )
 
-# HACK: Intellisense for the sandbox
-# NOTE: Need to run ninja twice to get here, maybe move to subproject
-# if (import ('fs').is_file ('build/virgil.vapi'))
-    shared_module (
-        'game',
+project_dependency = declare_dependency (
+    link_with: project_lib, # Only needed for windows
 
-        files (
-            'sandbox/Game.vala',
-            'sandbox/Player.vala',
-            'sandbox/Box.vala'
-        ),
+    dependencies: [
+        dependency ('gmodule-2.0'), # Will include GLIB
 
-        link_with: temp_lib,
-        name_prefix: '',
+        # Used for syntax highlighting using VLS in the sandbox, not required
+        valac.find_library ('virgil', dirs: meson.current_source_dir () / 'build', required: false)
+    ]
+)
 
-        dependencies: [
-            # valac.find_library ('virgil', dirs: meson.current_source_dir () / 'build'),
-            dependency ('gobject-2.0'),
-            dependency ('gmodule-2.0'), # Will include GLIB
-        ]
-    )
-# endif
+shared_module (
+    'game',
+
+    files (
+        'sandbox/Game.vala',
+        'sandbox/Player.vala',
+        'sandbox/Box.vala',
+    ),
+
+    name_prefix: '',
+
+    dependencies: project_dependency
+)

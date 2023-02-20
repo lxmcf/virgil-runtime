@@ -7,6 +7,7 @@ namespace Virgil.Runtime {
         GameLoader current_game = new GameLoader ();
 
         FontCache.init ();
+        AudioCache.init ();
 
         string game_prefix = "";
 
@@ -40,6 +41,7 @@ namespace Virgil.Runtime {
         current_game.unload_content ();
 
         FontCache.clear ();
+        AudioCache.clear ();
 
         window.close ();
 

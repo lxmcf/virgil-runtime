@@ -2284,7 +2284,7 @@ namespace Raylib {
     public static Music load_music_stream_from_memory (string file_type, uchar[] data);
 
     [CCode (cname = "UnloadMusicStream")]
-    public static void unload_usic_stream (Music music);
+    public static void unload_music_stream (Music music);
 
     [CCode (cname = "PlayMusicStream")]
     public static void play_music_stream (Music music);
