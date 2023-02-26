@@ -21,6 +21,7 @@ Virgil is the result of 'if it ain't broken, break it and reinvent the wheel lma
 ---
 
 - `raylib`
+- `glib-2.0`
 
 Virgil uses very minimal depencies and due to being base on Raylib; has no runtime dependencies!
 
@@ -32,13 +33,18 @@ To install raylib, follow the instructions [HERE](https://www.raylib.com/) then 
 
 Compiling will output the main runtime executable as well as the C header and Vala VAPI for game module development, you can follow the below steps on any supported platform to build Virgil:
 
-```bash
-meson build
+```powershell
+meson setup build
+meson compile -C build
 
-cd build
+# This will compile the engine and sandbox
+build/virgil --test-build
+```
 
-ninja && ./virgil
+Alternatively you can simply run:
 
+```powershell
+./build.sh
 ```
 
 Congratulations! you shoud now see the 'sandbox' application and are well on your way to game development!

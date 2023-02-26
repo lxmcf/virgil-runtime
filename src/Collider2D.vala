@@ -7,8 +7,10 @@ namespace Virgil {
         protected Vector2 offset;
 
         protected Vector2 adjusted_offset;
+        protected ColliderShape2D shape;
 
-        protected Colour _colour;
+        // Remove on main builds
+        protected Colour debug_colour;
 
         ~Collider2D () {
             _active_colliders.remove (this);
@@ -18,10 +20,11 @@ namespace Virgil {
             id = _active_colliders.length ();
             _active_colliders.append (this);
 
-            _colour = Colour.WHITE;
-
             offset = { 0.0f, 0.0f };
             adjusted_offset = offset;
+
+            shape = ColliderShape2D.NULL;
+            debug_colour = Colour.WHITE;
 
             setup ();
         }
@@ -31,10 +34,9 @@ namespace Virgil {
             adjusted_offset = Vector2.abs (adjusted_offset);
 
             position = Vector2.subtract (object.relative_transform.position, adjusted_offset);
+            debug_colour = Colour.WHITE;
 
             adjust_collider ();
-
-            _colour = Colour.WHITE;
 
             foreach (Collider2D collider in _active_colliders) {
                 if (id == collider.id) continue;
@@ -42,7 +44,7 @@ namespace Virgil {
                 if (process_collision (collider)) {
                     object.collide_2D (collider);
 
-                    _colour = Colour.RED;
+                    debug_colour = Colour.RED;
                 }
             }
         }

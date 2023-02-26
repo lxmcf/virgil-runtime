@@ -13,12 +13,13 @@ namespace Virgil {
                 size.x / 2.0f,
                 size.y / 2.0f
             };
+
+            shape = ColliderShape2D.RECTANGLE;
         }
 
         public override bool process_collision (Collider2D collider) {
-            //  TODO: Remove strings and replace with enums
-            switch (collider.name) {
-                case "VirgilRectangleCollider2D":
+            switch (collider.shape) {
+                case ColliderShape2D.RECTANGLE:
                     RectangleCollider2D rectangle = (RectangleCollider2D)collider;
 
                     return Raylib.check_collision_rectangles (
@@ -26,13 +27,16 @@ namespace Virgil {
                         { position.x, position.y, adjusted_size.x, adjusted_size.y }
                     );
 
-                case "VirgilCircleCollider2D":
+                case ColliderShape2D.CIRCLE:
                     CircleCollider2D circle = (CircleCollider2D)collider;
 
                     return Raylib.check_collision_circle_rectangle (
                         { circle.position.x, circle.position.y }, circle.adjusted_radius,   // Cirle
                         { position.x, position.y, adjusted_size.x, adjusted_size.y }        // Rectangle
                     );
+
+                default:
+                    break;
             }
 
             return false;
@@ -44,7 +48,7 @@ namespace Virgil {
         }
 
         public override void draw () {
-            draw_rectangle_outline ({ position.x, position.y, adjusted_size.x, adjusted_size.y }, _colour);
+            draw_rectangle_outline ({ position.x, position.y, adjusted_size.x, adjusted_size.y }, debug_colour);
         }
     }
 }

@@ -6,26 +6,31 @@ namespace Virgil {
         public override void setup () {
             radius = 32.0f;
             adjusted_radius = radius;
+
+            shape = ColliderShape2D.CIRCLE;
         }
 
         public override bool process_collision (Collider2D collider) {
-            switch (collider.name) {
-                case "VirgilRectangleCollider2D":
+            switch (collider.shape) {
+                case ColliderShape2D.RECTANGLE:
                     RectangleCollider2D rectangle = (RectangleCollider2D)collider;
 
                     return Raylib.check_collision_circle_rectangle (
-                        { position.x, position.y }, adjusted_radius,                                                                     // Circle
-                        { rectangle.position.x, rectangle.position.y, rectangle.adjusted_size.x, rectangle.adjusted_size.y }    // Rectangle
+                        { position.x, position.y }, adjusted_radius,
+                        { rectangle.position.x, rectangle.position.y, rectangle.adjusted_size.x, rectangle.adjusted_size.y }
                     );
 
 
-                case "VirgilCircleCollider2D":
+                case ColliderShape2D.CIRCLE:
                     CircleCollider2D circle = (CircleCollider2D)collider;
 
                     return Raylib.check_collision_circles (
                         { position.x, position.y }, adjusted_radius,
                         { circle.position.x, circle.position.y }, circle.adjusted_radius
                     );
+
+                default:
+                    break;
             }
 
             return false;
@@ -36,7 +41,7 @@ namespace Virgil {
         }
 
         public override void draw () {
-            draw_circle_outline (position, adjusted_radius, _colour);
+            draw_circle_outline (position, radius, debug_colour);
         }
     }
 }

@@ -1,5 +1,4 @@
 namespace Virgil {
-    //  TODO: Replace functions with raymath
     public struct Vector2 {
         public const Vector2 ZERO = { 0.0f, 0.0f };
         public const Vector2 ONE = { 1.0f, 1.0f };
@@ -35,6 +34,17 @@ namespace Virgil {
             return Vector2.ZERO;
         }
 
+        //----------------------------------------------------------------------------------
+        // Vector based manipulation
+        //----------------------------------------------------------------------------------
+
+        public inline static Vector2 add (Vector2 vector1, Vector2 vector2) {
+            return {
+                vector1.x += vector2.x,
+                vector1.y += vector2.y
+            };
+        }
+
         public inline static Vector2 subtract (Vector2 vector1, Vector2 vector2) {
             return {
                 vector1.x -= vector2.x,
@@ -56,12 +66,41 @@ namespace Virgil {
             };
         }
 
-        public inline static Vector2 add (Vector2 vector1, Vector2 vector2) {
+        //----------------------------------------------------------------------------------
+        // Value based manipulation
+        //----------------------------------------------------------------------------------
+
+        public inline static Vector2 add_value (Vector2 vector, float value) {
             return {
-                vector1.x += vector2.x,
-                vector1.y += vector2.y
+                vector.x += value,
+                vector.y += value
             };
         }
+
+        public inline static Vector2 subtract_value (Vector2 vector1, float value) {
+            return {
+                vector1.x -= value,
+                vector1.y -= value
+            };
+        }
+
+        public inline static Vector2 multiply_value (Vector2 vector1, float value) {
+            return {
+                vector1.x *= value,
+                vector1.y *= value
+            };
+        }
+
+        public inline static Vector2 divide_value (Vector2 vector1, float value) {
+            return {
+                vector1.x /= value,
+                vector1.y /= value
+            };
+        }
+
+        //----------------------------------------------------------------------------------
+        // Vectr based math
+        //----------------------------------------------------------------------------------
 
         public inline static Vector2 rotate (Vector2 vector, float degrees) {
             float sin = Math.sinf (degrees * Raylib.DEG2RAD);

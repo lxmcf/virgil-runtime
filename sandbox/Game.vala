@@ -12,7 +12,7 @@ namespace Sandbox {
 
         public override void start () {
             root.add_component (new TextureRenderer ());
-            root.add_component (new RectangleCollider2D ());
+            root.add_component (new CircleCollider2D ());
 
             TextureRenderer tr = root.get_component<TextureRenderer> ();
             tr.set_texture (new Texture2D ("data/sprites/test_square.png"));
@@ -57,6 +57,7 @@ namespace Sandbox {
     }
 }
 
+//  TODO: Need to wrap 'Module' into Virgil to remove need for gmodule dependency
 [ModuleInit]
 public Type register_game (Module module) {
     return typeof (Sandbox.TestGame);

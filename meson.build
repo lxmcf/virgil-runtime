@@ -19,8 +19,7 @@ cc = meson.get_compiler ('c')
 
 # Compiler arguments
 valac_arguments = [
-    '--vapidir', vapi_dir,
-    # '--profile', 'posix'
+    '--vapidir=' + vapi_dir
 ]
 
 cc_arguments = [ ]
@@ -64,6 +63,7 @@ project_source = files (
 
     # PUBLIC COMPONENTS
     'src/Camera2D.vala',
+    'src/ColliderShape2D.vala',
     'src/TextureRenderer.vala',
     'src/Collider2D.vala',
     'src/CircleCollider2D.vala',
@@ -108,7 +108,7 @@ project_dependency = declare_dependency (
     dependencies: [
         dependency ('gmodule-2.0'), # Will include GLIB
 
-        # Used for syntax highlighting using VLS in the sandbox, not required
+        # Used for syntax highlighting using VLS in the sandbox, not required and will be skipped
         valac.find_library ('virgil', dirs: meson.current_source_dir () / 'build', required: false)
     ]
 )
