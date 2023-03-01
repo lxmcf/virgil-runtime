@@ -12,10 +12,10 @@ namespace Sandbox {
 
             transform.translate ({ 128.0f, 0.0f });
 
-            add_component (new TextureRenderer ());
+            add_component (new TextureRenderer2D ());
             add_component (new RectangleCollider2D ());
 
-            TextureRenderer tr = get_component<TextureRenderer> ();
+            TextureRenderer2D tr = get_component<TextureRenderer2D> ();
             tr.set_texture (new Texture2D ("data/sprites/test_square.png"));
 
             add_child (new Box ());

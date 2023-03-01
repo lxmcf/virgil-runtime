@@ -56,6 +56,7 @@ project_source = files (
     'src/Colour.vala',
     'src/Transform.vala',
     'src/Texture2D.vala',
+    'src/TextureAnimation2D.vala',
     'src/RenderTexture.vala',
     'src/Shapes.vala',
     'src/Surface2D.vala',
@@ -64,7 +65,7 @@ project_source = files (
     # PUBLIC COMPONENTS
     'src/Camera2D.vala',
     'src/ColliderShape2D.vala',
-    'src/TextureRenderer.vala',
+    'src/TextureRenderer2D.vala',
     'src/Collider2D.vala',
     'src/CircleCollider2D.vala',
     'src/RectangleCollider2D.vala',
@@ -106,6 +107,7 @@ project_dependency = declare_dependency (
     link_with: project_lib, # Only needed for windows
 
     dependencies: [
+        dependency ('gobject-2.0'),
         dependency ('gmodule-2.0'), # Will include GLIB
 
         # Used for syntax highlighting using VLS in the sandbox, not required and will be skipped

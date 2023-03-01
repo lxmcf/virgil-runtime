@@ -11,10 +11,10 @@ namespace Sandbox {
         Sound test_sound;
 
         public override void start () {
-            root.add_component (new TextureRenderer ());
+            root.add_component (new TextureRenderer2D ());
             root.add_component (new CircleCollider2D ());
 
-            TextureRenderer tr = root.get_component<TextureRenderer> ();
+            TextureRenderer2D tr = root.get_component<TextureRenderer2D> ();
             tr.set_texture (new Texture2D ("data/sprites/test_square.png"));
 
             root.transform.position = { 32.0f, 32.0f };

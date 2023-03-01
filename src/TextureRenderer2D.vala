@@ -1,10 +1,13 @@
 namespace Virgil {
-    public class TextureRenderer : Component {
+    public class TextureRenderer2D : Component {
         private Texture2D? _texture;
+
         private Colour _colour;
 
         public override void start () {
             _colour = Colour.WHITE;
+
+            //  TODO: Remove null from the equation and move to 'defaults'
             _texture = null;
         }
 

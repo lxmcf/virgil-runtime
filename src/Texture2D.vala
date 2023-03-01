@@ -27,11 +27,7 @@ namespace Virgil {
             Raylib.unload_texture (_texture);
         }
 
-        public void draw (Vector2 position) {
-            Raylib.draw_texture_vector (_texture, { position.x - origin.x, position.y - origin.y }, Raylib.WHITE);
-        }
-
-        public void draw_tint (Vector2 position, Colour colour) {
+        public void draw (Vector2 position, Colour colour = Colour.WHITE) {
             Raylib.draw_texture_vector (_texture, { position.x - origin.x, position.y - origin.y }, { colour.r, colour.g, colour.b, colour.a });
         }
 
