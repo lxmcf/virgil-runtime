@@ -37,7 +37,7 @@ namespace Virgil {
                 destination.height = _texture.height * object.relative_transform.scale.y;
             } else {
                 source = _animation.get_current_frame_rectange ();
-                origin = Vector2.multiply (_animation.get_pivot (), object.relative_transform.scale);
+                origin = Vector2.multiply (_animation.origin, object.relative_transform.scale);
 
                 destination = _animation.get_current_frame_rectange ();
                 destination.x = position.x;

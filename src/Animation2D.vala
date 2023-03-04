@@ -4,17 +4,17 @@ namespace Virgil {
         private float _current_frame;
         private float _speed;
 
-        private Vector2 _pivot;
+        public Vector2 origin;
 
         public int frame_count {
             get { return _frames.length; }
         }
 
-        public Animation2D (Rectangle[] frames, Vector2 pivot, float speed = 10.0f) {
+        public Animation2D (Rectangle[] frames, float speed = 10.0f) {
             _frames = frames;
             _speed = speed;
 
-            _pivot = pivot;
+            this.origin = { frames[0].width / 2, frames[0].height / 2 };
 
             _current_frame = 0;
         }
@@ -30,7 +30,7 @@ namespace Virgil {
 
             _speed = speed;
 
-            _pivot = { frame_width / 2, frame_height / 2 };
+            origin = { frame_width / 2, frame_height / 2 };
         }
 
         public void play () {
@@ -48,10 +48,6 @@ namespace Virgil {
 
         public void set_speed (float speed) {
             _speed = speed;
-        }
-
-        public Vector2 get_pivot () {
-            return _pivot;
         }
 
         public Rectangle get_current_frame_rectange () {

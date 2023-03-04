@@ -121,7 +121,6 @@ shared_module (
     files (
         'sandbox/Game.vala',
         'sandbox/Player.vala',
-        'sandbox/Box.vala',
     ),
 
     name_prefix: '',

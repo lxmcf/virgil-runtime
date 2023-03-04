@@ -2,6 +2,8 @@ using Virgil.Runtime;
 
 namespace Virgil {
     public class GameObject {
+        public delegate int SortFunction (GameObject object1, GameObject object2);
+
         private List<Component> _components;
         private List<GameObject> _children;
 
@@ -191,6 +193,10 @@ namespace Virgil {
             object.set_parent (this);
 
             return object;
+        }
+
+        public void sort_children (SortFunction sort_function) {
+            _children.sort ((GLib.CompareFunc<GameObject>)sort_function);
         }
 
         public void set_parent (GameObject? object) {
