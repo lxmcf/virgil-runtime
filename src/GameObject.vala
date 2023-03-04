@@ -64,14 +64,14 @@ namespace Virgil {
 
             draw ();
 
-            foreach (GameObject child in _children) {
-                child.draw_object ();
-            }
-
             foreach (Component component in _components) {
                 if (!component.enabled) continue;
 
                 component.draw ();
+            }
+
+            foreach (GameObject child in _children) {
+                child.draw_object ();
             }
 
             foreach (Component component in _components) {

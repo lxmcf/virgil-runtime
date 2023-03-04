@@ -52,10 +52,6 @@ namespace Sandbox {
             if (check_key_pressed (KeyCode.BACKSPACE)) {
                 test_sound.play ();
             }
-
-            Vector2 mouse = get_mouse_position ();
-
-            print ("Mouse: [ %f | %f ]\n", mouse.x, mouse.y);
         }
 
         public override void draw () {

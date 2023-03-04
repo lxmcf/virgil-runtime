@@ -23,38 +23,36 @@ namespace Virgil {
             if (_texture == null) return;
 
             Vector2 position = object.relative_transform.position;
+            Rectangle destination = { position.x, position.y, 0.0f, 0.0f };
+
+            Rectangle source;
+            Vector2 origin;
 
             if (_animation == null) {
-                Vector2 adjusted_origin = Vector2.multiply (_texture.origin, object.relative_transform.scale);
-                float adjusted_width = _texture.width * object.relative_transform.scale.x;
-                float adjusted_height = _texture.height * object.relative_transform.scale.y;
+                source = _texture.get_rectangle ();
 
-                Rectangle destination = { position.x, position.y, adjusted_width, adjusted_height };
+                origin = Vector2.multiply (_texture.origin, object.relative_transform.scale);
 
-                _texture.draw_ext (
-                    _texture.get_rectangle (),
-                    destination,
-                    adjusted_origin,
-                    object.relative_transform.rotation,
-                    _colour
-                );
+                destination.width = _texture.width * object.relative_transform.scale.x;
+                destination.height = _texture.height * object.relative_transform.scale.y;
             } else {
-                Vector2 adjusted_origin = Vector2.multiply (_animation.get_pivot (), object.relative_transform.scale);
+                source = _animation.get_current_frame_rectange ();
+                origin = Vector2.multiply (_animation.get_pivot (), object.relative_transform.scale);
 
-                Rectangle adjusted_target = _animation.get_current_frame_rectange ();
-                adjusted_target.x = position.x;
-                adjusted_target.y = position.y;
+                destination = _animation.get_current_frame_rectange ();
+                destination.x = position.x;
+                destination.y = position.y;
 
-                adjusted_target = Rectangle.scale_vector (adjusted_target, object.relative_transform.scale);
-
-                _texture.draw_ext (
-                    _animation.get_current_frame_rectange (),
-                    adjusted_target,
-                    adjusted_origin,
-                    object.relative_transform.rotation,
-                    _colour
-                );
+                destination = Rectangle.scale_vector (destination, object.relative_transform.scale);
             }
+
+            _texture.draw_ext (
+                source,
+                destination,
+                origin,
+                object.relative_transform.rotation,
+                _colour
+            );
         }
 
         public void set_texture (Texture2D? texture) {
