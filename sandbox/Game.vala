@@ -17,6 +17,9 @@ namespace Sandbox {
             TextureRenderer2D tr = root.get_component<TextureRenderer2D> ();
             tr.set_texture (new Texture2D ("data/sprites/test_square.png"));
 
+            Camera2D camera = root.add_component_return<Camera2D> (new Camera2D ());
+            camera.set_target (root);
+
             root.transform.position = { 32.0f, 32.0f };
             root.add_child (new Player ());
 
@@ -49,6 +52,10 @@ namespace Sandbox {
             if (check_key_pressed (KeyCode.BACKSPACE)) {
                 test_sound.play ();
             }
+
+            Vector2 mouse = get_mouse_position ();
+
+            print ("Mouse: [ %f | %f ]\n", mouse.x, mouse.y);
         }
 
         public override void draw () {

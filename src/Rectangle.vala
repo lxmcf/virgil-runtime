@@ -23,5 +23,17 @@ namespace Virgil {
         public float bottom {
             get { return y + height; }
         }
+
+        public Vector2 center {
+            get { return { x + (width / 2), y + (height / 2) }; }
+        }
+
+        public static Rectangle scale (Rectangle rectangle, float scale) {
+            return { rectangle.x, rectangle.y, rectangle.width * scale, rectangle.height * scale };
+        }
+
+        public static Rectangle scale_vector (Rectangle rectangle, Vector2 scale) {
+            return { rectangle.x, rectangle.y, rectangle.width * scale.x, rectangle.height * scale.y };
+        }
     }
 }

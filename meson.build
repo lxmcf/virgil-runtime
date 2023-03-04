@@ -56,7 +56,7 @@ project_source = files (
     'src/Colour.vala',
     'src/Transform.vala',
     'src/Texture2D.vala',
-    'src/TextureAnimation2D.vala',
+    'src/Animation2D.vala',
     'src/RenderTexture.vala',
     'src/Shapes.vala',
     'src/Surface2D.vala',

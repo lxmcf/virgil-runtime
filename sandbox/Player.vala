@@ -8,6 +8,8 @@ namespace Sandbox {
         float direction;
 
         public override void start () {
+            Texture2D texture = new Texture2D ("data/sprites/walk_down.png");
+            Animation2D animation = new Animation2D.from_texture (texture, 16, 16);
             speed = 200.0f;
 
             transform.translate ({ 128.0f, 0.0f });
@@ -16,7 +18,8 @@ namespace Sandbox {
             add_component (new RectangleCollider2D ());
 
             TextureRenderer2D tr = get_component<TextureRenderer2D> ();
-            tr.set_texture (new Texture2D ("data/sprites/test_square.png"));
+            tr.set_texture (texture);
+            tr.set_animation (animation);
 
             add_child (new Box ());
         }
