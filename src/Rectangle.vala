@@ -1,4 +1,5 @@
 namespace Virgil {
+    [SimpleType]
     public struct Rectangle {
         public const Rectangle SQUARE_32 = { 0.0f, 0.0f, 32.0f, 32.0f };
         public const Rectangle SQUARE_64 = { 0.0f, 0.0f, 64.0f, 64.0f };

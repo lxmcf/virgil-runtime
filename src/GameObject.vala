@@ -27,6 +27,8 @@ namespace Virgil {
             Type type = Type.from_instance (this);
             name = type.name ();
 
+            enabled = true;
+
             start ();
         }
 
@@ -34,6 +36,8 @@ namespace Virgil {
         // Internal API
         //----------------------------------------------------------------------------------
         internal void update_object () {
+            if (!enabled) return;
+
             foreach (Component component in _components) {
                 if (!component.enabled) continue;
 
@@ -58,6 +62,8 @@ namespace Virgil {
         }
 
         internal void draw_object () {
+            if (!enabled) return;
+
             foreach (Component component in _components) {
                 if (!component.enabled) continue;
 
@@ -84,6 +90,8 @@ namespace Virgil {
         }
 
         internal Vector2 get_relative_position () {
+            if (!enabled) return Vector2.ZERO;
+
             Vector2 position = transform.position;
 
             if (_parent != null) {
@@ -95,6 +103,8 @@ namespace Virgil {
         }
 
         internal float get_relative_rotation () {
+            if (!enabled) return 0.0f;
+
             float rotation = transform.rotation;
 
             if (_parent != null) {
@@ -105,6 +115,8 @@ namespace Virgil {
         }
 
         internal Vector2 get_relative_scale () {
+            if (!enabled) return Vector2.ZERO;
+
             Vector2 scale = transform.scale;
 
             if (_parent != null) {

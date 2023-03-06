@@ -1,4 +1,5 @@
 namespace Virgil {
+    [SimpleType]
     public struct Vector2 {
         public const Vector2 ZERO = { 0.0f, 0.0f };
         public const Vector2 ONE = { 1.0f, 1.0f };

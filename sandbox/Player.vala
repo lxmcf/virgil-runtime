@@ -18,11 +18,13 @@ namespace Sandbox {
             TextureRenderer2D tr = add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
             tr.set_texture (texture);
             tr.set_animation (animation);
+
+            transform.translate ({ 320, 180 });
         }
 
         public override void update (float delta_time) {
-            int xaxis = check_key_raw (KeyCode.RIGHT) - check_key_raw (KeyCode.LEFT);
-            int yaxis = check_key_raw (KeyCode.DOWN) - check_key_raw (KeyCode.UP);
+            int xaxis = check_key_raw (KeyCode.CHAR_D) - check_key_raw (KeyCode.CHAR_A);
+            int yaxis = check_key_raw (KeyCode.CHAR_S) - check_key_raw (KeyCode.CHAR_W);
 
             if (xaxis != 0 || yaxis != 0) {
                 float direction = Vector2.direction ({ 0.0f, 0.0f }, { xaxis, yaxis });

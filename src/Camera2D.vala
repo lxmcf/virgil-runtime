@@ -4,16 +4,27 @@ namespace Virgil {
 
         private GameObject? _target;
 
+        public Vector2 offset {
+            get { return { _camera.offset.x, _camera.offset.y }; }
+            set { _camera.offset = { value.x, value.y }; }
+        }
+
+        public Vector2 position {
+            get { return { _camera.target.x, _camera.target.y }; }
+            set { _camera.target = { value.x, value.y }; }
+        }
+
+        public float zoom {
+            get { return _camera.zoom; }
+            set { _camera.zoom = value; }
+        }
+
         public override void start () {
             _camera.rotation = 0.0f;
             _camera.zoom = 1.0f;
             _camera.target = { 0.0f, 0.0f };
 
             _target = object;
-
-            Rectangle window = Game.get_window_rectangle ();
-
-            _camera.offset = { window.width / 2.0f, window.height / 2 };
         }
 
         public override void update () {
@@ -31,20 +42,16 @@ namespace Virgil {
             Raylib.end_mode_2D ();
         }
 
-        public void set_offset (Vector2 offset) {
-            _camera.offset = { offset.x, offset.y };
-        }
-
         public void set_target (GameObject? target) {
             _target = target;
         }
 
-        public void set_zoom (float zoom) {
-            _camera.zoom = zoom;
-        }
+        public Vector2 get_mouse_position () {
+            Vector2 mouse = Input.get_mouse_position ();
 
-        public float get_zoom () {
-            return _camera.zoom;
+            mouse = Vector2.divide_value (mouse, _camera.zoom);
+
+            return Vector2.add (position, mouse);
         }
     }
 }

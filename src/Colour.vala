@@ -1,4 +1,5 @@
 namespace Virgil {
+    [SimpleType]
     public struct Colour {
         public const Colour WHITE = { 255, 255, 255, 255 };
         public const Colour BLACK = { 0, 0, 0, 255 };

@@ -5,8 +5,8 @@ namespace Virgil.Graphics {
         private unowned Raylib.Font _font;
         private string _file;
 
-        public float size;
-        public float spacing;
+        public float size { get; private set; }
+        public float spacing { get; private set; }
 
         public Font (string filename) {
             Raylib.Font font = Raylib.load_font (filename);
