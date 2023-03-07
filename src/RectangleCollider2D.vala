@@ -45,6 +45,8 @@ namespace Virgil {
         public override void adjust_collider () {
             adjusted_size = Vector2.multiply (size, object.relative_transform.scale);
             adjusted_size = Vector2.abs (adjusted_size);
+
+            offset = Vector2.divide_value (size, 2.0f);
         }
 
         public override void draw () {

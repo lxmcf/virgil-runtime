@@ -3,11 +3,11 @@ namespace Virgil {
         private static List<Collider2D> _active_colliders = new List<Collider2D> ();
         private uint id;
 
-        protected Vector2 position;
-        protected Vector2 offset;
+        public Vector2 position;
+        public Vector2 offset;
 
-        protected Vector2 adjusted_offset;
-        protected ColliderShape2D shape;
+        public Vector2 adjusted_offset;
+        public ColliderShape2D shape;
 
         // Remove on main builds
         protected Colour debug_colour;

@@ -29,7 +29,19 @@ namespace Virgil {
             }
 
             _speed = speed;
+            origin = { frame_width / 2, frame_height / 2 };
+        }
 
+        public Animation2D.from_rectangle (Rectangle bounds, int frame_width, int frame_height, float speed = 10.0f) {
+            int count = (int)bounds.width / frame_width;
+
+            for (int i = 0; i < count; i++) {
+                Rectangle rectangle = { i * frame_width, 0, frame_width, frame_height };
+
+                _frames += rectangle;
+            }
+
+            _speed = speed;
             origin = { frame_width / 2, frame_height / 2 };
         }
 

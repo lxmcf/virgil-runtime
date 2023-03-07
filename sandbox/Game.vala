@@ -12,11 +12,8 @@ namespace Sandbox {
             root.transform.scale = Vector2.multiply_value (root.transform.scale, 3.0f);
 
             for (int i = 0; i < 5; i++) {
-                int x = Random.int_range (0, 1024);
-                int y = Random.int_range (0, 1024);
-
-                x = x % 640;
-                y = y % 360;
+                int x = Random.int_range (0, 640);
+                int y = Random.int_range (0, 360);
 
                 GameObject tree = root.add_child (new GameObject ());
                 tree.transform.position = { x, y };
@@ -24,6 +21,9 @@ namespace Sandbox {
                 TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
 
                 tr.set_texture (tree_texture);
+
+                RectangleCollider2D col = tree.add_component_return<RectangleCollider2D> (new RectangleCollider2D ());
+                col.size = { 16, 8 };
             }
         }
 

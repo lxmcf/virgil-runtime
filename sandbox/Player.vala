@@ -20,6 +20,9 @@ namespace Sandbox {
             tr.set_animation (animation);
 
             transform.translate ({ 320, 180 });
+
+            RectangleCollider2D collider = add_component_return<RectangleCollider2D> (new RectangleCollider2D ());
+            collider.size = { 8.0f, 4.0f };
         }
 
         public override void update (float delta_time) {
@@ -30,6 +33,10 @@ namespace Sandbox {
                 float direction = Vector2.direction ({ 0.0f, 0.0f }, { xaxis, yaxis });
 
                 transform.translate (Vector2.length_direction (speed * delta_time, direction));
+            }
+
+            if (check_key (KeyCode.SPACE)) {
+                transform.scale = Vector2.add_value (transform.scale, delta_time);
             }
         }
     }
