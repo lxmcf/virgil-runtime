@@ -32,6 +32,10 @@ namespace Virgil {
             start ();
         }
 
+        ~GameObject () {
+            print ("Object type %s deleted!\n", name);
+        }
+
         //----------------------------------------------------------------------------------
         // Internal API
         //----------------------------------------------------------------------------------
@@ -89,6 +93,7 @@ namespace Virgil {
             }
         }
 
+        //  TODO: Move to single projection method
         internal Vector2 get_relative_position () {
             if (!enabled) return Vector2.ZERO;
 
@@ -102,6 +107,7 @@ namespace Virgil {
             return position;
         }
 
+        //  TODO: Move to single projection method
         internal float get_relative_rotation () {
             if (!enabled) return 0.0f;
 
@@ -114,6 +120,7 @@ namespace Virgil {
             return rotation % 360;
         }
 
+        //  TODO: Move to single projection method
         internal Vector2 get_relative_scale () {
             if (!enabled) return Vector2.ZERO;
 
@@ -223,6 +230,22 @@ namespace Virgil {
             }
 
             return (root_parent == null) ? this : root_parent;
+        }
+
+        public unowned List<GameObject> get_children () {
+            return _children;
+        }
+
+        public void destroy (GameObject object) {
+            if (_parent == null) return;
+
+            unowned List<GameObject> children = _parent.get_children ();
+
+            children.remove (object);
+        }
+
+        public void destroy_self () {
+            destroy (this);
         }
     }
 }

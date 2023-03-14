@@ -39,5 +39,9 @@ namespace Sandbox {
                 transform.scale = Vector2.add_value (transform.scale, delta_time);
             }
         }
+
+        public override void collide_2D (Collider2D collider) {
+            destroy (collider.object.parent);
+        }
     }
 }
