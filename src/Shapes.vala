@@ -41,4 +41,13 @@ namespace Virgil {
             { colour.r, colour.g, colour.b, colour.a }
         );
     }
+
+    public static void draw_polygon_outline (Vector2[] vertices, Colour colour = Colour.WHITE) {
+        for (int i = 0; i < vertices.length; i++) {
+            Vector2 start = vertices[i];
+            Vector2 end = vertices[(i + 1) % vertices.length];
+
+            Raylib.draw_line_vector ({ start.x, start.y }, { end.x, end.y }, { colour.r, colour.g, colour.b, colour.a });
+        }
+    }
 }
