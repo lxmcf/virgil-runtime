@@ -6,12 +6,11 @@ namespace Sandbox {
         public Texture2D texture;
         public Animation2D animation;
 
-        private ColliderBody2D _test_collider_body;
-
         public float speed;
 
         public override void start () {
-            _test_collider_body = new ColliderBody2D (ColliderShape2D.CIRCLE, this);
+            CircleCollider2D collider = add_component_return<CircleCollider2D> (new CircleCollider2D ());
+            collider.set_radius (8.0f);
 
             texture = new Texture2D ("data/sprites/walk_down.png");
             animation = new Animation2D.from_texture (texture, 16, 16);

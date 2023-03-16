@@ -1,44 +1,55 @@
-namespace Virgil.Runtime.Collision {
-    internal static CollisionScene global_scene;
-
+namespace Virgil.Runtime {
     internal class CollisionScene {
-        private List<ColliderBody2D> _colliders;
+        private static static List<ColliderBody2D> _active_colliders;
+        private static bool update_collision;
 
-        public CollisionScene () {
-            _colliders = new List<ColliderBody2D> ();
+        internal static void init () {
+            _active_colliders = new List<ColliderBody2D> ();
 
-            global_scene = this;
+            update_collision = true;
         }
 
-        public void update () {
-            if (_colliders.length () <= 1) return;
+        internal static void update () {
+            if (_active_colliders.length () == 0) return;
 
-            for (int i = 0; i < _colliders.length () - 1; i++) {
-                ColliderBody2D body1 = _colliders.nth_data (i);
+            for (int i = 0; i < _active_colliders.length () - 1; i++) {
+                if (!update_collision) break;
 
-                for (int j = i + 1; j < _colliders.length (); j++) {
-                    ColliderBody2D body2 = _colliders.nth_data (j);
+                ColliderBody2D body1 = _active_colliders.nth_data (i);
+
+                for (int j = i + 1; j < _active_colliders.length (); j++) {
+                    if (!update_collision) break;
+
+                    ColliderBody2D body2 = _active_colliders.nth_data (j);
 
                     CollisionData collide_check = _check_collisions (body1, body2);
                     if (collide_check.collision_found) {
                         body1.move (Vector2.multiply_value (collide_check.normal, -collide_check.depth / 2.0f));
                         body2.move (Vector2.multiply_value (collide_check.normal, collide_check.depth / 2.0f));
+
+                        body1.collider.object.collide_2D (body2.collider);
+                        if (!update_collision) break;
+
+                        body2.collider.object.collide_2D (body1.collider);
+                        if (!update_collision) break;
                     }
                 }
             }
+
+            update_collision = true;
         }
 
-        public void draw () {
-            foreach (ColliderBody2D collider in _colliders) {
-                collider.draw ();
-            }
+        internal static void register (ColliderBody2D body) {
+            _active_colliders.append (body);
         }
 
-        public void register_collider (ColliderBody2D collider) {
-            _colliders.append (collider);
+        internal static void remove (ColliderBody2D body) {
+            _active_colliders.remove (body);
+
+            update_collision = false;
         }
 
-        private CollisionData _check_collisions (ColliderBody2D body1, ColliderBody2D body2) {
+        private static CollisionData _check_collisions (ColliderBody2D body1, ColliderBody2D body2) {
             CollisionData collision = { };
 
             ColliderShape2D shape1 = body1.get_shape ();
@@ -62,7 +73,7 @@ namespace Virgil.Runtime.Collision {
             }
         }
 
-        private Vector2 _get_projection_mean (Vector2[] vertices) {
+        private static Vector2 _get_projection_mean (Vector2[] vertices) {
             Vector2 sum = Vector2.ZERO;
 
             for (int i = 0; i < vertices.length; i++) {
@@ -74,7 +85,7 @@ namespace Virgil.Runtime.Collision {
             return sum;
         }
 
-        private Vector2 _project_vertices (Vector2[] vertices, Vector2 axis) {
+        private static Vector2 _project_vertices (Vector2[] vertices, Vector2 axis) {
             Vector2 values = { float.MAX, float.MIN };
 
             for (int i = 0; i < vertices.length; i++) {
@@ -87,7 +98,7 @@ namespace Virgil.Runtime.Collision {
             return values;
         }
 
-        private Vector2 _project_circle (Vector2 position, float radius, Vector2 axis) {
+        private static Vector2 _project_circle (Vector2 position, float radius, Vector2 axis) {
             Vector2 values = { float.MAX, float.MIN };
 
             Vector2 direction = Vector2.normalise (axis);
@@ -109,7 +120,7 @@ namespace Virgil.Runtime.Collision {
             return values;
         }
 
-        private CollisionData _intersect_circles (Vector2 position1, float radius1, Vector2 position2, float radius2) {
+        private static CollisionData _intersect_circles (Vector2 position1, float radius1, Vector2 position2, float radius2) {
             CollisionData collision = { };
 
             collision.collision_found = false;
@@ -130,7 +141,7 @@ namespace Virgil.Runtime.Collision {
             return collision;
         }
 
-        private CollisionData _intersect_polygon (Vector2[] vertices1, Vector2[] vertices2) {
+        private static CollisionData _intersect_polygon (Vector2[] vertices1, Vector2[] vertices2) {
             CollisionData collision = { };
 
             collision.collision_found = false;
@@ -193,7 +204,7 @@ namespace Virgil.Runtime.Collision {
             return collision;
         }
 
-        private CollisionData _intersect_circle_polygon (Vector2 position, float radius, Vector2[] vertices) {
+        private static CollisionData _intersect_circle_polygon (Vector2 position, float radius, Vector2[] vertices) {
             CollisionData collision = { };
 
             collision.collision_found = false;
@@ -255,7 +266,7 @@ namespace Virgil.Runtime.Collision {
             return collision;
         }
 
-        private int _point_on_polygon (Vector2 position, Vector2[] vertices) {
+        private static int _point_on_polygon (Vector2 position, Vector2[] vertices) {
             int result = -1;
             float minimum_distance = float.MAX;
 

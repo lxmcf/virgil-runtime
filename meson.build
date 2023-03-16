@@ -75,10 +75,9 @@ project_source = files (
     'src/Runtime/FontCache.vala',
     'src/Runtime/AudioCache.vala',
     'src/Runtime/GameLoader.vala',
+    'src/Runtime/CollisionData.vala',
+    'src/Runtime/CollisionScene.vala',
     'src/Runtime/Main.vala',
-
-    'src/Runtime/Collision/CollisionScene.vala',
-    'src/Runtime/Collision/CollisionData.vala',
 )
 
 project_dependencies = [

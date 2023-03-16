@@ -2,11 +2,9 @@ using Virgil;
 
 namespace Sandbox {
     public class Tree : GameObject {
-        private ColliderBody2D _test_collider_body;
-
         public override void start () {
-            _test_collider_body = new ColliderBody2D (ColliderShape2D.RECTANGLE, this);
-            _test_collider_body.set_size ({ 16.0f, 8.0f });
+            RectangleCollider2D collider = add_component_return<RectangleCollider2D> (new RectangleCollider2D ());
+            collider.set_size ({ 16.0f, 8.0f });
         }
     }
 }

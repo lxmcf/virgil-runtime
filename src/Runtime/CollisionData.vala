@@ -1,4 +1,4 @@
-namespace Virgil.Runtime.Collision {
+namespace Virgil.Runtime {
     internal struct CollisionData {
         public bool collision_found;
 

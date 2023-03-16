@@ -1,5 +1,3 @@
-using Virgil.Runtime.Collision;
-
 namespace Virgil.Runtime {
     internal static int main (string[] args) {
         Raylib.set_trace_log_level (Raylib.TraceLogLevel.ALL);
@@ -11,7 +9,7 @@ namespace Virgil.Runtime {
         FontCache.init ();
         AudioCache.init ();
 
-        CollisionScene colliders = new CollisionScene ();
+        CollisionScene.init ();
 
         string game_prefix = "";
 
@@ -35,12 +33,11 @@ namespace Virgil.Runtime {
         while (!window.should_close () || Game.should_close) {
             current_game.run (Raylib.get_frame_time ());
 
-            colliders.update ();
+            CollisionScene.update ();
 
             window.clear ();
 
             current_game.draw ();
-            colliders.draw ();
 
             window.present ();
         }
