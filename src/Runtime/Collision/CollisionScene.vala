@@ -189,6 +189,7 @@ namespace Virgil.Runtime.Collision {
                 collision.normal = { -collision.normal.x, -collision.normal.y };
             }
 
+            collision.collision_found = true;
             return collision;
         }
 
