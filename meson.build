@@ -76,6 +76,9 @@ project_source = files (
     'src/Runtime/AudioCache.vala',
     'src/Runtime/GameLoader.vala',
     'src/Runtime/Main.vala',
+
+    'src/Runtime/Collision/CollisionScene.vala',
+    'src/Runtime/Collision/CollisionData.vala',
 )
 
 project_dependencies = [
@@ -121,6 +124,7 @@ shared_module (
     files (
         'sandbox/Game.vala',
         'sandbox/Player.vala',
+        'sandbox/Tree.vala',
     ),
 
     name_prefix: '',

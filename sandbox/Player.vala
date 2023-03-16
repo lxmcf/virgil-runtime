@@ -11,7 +11,7 @@ namespace Sandbox {
         public float speed;
 
         public override void start () {
-            _test_collider_body = new ColliderBody2D (ColliderShape2D.RECTANGLE, this);
+            _test_collider_body = new ColliderBody2D (ColliderShape2D.CIRCLE, this);
 
             texture = new Texture2D ("data/sprites/walk_down.png");
             animation = new Animation2D.from_texture (texture, 16, 16);
@@ -43,12 +43,6 @@ namespace Sandbox {
             if (check_key (KeyCode.CHAR_R)) {
                 transform.rotation += delta_time * 100.0f;
             }
-
-            _test_collider_body.update ();
-        }
-
-        public override void draw () {
-            _test_collider_body.draw ();
         }
 
         public override void collide_2D (Collider2D collider) {
