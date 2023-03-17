@@ -22,10 +22,21 @@ namespace Virgil.Runtime {
 
                     ColliderBody2D body2 = _active_colliders.nth_data (j);
 
+                    //  TODO: Impliment AABB checking
+                    //  TODO: Impliment quad tree's or something?
+                    //  TODO: Move collision type checks to bit flags
                     CollisionData collide_check = _check_collisions (body1, body2);
                     if (collide_check.collision_found) {
-                        body1.move (Vector2.multiply_value (collide_check.normal, -collide_check.depth / 2.0f));
-                        body2.move (Vector2.multiply_value (collide_check.normal, collide_check.depth / 2.0f));
+                        if (body1.collider.is_static && body2.collider.is_static) continue;
+
+                        if (body1.collider.is_static) {
+                            body2.move (Vector2.multiply_value (collide_check.normal, collide_check.depth));
+                        } else if (body2.collider.is_static) {
+                            body1.move (Vector2.multiply_value (collide_check.normal, -collide_check.depth));
+                        } else {
+                            body1.move (Vector2.multiply_value (collide_check.normal, -collide_check.depth / 2.0f));
+                            body2.move (Vector2.multiply_value (collide_check.normal, collide_check.depth / 2.0f));
+                        }
 
                         body1.collider.object.collide_2D (body2.collider);
                         if (!update_collision) break;

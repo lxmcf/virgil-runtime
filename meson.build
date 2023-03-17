@@ -71,13 +71,15 @@ project_source = files (
     'src/RectangleCollider2D.vala',
 
     # RUNTIME API
+    'src/Runtime/Main.vala',
     'src/Runtime/Window.vala',
     'src/Runtime/FontCache.vala',
     'src/Runtime/AudioCache.vala',
     'src/Runtime/GameLoader.vala',
+
+    # NOTE: This is a bin fire
     'src/Runtime/CollisionData.vala',
     'src/Runtime/CollisionScene.vala',
-    'src/Runtime/Main.vala',
 )
 
 project_dependencies = [
@@ -106,7 +108,7 @@ project_lib = executable (
 )
 
 project_dependency = declare_dependency (
-    link_with: project_lib, # Only needed for windows
+    # link_with: project_lib, # Only needed for windows
 
     dependencies: [
         dependency ('gobject-2.0'),

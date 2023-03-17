@@ -4,6 +4,8 @@ namespace Virgil {
     public class Collider2D : Component {
         protected unowned ColliderBody2D? collider;
 
+        public bool is_static;
+
         ~Collider2D () {
             if (collider == null) return;
 
@@ -11,6 +13,8 @@ namespace Virgil {
         }
 
         public override void start () {
+            is_static = false;
+
             setup ();
         }
 
