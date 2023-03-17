@@ -9,6 +9,10 @@ namespace Sandbox {
         public float speed;
 
         public override void start () {
+            CircleCollider2D collider = add_component_return<CircleCollider2D> (new CircleCollider2D ());
+            collider.set_radius (8.0f);
+            collider.is_static = false;
+
             texture = new Texture2D ("data/sprites/walk_down.png");
             animation = new Animation2D.from_texture (texture, 16, 16);
             animation.origin.y = texture.height;
@@ -20,9 +24,6 @@ namespace Sandbox {
             tr.set_animation (animation);
 
             transform.translate ({ 320, 180 });
-
-            RectangleCollider2D collider = add_component_return<RectangleCollider2D> (new RectangleCollider2D ());
-            collider.size = { 8.0f, 4.0f };
         }
 
         public override void update (float delta_time) {
@@ -38,10 +39,14 @@ namespace Sandbox {
             if (check_key (KeyCode.SPACE)) {
                 transform.scale = Vector2.add_value (transform.scale, delta_time);
             }
+
+            if (check_key (KeyCode.CHAR_R)) {
+                transform.rotation += delta_time * 100.0f;
+            }
         }
 
         public override void collide_2D (Collider2D collider) {
-            destroy (collider.object.parent);
+            //  destroy (collider.object);
         }
     }
 }

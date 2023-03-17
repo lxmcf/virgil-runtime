@@ -1,5 +1,4 @@
 namespace Virgil {
-    [SimpleType]
     public struct Vector2 {
         public const Vector2 ZERO = { 0.0f, 0.0f };
         public const Vector2 ONE = { 1.0f, 1.0f };
@@ -33,6 +32,16 @@ namespace Virgil {
             }
 
             return Vector2.ZERO;
+        }
+
+        public inline static Vector2 transform (Vector2 vector, Transform transform) {
+            float cos = Math.cosf (transform.rotation * Raylib.DEG2RAD);
+            float sin = Math.sinf (transform.rotation * Raylib.DEG2RAD);
+
+            float rotation_x = (cos * vector.x) - (sin * vector.y);
+            float rotation_y = (sin * vector.x) + (cos * vector.y);
+
+            return { rotation_x + transform.position.x, rotation_y + transform.position.y };
         }
 
         //----------------------------------------------------------------------------------

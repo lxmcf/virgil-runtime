@@ -1,5 +1,6 @@
 using Virgil.Runtime;
 
+//  TODO: Clean up the amount of loops
 namespace Virgil {
     public class GameObject {
         public delegate int SortFunction (GameObject object1, GameObject object2);
@@ -7,7 +8,7 @@ namespace Virgil {
         private List<Component> _components;
         private List<GameObject> _children;
 
-        private GameObject? _parent;
+        public GameObject? parent { get; private set; }
 
         public Transform transform;
         public Transform relative_transform { get; private set; }
@@ -22,7 +23,7 @@ namespace Virgil {
             transform = new Transform ();
             relative_transform = new Transform ();
 
-            _parent = null;
+            parent = null;
 
             Type type = Type.from_instance (this);
             name = type.name ();
@@ -33,7 +34,18 @@ namespace Virgil {
         }
 
         ~GameObject () {
-            print ("Object type %s deleted!\n", name);
+            print ("Object type %s deleting!\n", name);
+
+            while (_components.length () > 0) {
+                Component component = _components.nth_data (0);
+                string component_name = component.name;
+
+                _components.remove (component);
+
+                print ("\tComponent type %s deleted!\n", component_name);
+            }
+
+            print ("Object type %s deleted!\n\n", name);
         }
 
         //----------------------------------------------------------------------------------
@@ -50,7 +62,7 @@ namespace Virgil {
 
             update (Raylib.get_frame_time ());
 
-            if (_parent != null) {
+            if (parent != null) {
                 relative_transform.position = get_relative_position ();
                 relative_transform.rotation = get_relative_rotation ();
                 relative_transform.scale = get_relative_scale ();
@@ -99,9 +111,9 @@ namespace Virgil {
 
             Vector2 position = transform.position;
 
-            if (_parent != null) {
+            if (parent != null) {
                 position = Vector2.rotate (position, get_relative_rotation () - transform.rotation);
-                position = Vector2.add (position, _parent.get_relative_position ());
+                position = Vector2.add (position, parent.get_relative_position ());
             }
 
             return position;
@@ -113,8 +125,8 @@ namespace Virgil {
 
             float rotation = transform.rotation;
 
-            if (_parent != null) {
-                rotation += _parent.get_relative_rotation ();
+            if (parent != null) {
+                rotation += parent.get_relative_rotation ();
             }
 
             return rotation % 360;
@@ -126,8 +138,8 @@ namespace Virgil {
 
             Vector2 scale = transform.scale;
 
-            if (_parent != null) {
-                scale = Vector2.multiply (scale, _parent.get_relative_scale ());
+            if (parent != null) {
+                scale = Vector2.multiply (scale, parent.get_relative_scale ());
             }
 
             return scale;
@@ -209,27 +221,21 @@ namespace Virgil {
         public GameObject add_child (GameObject object) {
             _children.append (object);
 
-            object.set_parent (this);
+            object.setparent (this);
 
             return object;
+        }
+
+        public void remove_child (GameObject object) {
+            _children.remove (object);
         }
 
         public void sort_children (SortFunction sort_function) {
             _children.sort ((GLib.CompareFunc<GameObject>)sort_function);
         }
 
-        public void set_parent (GameObject? object) {
-            _parent = object;
-        }
-
-        public GameObject get_root_parent () {
-            GameObject? root_parent = _parent;
-
-            if (_parent != null) {
-                root_parent = _parent.get_root_parent ();
-            }
-
-            return (root_parent == null) ? this : root_parent;
+        public void setparent (GameObject? object) {
+            parent = object;
         }
 
         public unowned List<GameObject> get_children () {
@@ -237,11 +243,9 @@ namespace Virgil {
         }
 
         public void destroy (GameObject object) {
-            if (_parent == null) return;
+            if (object.parent == null) return;
 
-            unowned List<GameObject> children = _parent.get_children ();
-
-            children.remove (object);
+            object.parent.remove_child (object);
         }
 
         public void destroy_self () {

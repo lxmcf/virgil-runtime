@@ -2,7 +2,7 @@ using Virgil;
 
 namespace Sandbox {
     public class TestGame : Game {
-        Texture2D tree_texture;
+        public Texture2D tree_texture;
 
         public override void start () {
             tree_texture = new Texture2D ("data/sprites/tree.png");
@@ -12,18 +12,14 @@ namespace Sandbox {
             root.transform.scale = Vector2.multiply_value (root.transform.scale, 3.0f);
 
             for (int i = 0; i < 5; i++) {
-                int x = Random.int_range (0, 640);
-                int y = Random.int_range (0, 360);
+                int x = Random.int_range (64, 576);
+                int y = Random.int_range (64, 296);
 
-                GameObject tree = root.add_child (new GameObject ());
+                Tree tree = (Tree)root.add_child (new Tree ());
                 tree.transform.position = { x, y };
 
                 TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
-
                 tr.set_texture (tree_texture);
-
-                RectangleCollider2D col = tree.add_component_return<RectangleCollider2D> (new RectangleCollider2D ());
-                col.size = { 16, 8 };
             }
         }
 
@@ -32,8 +28,6 @@ namespace Sandbox {
                 return (int)object1.transform.position.y - (int)object2.transform.position.y;
             });
         }
-
-        public override void draw () { }
     }
 }
 

@@ -9,6 +9,8 @@ namespace Virgil.Runtime {
         FontCache.init ();
         AudioCache.init ();
 
+        CollisionScene.init ();
+
         string game_prefix = "";
 
         // NOTE: not final, might be worth using OptionEntry
@@ -30,6 +32,8 @@ namespace Virgil.Runtime {
 
         while (!window.should_close () || Game.should_close) {
             current_game.run (Raylib.get_frame_time ());
+
+            CollisionScene.update ();
 
             window.clear ();
 
