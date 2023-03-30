@@ -3,6 +3,8 @@ namespace Virgil {
         private ColliderShape2D _shape;
         private unowned Collider2D _collider;
 
+        public Colour debug_colour;
+
         //  Circle
         private float _radius;
 
@@ -23,6 +25,8 @@ namespace Virgil {
             _shape = shape;
             _collider = collider;
 
+            debug_colour = Colour.WHITE;
+
             if (_shape == ColliderShape2D.CIRCLE) {
                 _radius = 8.0f;
             } else {
@@ -42,10 +46,6 @@ namespace Virgil {
 
                 _transformed_vertices = _vertices;
             }
-        }
-
-        public void move (Vector2 vector) {
-            _collider.object.transform.position = Vector2.add (position, vector);
         }
 
         public void set_size (Vector2 vector) {
@@ -87,9 +87,9 @@ namespace Virgil {
 
         public void draw () {
             if (_shape == ColliderShape2D.RECTANGLE) {
-                draw_polygon_outline (get_transformed_vertices ());
+                draw_polygon_outline (get_transformed_vertices (), debug_colour);
             } else {
-                draw_circle_outline (_collider.object.relative_transform.position, get_transformed_radius ());
+                draw_circle_outline (_collider.object.relative_transform.position, get_transformed_radius (), debug_colour);
             }
         }
     }

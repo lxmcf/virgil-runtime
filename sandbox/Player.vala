@@ -9,9 +9,8 @@ namespace Sandbox {
         public float speed;
 
         public override void start () {
-            CircleCollider2D collider = add_component_return<CircleCollider2D> (new CircleCollider2D ());
-            collider.set_radius (8.0f);
-            collider.is_static = false;
+            RectangleCollider2D collider = add_component_return<RectangleCollider2D> (new RectangleCollider2D ());
+            collider.set_size ({ 8.0f, 8.0f });
 
             texture = new Texture2D ("data/sprites/walk_down.png");
             animation = new Animation2D.from_texture (texture, 16, 16);
@@ -45,8 +44,6 @@ namespace Sandbox {
             }
         }
 
-        public override void collide_2D (Collider2D collider) {
-            //  destroy (collider.object);
-        }
+        public override void collide_2D (Collider2D collider) { }
     }
 }

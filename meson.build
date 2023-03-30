@@ -78,7 +78,6 @@ project_source = files (
     'src/Runtime/GameLoader.vala',
 
     # NOTE: This is a bin fire
-    'src/Runtime/CollisionData.vala',
     'src/Runtime/CollisionScene.vala',
 )
 
@@ -108,7 +107,7 @@ project_lib = executable (
 )
 
 project_dependency = declare_dependency (
-    # link_with: project_lib, # Only needed for windows
+    link_with: project_lib, # Only needed for windows
 
     dependencies: [
         dependency ('gobject-2.0'),
