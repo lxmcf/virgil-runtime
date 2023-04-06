@@ -12,7 +12,7 @@ namespace Virgil.Runtime {
         internal static void update () {
             if (_active_colliders.length () == 0) return;
 
-            for (int i = 0; i < _active_colliders.length () - 1; i++) {
+            for (int i = 0; i < _active_colliders.length (); i++) {
                 if (!update_collision) break;
 
                 ColliderBody2D body1 = _active_colliders.nth_data (i);
@@ -32,6 +32,9 @@ namespace Virgil.Runtime {
                         body2.collider.object.collide_2D (body1.collider);
                         if (!update_collision) break;
                     }
+
+                    body1.update_vertices = true;
+                    body2.update_vertices = true;
                 }
             }
         }

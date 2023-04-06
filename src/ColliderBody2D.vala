@@ -3,6 +3,8 @@ namespace Virgil {
         private ColliderShape2D _shape;
         private unowned Collider2D _collider;
 
+        internal bool update_vertices;
+
         public Colour debug_colour;
 
         //  Circle
@@ -12,6 +14,7 @@ namespace Virgil {
         private Vector2[] _transformed_vertices;
         private Vector2[] _vertices;
         private Vector2 _size;
+
 
         public Vector2 position {
             get { return _collider.object.relative_transform.position; }
@@ -46,6 +49,8 @@ namespace Virgil {
 
                 _transformed_vertices = _vertices;
             }
+
+            update_vertices = true;
         }
 
         public void set_size (Vector2 vector) {
@@ -72,10 +77,23 @@ namespace Virgil {
         }
 
         public Vector2[] get_transformed_vertices () {
-            for (int i = 0; i < _vertices.length; i++) {
-                Vector2 scaled_vertex = Vector2.multiply (_vertices[i], _collider.object.relative_transform.scale);
+            if (update_vertices) {
+                float cos = Math.cosf (_collider.object.relative_transform.rotation * Raylib.DEG2RAD);
+                float sin = Math.sinf (_collider.object.relative_transform.rotation * Raylib.DEG2RAD);
 
-                _transformed_vertices[i] = Vector2.transform (scaled_vertex, _collider.object.relative_transform);
+                float rotation_x;
+                float rotation_y;
+
+                for (int i = 0; i < _vertices.length; i++) {
+                    Vector2 scaled_vertex = Vector2.multiply (_vertices[i], _collider.object.relative_transform.scale);
+
+                    rotation_x = (cos * scaled_vertex.x) - (sin * scaled_vertex.y);
+                    rotation_y = (sin * scaled_vertex.x) + (cos * scaled_vertex.y);
+
+                    _transformed_vertices[i] = Vector2.add ({ rotation_x, rotation_y }, _collider.object.relative_transform.position);
+                }
+
+                update_vertices = false;
             }
 
             return _transformed_vertices;

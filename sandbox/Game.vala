@@ -1,4 +1,5 @@
 using Virgil;
+using Virgil.Graphics;
 
 namespace Sandbox {
     public class TestGame : Game {
@@ -20,7 +21,6 @@ namespace Sandbox {
 
                 TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
                 tr.set_texture (tree_texture);
-                tr.enabled = false;
             }
         }
 

@@ -20,9 +20,13 @@ namespace Virgil {
         }
 
         internal void do_draw () {
+            begin_draw ();
+
             root.draw_object ();
 
             draw ();
+
+            end_draw ();
         }
 
         //----------------------------------------------------------------------------------
@@ -30,7 +34,10 @@ namespace Virgil {
         //----------------------------------------------------------------------------------
         public virtual void start () { }
         public virtual void update (float delta_time) { }
+
+        public virtual void begin_draw () { }
         public virtual void draw () { }
+        public virtual void end_draw () { }
 
         //----------------------------------------------------------------------------------
         // Content loading
