@@ -3,6 +3,8 @@ builddir/
 build-aux/
 subprojects/
 
+.vscode/
+
 *~
 
 .DS_Store

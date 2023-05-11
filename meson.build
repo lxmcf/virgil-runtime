@@ -53,6 +53,8 @@ project_source = files (
     'src/GameObject.vala',
     'src/Component.vala',
     'src/Vector2.vala',
+    'src/Vector3.vala',
+    'src/Vector4.vala',
     'src/Rectangle.vala',
     'src/Colour.vala',
     'src/Transform.vala',
