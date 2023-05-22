@@ -48,6 +48,11 @@ namespace Virgil {
         //----------------------------------------------------------------------------------
         // Public functions
         //----------------------------------------------------------------------------------
+        public void instantiate (GameObject object) {
+            //  NOTE: Mimics instantiation inside of GameObject
+            root.add_child (object);
+        }
+
         public static void quit () {
             should_close = true;
         }
@@ -60,6 +65,9 @@ namespace Virgil {
             Raylib.set_window_position (x, y);
         }
 
+        public static void set_window_title (string title) {
+            Raylib.set_window_title (title);
+        }
 
         public static Rectangle get_window_rectangle () {
             Raylib.Vector2 position = Raylib.get_window_position ();

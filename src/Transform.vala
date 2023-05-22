@@ -15,5 +15,16 @@ namespace Virgil {
         public void translate (Vector2 vector) {
             position = Vector2.add (position, vector);
         }
+
+        public Transform copy () {
+            Transform transform = new Transform ();
+
+            transform.position = position;
+            transform.scale = scale;
+
+            transform.rotation = rotation;
+
+            return transform;
+        }
     }
 }

@@ -12,16 +12,16 @@ namespace Sandbox {
             root.add_child (new Player ());
             root.transform.scale = Vector2.multiply_value (root.transform.scale, 3.0f);
 
-            for (int i = 0; i < 5; i++) {
-                int x = Random.int_range (64, 576);
-                int y = Random.int_range (64, 296);
+            //  for (int i = 0; i < 5; i++) {
+            //      int x = Random.int_range (64, 576);
+            //      int y = Random.int_range (64, 296);
 
-                Tree tree = (Tree)root.add_child (new Tree ());
-                tree.transform.position = { x, y };
+            //      Tree tree = (Tree)root.add_child (new Tree ());
+            //      tree.transform.position = { x, y };
 
-                TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
-                tr.set_texture (tree_texture);
-            }
+            //      TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
+            //      tr.set_texture (tree_texture);
+            //  }
         }
 
         public override void update (float delta_time) {

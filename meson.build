@@ -62,6 +62,7 @@ project_source = files (
     'src/Animation2D.vala',
     'src/Shapes.vala',
     'src/Surface2D.vala',
+    # 'src/Asset.vala',
     'src/Game.vala',
 
     # PUBLIC COMPONENTS
@@ -127,6 +128,7 @@ shared_module (
         'sandbox/Game.vala',
         'sandbox/Player.vala',
         'sandbox/Tree.vala',
+        'sandbox/TestObject.vala',
     ),
 
     name_prefix: '',

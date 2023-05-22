@@ -42,6 +42,16 @@ namespace Sandbox {
             if (check_key (KeyCode.CHAR_R)) {
                 transform.rotation += delta_time * 100.0f;
             }
+
+            //  DEBUG:
+            if (check_mouse_button_pressed (MouseButton.LEFT)) {
+                instantiate (new TestObject ());
+            }
+
+            //  DEBUG:
+            if (check_mouse_button_pressed (MouseButton.RIGHT)) {
+                destroy_self ();
+            }
         }
 
         public override void collide_2D (Collider2D collider) { }

@@ -8,10 +8,29 @@ namespace Virgil {
         private List<Component> _components;
         private List<GameObject> _children;
 
-        public GameObject? parent { get; private set; }
+        private GameObject? _parent;
+
+        public GameObject? parent {
+            get { return _parent; }
+        }
 
         public Transform transform;
         public Transform relative_transform { get; private set; }
+
+        public Vector2 position {
+            get { return transform.position; }
+            set { transform.position = value; }
+        }
+
+        public Vector2 scale {
+            get { return transform.scale; }
+            set { transform.scale = value; }
+        }
+
+        public float rotation {
+            get { return transform.rotation; }
+            set { transform.rotation = value; }
+        }
 
         public string name { get; private set; }
         public bool enabled;
@@ -23,7 +42,7 @@ namespace Virgil {
             transform = new Transform ();
             relative_transform = new Transform ();
 
-            parent = null;
+            _parent = null;
 
             Type type = Type.from_instance (this);
             name = type.name ();
@@ -156,7 +175,7 @@ namespace Virgil {
         public virtual void draw () { }
 
         //  NOTE: Not final
-        public virtual void collide_2D (Collider2D collider) { }                                                        // vala-lint=naming-convention
+        public virtual void collide_2D (Collider2D collider) { }
 
         //----------------------------------------------------------------------------------
         // Public API
@@ -218,10 +237,22 @@ namespace Virgil {
             return null;
         }
 
+        public GameObject get_root_parent () {
+            GameObject? root = parent;
+
+            while (root != null) {
+                if (root.parent != null) {
+                    root = root.parent;
+                } else break;
+            }
+
+            return root;
+        }
+
         public GameObject add_child (GameObject object) {
             _children.append (object);
 
-            object.setparent (this);
+            object.set_parent (this);
 
             return object;
         }
@@ -234,12 +265,20 @@ namespace Virgil {
             _children.sort ((GLib.CompareFunc<GameObject>)sort_function);
         }
 
-        public void setparent (GameObject? object) {
-            parent = object;
+        public void set_parent (GameObject? object) {
+            //  TODO: Remember world space
+
+            _parent = object;
         }
 
         public unowned List<GameObject> get_children () {
             return _children;
+        }
+
+        public void instantiate (GameObject object) {
+            GameObject root = get_root_parent ();
+
+            root.add_child (object);
         }
 
         public void destroy (GameObject object) {

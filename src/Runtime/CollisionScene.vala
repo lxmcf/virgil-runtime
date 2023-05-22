@@ -10,6 +10,7 @@ namespace Virgil.Runtime {
         }
 
         internal static void update () {
+            //  BUG: Does not update if only 1 body
             if (_active_colliders.length () == 0) return;
 
             for (int i = 0; i < _active_colliders.length (); i++) {
