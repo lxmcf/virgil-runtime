@@ -15,20 +15,21 @@ namespace Virgil {
         }
 
         public Transform transform;
-        public Transform relative_transform { get; private set; }
+        public Transform world_transform { get; private set; }
 
+        //  NOTE: Need more testing to see if return world transform is best option
         public Vector2 position {
-            get { return transform.position; }
+            get { return world_transform.position; }
             set { transform.position = value; }
         }
 
         public Vector2 scale {
-            get { return transform.scale; }
+            get { return world_transform.scale; }
             set { transform.scale = value; }
         }
 
         public float rotation {
-            get { return transform.rotation; }
+            get { return world_transform.rotation; }
             set { transform.rotation = value; }
         }
 
@@ -40,7 +41,7 @@ namespace Virgil {
             _children = new List<GameObject> ();
 
             transform = new Transform ();
-            relative_transform = new Transform ();
+            world_transform = new Transform ();
 
             _parent = null;
 
@@ -82,13 +83,13 @@ namespace Virgil {
             update (Raylib.get_frame_time ());
 
             if (parent != null) {
-                relative_transform.position = get_relative_position ();
-                relative_transform.rotation = get_relative_rotation ();
-                relative_transform.scale = get_relative_scale ();
+                world_transform.position = get_world_position ();
+                world_transform.rotation = get_world_rotation ();
+                world_transform.scale = get_world_scale ();
             } else {
-                relative_transform.position = transform.position;
-                relative_transform.rotation = transform.rotation;
-                relative_transform.scale = transform.scale;
+                world_transform.position = transform.position;
+                world_transform.rotation = transform.rotation;
+                world_transform.scale = transform.scale;
             }
 
             foreach (GameObject child in _children) {
@@ -125,40 +126,40 @@ namespace Virgil {
         }
 
         //  TODO: Move to single projection method
-        internal Vector2 get_relative_position () {
+        internal Vector2 get_world_position () {
             if (!enabled) return Vector2.ZERO;
 
             Vector2 position = transform.position;
 
             if (parent != null) {
-                position = Vector2.rotate (position, get_relative_rotation () - transform.rotation);
-                position = Vector2.add (position, parent.get_relative_position ());
+                position = Vector2.rotate (position, get_world_rotation () - transform.rotation);
+                position = Vector2.add (position, parent.get_world_position ());
             }
 
             return position;
         }
 
         //  TODO: Move to single projection method
-        internal float get_relative_rotation () {
+        internal float get_world_rotation () {
             if (!enabled) return 0.0f;
 
             float rotation = transform.rotation;
 
             if (parent != null) {
-                rotation += parent.get_relative_rotation ();
+                rotation += parent.get_world_rotation ();
             }
 
             return rotation % 360;
         }
 
         //  TODO: Move to single projection method
-        internal Vector2 get_relative_scale () {
+        internal Vector2 get_world_scale () {
             if (!enabled) return Vector2.ZERO;
 
             Vector2 scale = transform.scale;
 
             if (parent != null) {
-                scale = Vector2.multiply (scale, parent.get_relative_scale ());
+                scale = Vector2.multiply (scale, parent.get_world_scale ());
             }
 
             return scale;
@@ -220,9 +221,6 @@ namespace Virgil {
             return component;
         }
 
-        //  NOTE: Really want this to be the final API, unsure how to work it in vala without inheriting GLib.Object
-        //  public void add_component_exp<T> () { }
-
         public T get_component<T> () {
             Type desired_component = typeof (T);
 
@@ -257,8 +255,16 @@ namespace Virgil {
             return object;
         }
 
+        public unowned List<GameObject> get_children () {
+            return _children;
+        }
+
         public void remove_child (GameObject object) {
+            GameObject root = get_root_parent ();
+
             _children.remove (object);
+
+            root.add_child (object);
         }
 
         public void sort_children (SortFunction sort_function) {
@@ -266,19 +272,13 @@ namespace Virgil {
         }
 
         public void set_parent (GameObject? object) {
-            //  TODO: Remember world space
-
             _parent = object;
         }
 
-        public unowned List<GameObject> get_children () {
-            return _children;
-        }
-
-        public void instantiate (GameObject object) {
+        public GameObject instantiate (GameObject object) {
             GameObject root = get_root_parent ();
 
-            root.add_child (object);
+            return root.add_child (object);
         }
 
         public void destroy (GameObject object) {

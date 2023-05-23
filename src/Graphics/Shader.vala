@@ -1,10 +1,12 @@
+//  FIXME: No shader freeing
+
 namespace Virgil.Graphics {
     [Version (experimental = true)]
     public class Shader {
         private const int SHADER_VERTEX = 1;
         private const int SHADER_FRAGMENT = 2;
 
-        private Raylib.Shader? _shader;
+        private Raylib.Shader _shader;
 
         public Shader (string vertex_file, string fragment_file) {
             _shader = Raylib.load_shader (vertex_file, fragment_file);
@@ -49,19 +51,19 @@ namespace Virgil.Graphics {
         }
 
         ~Shader () {
-            if (_shader == null) return;
+            if (!Raylib.is_shader_ready (_shader)) return;
 
             Raylib.unload_shader (_shader);
         }
 
         public void set_target () {
-            if (_shader == null) return;
+            if (!Raylib.is_shader_ready (_shader)) return;
 
             Raylib.begin_shader_mode (_shader);
         }
 
         public void reset_target () {
-            if (_shader == null) return;
+            if (!Raylib.is_shader_ready (_shader)) return;
 
             Raylib.end_shader_mode ();
         }
@@ -74,7 +76,6 @@ namespace Virgil.Graphics {
             return Raylib.get_shader_location_attribute (_shader, attribute);
         }
 
-        //  TODO: Change syntax to be set_value<T> (int location, T value);
         public void set_value (int location, void* value, ShaderDataType type) {
             Raylib.set_shader_value (_shader, location, value, (Raylib.ShaderUniformDataType)type);
         }

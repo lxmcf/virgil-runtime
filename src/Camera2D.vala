@@ -29,8 +29,8 @@ namespace Virgil {
 
         public override void update () {
             if (_target != null) {
-                _camera.target.x = _target.relative_transform.position.x;
-                _camera.target.y = _target.relative_transform.position.y;
+                _camera.target.x = _target.world_transform.position.x;
+                _camera.target.y = _target.world_transform.position.y;
             }
         }
 
