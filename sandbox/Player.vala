@@ -22,7 +22,7 @@ namespace Sandbox {
             tr.set_texture (texture);
             tr.set_animation (animation);
 
-            transform.translate ({ 320, 180 });
+            local_transform.translate ({ 320, 180 });
         }
 
         public override void update (float delta_time) {
@@ -32,25 +32,15 @@ namespace Sandbox {
             if (xaxis != 0 || yaxis != 0) {
                 float direction = Vector2.direction ({ 0.0f, 0.0f }, { xaxis, yaxis });
 
-                transform.translate (Vector2.length_direction (speed * delta_time, direction));
+                local_transform.translate (Vector2.length_direction (speed * delta_time, direction));
             }
 
             if (check_key (KeyCode.SPACE)) {
-                transform.scale = Vector2.add_value (transform.scale, delta_time);
+                scale = Vector2.add_value (scale, delta_time);
             }
 
             if (check_key (KeyCode.CHAR_R)) {
-                transform.rotation += delta_time * 100.0f;
-            }
-
-            //  DEBUG:
-            if (check_mouse_button_pressed (MouseButton.LEFT)) {
-                instantiate (new TestObject ());
-            }
-
-            //  DEBUG:
-            if (check_mouse_button_pressed (MouseButton.RIGHT)) {
-                destroy_self ();
+                rotation += delta_time * 100.0f;
             }
         }
 

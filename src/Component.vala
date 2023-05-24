@@ -1,7 +1,7 @@
 namespace Virgil {
     public class Component {
         public unowned GameObject object { get; internal set; }
-        public unowned Transform transform { get { return object.transform; } }
+        //  public unowned Transform transform { get { return object.local_transform; } }
 
         public string name { get; private set; }
 

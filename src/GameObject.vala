@@ -14,23 +14,23 @@ namespace Virgil {
             get { return _parent; }
         }
 
-        public Transform transform;
+        public Transform local_transform;
         public Transform world_transform { get; private set; }
 
         //  NOTE: Need more testing to see if return world transform is best option
         public Vector2 position {
             get { return world_transform.position; }
-            set { transform.position = value; }
+            set { local_transform.position = value; }
         }
 
         public Vector2 scale {
             get { return world_transform.scale; }
-            set { transform.scale = value; }
+            set { local_transform.scale = value; }
         }
 
         public float rotation {
             get { return world_transform.rotation; }
-            set { transform.rotation = value; }
+            set { local_transform.rotation = value; }
         }
 
         public string name { get; private set; }
@@ -40,7 +40,7 @@ namespace Virgil {
             _components = new List<Component> ();
             _children = new List<GameObject> ();
 
-            transform = new Transform ();
+            local_transform = new Transform ();
             world_transform = new Transform ();
 
             _parent = null;
@@ -82,15 +82,7 @@ namespace Virgil {
 
             update (Raylib.get_frame_time ());
 
-            if (parent != null) {
-                world_transform.position = get_world_position ();
-                world_transform.rotation = get_world_rotation ();
-                world_transform.scale = get_world_scale ();
-            } else {
-                world_transform.position = transform.position;
-                world_transform.rotation = transform.rotation;
-                world_transform.scale = transform.scale;
-            }
+            world_transform = _local_to_world_transform ();
 
             foreach (GameObject child in _children) {
                 child.update_object ();
@@ -125,25 +117,45 @@ namespace Virgil {
             }
         }
 
-        //  TODO: Move to single projection method
+        //  FIXME: This is conciderably slower than calling each relative function individually...
+        private Transform _local_to_world_transform () {
+            if (!enabled) return new Transform ();
+
+            if (parent == null) {
+                return local_transform;
+            }
+
+            Transform transform = local_transform.copy ();
+
+            transform.rotation += parent.world_transform.rotation;
+            transform.rotation = transform.rotation % 360;
+
+            transform.position = Vector2.rotate (transform.position, parent.world_transform.rotation);
+            transform.position = Vector2.add (transform.position, parent.world_transform.position);
+            transform.scale = Vector2.multiply (transform.scale, parent.world_transform.scale);
+
+            return transform;
+        }
+
+        [Version (deprecated = true, replacement = "local_to_world_transform")]
         internal Vector2 get_world_position () {
             if (!enabled) return Vector2.ZERO;
 
-            Vector2 position = transform.position;
+            Vector2 position = local_transform.position;
 
             if (parent != null) {
-                position = Vector2.rotate (position, get_world_rotation () - transform.rotation);
+                position = Vector2.rotate (position, get_world_rotation () - local_transform.rotation);
                 position = Vector2.add (position, parent.get_world_position ());
             }
 
             return position;
         }
 
-        //  TODO: Move to single projection method
+        [Version (deprecated = true, replacement = "local_to_world_transform")]
         internal float get_world_rotation () {
             if (!enabled) return 0.0f;
 
-            float rotation = transform.rotation;
+            float rotation = local_transform.rotation;
 
             if (parent != null) {
                 rotation += parent.get_world_rotation ();
@@ -152,11 +164,11 @@ namespace Virgil {
             return rotation % 360;
         }
 
-        //  TODO: Move to single projection method
+        [Version (deprecated = true, replacement = "local_to_world_transform")]
         internal Vector2 get_world_scale () {
             if (!enabled) return Vector2.ZERO;
 
-            Vector2 scale = transform.scale;
+            Vector2 scale = local_transform.scale;
 
             if (parent != null) {
                 scale = Vector2.multiply (scale, parent.get_world_scale ());
@@ -247,7 +259,13 @@ namespace Virgil {
             return root;
         }
 
-        public GameObject add_child (GameObject object) {
+        public void add_child (GameObject object) {
+            _children.append (object);
+
+            object.set_parent (this);
+        }
+
+        public T add_child_return <T> (GameObject object) {
             _children.append (object);
 
             object.set_parent (this);
@@ -275,10 +293,10 @@ namespace Virgil {
             _parent = object;
         }
 
-        public GameObject instantiate (GameObject object) {
+        public GameObject instantiate (owned GameObject object) {
             GameObject root = get_root_parent ();
 
-            return root.add_child (object);
+            return root.add_child_return<GameObject> (object);
         }
 
         public void destroy (GameObject object) {

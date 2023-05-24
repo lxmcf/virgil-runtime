@@ -1,5 +1,6 @@
 using Virgil;
 using Virgil.Graphics;
+using Virgil.Input;
 
 namespace Sandbox {
     public class TestGame : Game {
@@ -10,24 +11,45 @@ namespace Sandbox {
             tree_texture.origin.y = tree_texture.height - 4;
 
             root.add_child (new Player ());
-            root.transform.scale = Vector2.multiply_value (root.transform.scale, 3.0f);
+            root.scale = Vector2.multiply_value (root.scale, 3.0f);
 
-            //  for (int i = 0; i < 5; i++) {
-            //      int x = Random.int_range (64, 576);
-            //      int y = Random.int_range (64, 296);
+            for (int i = 0; i < 5; i++) {
+                int x = Random.int_range (64, 576);
+                int y = Random.int_range (64, 296);
 
-            //      Tree tree = (Tree)root.add_child (new Tree ());
-            //      tree.transform.position = { x, y };
+                Tree tree = root.add_child_return<Tree> (new Tree ());
+                tree.position = { x, y };
 
-            //      TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
-            //      tr.set_texture (tree_texture);
-            //  }
+                TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
+                tr.set_texture (tree_texture);
+            }
+
+            for (int i = 0; i < 50; i++) {
+                instantiate (new TestObject ());
+            }
         }
 
         public override void update (float delta_time) {
-            root.sort_children ((object1, object2)=>{
-                return (int)object1.transform.position.y - (int)object2.transform.position.y;
+            root.sort_children ((object1, object2) => {
+                return (int)object1.position.y - (int)object2.position.y;
             });
+
+            if (check_key (KeyCode.CHAR_E)) {
+                root.local_transform.rotation += 10.0f * delta_time;
+            }
+
+            if (check_key (KeyCode.CHAR_Q)) {
+                root.local_transform.rotation -= 10.0f * delta_time;
+            }
+
+            int xaxis = check_key_raw (KeyCode.RIGHT) - check_key_raw (KeyCode.LEFT);
+            int yaxis = check_key_raw (KeyCode.DOWN) - check_key_raw (KeyCode.UP);
+
+            if (xaxis != 0 || yaxis != 0) {
+                float direction = Vector2.direction ({ 0.0f, 0.0f }, { xaxis, yaxis });
+
+                root.local_transform.translate (Vector2.length_direction (200.0f * delta_time, direction));
+            }
         }
     }
 }

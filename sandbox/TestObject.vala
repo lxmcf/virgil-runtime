@@ -3,7 +3,7 @@ using Virgil;
 namespace Sandbox {
     public class TestObject : GameObject {
         public override void start () {
-            transform.translate ({
+            local_transform.translate ({
                 Random.int_range (0, 640),
                 Random.int_range (0, 360)
             });
