@@ -10,12 +10,12 @@ namespace Virgil {
 
         private GameObject? _parent;
 
+        public Transform local_transform;
+        public Transform world_transform { get; private set; }
+
         public GameObject? parent {
             get { return _parent; }
         }
-
-        public Transform local_transform;
-        public Transform world_transform { get; private set; }
 
         //  NOTE: Need more testing to see if return world transform is best option
         public Vector2 position {

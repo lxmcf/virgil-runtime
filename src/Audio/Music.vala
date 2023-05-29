@@ -2,7 +2,7 @@ using Virgil.Runtime;
 
 namespace Virgil.Audio {
     public class Music {
-        private unowned Raylib.Music _music;
+        private Raylib.Music _music;
 
         private float _volume;
         private float _pitch;
@@ -37,13 +37,15 @@ namespace Virgil.Audio {
         }
 
         public Music (string filename) {
-            Raylib.Music music = Raylib.load_music_stream (filename);
+            _music = Raylib.load_music_stream (filename);
 
             _volume = 1.0f;
             _pitch = 1.0f;
             _pan = 0.0f;
+        }
 
-            _music = AudioCache.register_music (music);
+        ~Music () {
+            Raylib.unload_music_stream (_music);
         }
 
         public void play () {

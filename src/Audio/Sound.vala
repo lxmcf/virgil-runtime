@@ -2,7 +2,7 @@ using Virgil.Runtime;
 
 namespace Virgil.Audio {
     public class Sound {
-        private unowned Raylib.Sound _sound;
+        private Raylib.Sound _sound;
 
         private float _volume;
         private float _pitch;
@@ -28,13 +28,15 @@ namespace Virgil.Audio {
         }
 
         public Sound (string filename) {
-            Raylib.Sound sound = Raylib.load_sound (filename);
+            _sound = Raylib.load_sound (filename);
 
             _volume = 1.0f;
             _pitch = 1.0f;
             _pan = 0.0f;
+        }
 
-            _sound = AudioCache.register_sound (sound);
+        ~Sound () {
+            Raylib.unload_sound (_sound);
         }
 
         public void play () {

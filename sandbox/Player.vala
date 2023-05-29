@@ -1,5 +1,6 @@
 using Virgil;
 using Virgil.Input;
+using Virgil.Graphics;
 
 namespace Sandbox {
     public class Player : GameObject {

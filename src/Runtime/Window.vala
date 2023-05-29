@@ -9,7 +9,7 @@ namespace Virgil.Runtime {
             init_audio_device ();
         }
 
-        public void close () {
+        ~Window () {
             close_window ();
             close_audio_device ();
         }

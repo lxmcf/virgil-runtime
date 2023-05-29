@@ -20,7 +20,11 @@ namespace Virgil.Graphics {
             string adjusted_filename = GLib.Environment.get_current_dir () + "/" + filename;
             FileStream? stream = FileStream.open (adjusted_filename, "r");
 
-            if (stream == null) return;
+            if (stream == null) {
+                print ("Shader file %s coiuld not be loaded!\n", adjusted_filename);
+
+                return;
+            }
 
             string vertex_string = "";
             string fragment_string = "";

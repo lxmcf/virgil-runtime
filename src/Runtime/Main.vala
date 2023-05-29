@@ -6,10 +6,9 @@ namespace Virgil.Runtime {
 
         GameLoader current_game = new GameLoader ();
 
-        FontCache.init ();
-        AudioCache.init ();
-
         CollisionScene.init ();
+
+        Raylib.Font font = Raylib.load_font ("data/fonts/pixantiqua.fnt");
 
         string game_prefix = "";
 
@@ -28,8 +27,6 @@ namespace Virgil.Runtime {
             warning ("%s\n", e.message);
         }
 
-        current_game.load_content ();
-
         while (!window.should_close () || Game.should_close) {
             current_game.run (Raylib.get_frame_time ());
 
@@ -43,13 +40,6 @@ namespace Virgil.Runtime {
 
             window.present ();
         }
-
-        current_game.unload_content ();
-
-        FontCache.clear ();
-        AudioCache.clear ();
-
-        window.close ();
 
         return 0;
     }

@@ -57,6 +57,14 @@ namespace Virgil.Runtime {
             _registered_game.do_start ();
         }
 
+        //  TODO: Need to test a bit more, currently segmentation fault city
+        [Version (experimental = true)]
+        public void close () {
+            if (_module != null) return;
+
+            _module.close ();
+        }
+
         public void run (float delta_time) {
             if (!_did_register) return;
 
@@ -67,18 +75,6 @@ namespace Virgil.Runtime {
             if (!_did_register) return;
 
             _registered_game.do_draw ();
-        }
-
-        public void load_content () {
-            if (!_did_register) return;
-
-            _registered_game.load_content ();
-        }
-
-        public void unload_content () {
-            if (!_did_register) return;
-
-            _registered_game.unload_content ();
         }
     }
 }

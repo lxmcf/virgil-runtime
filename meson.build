@@ -76,8 +76,6 @@ project_source = files (
     # RUNTIME API
     'src/Runtime/Main.vala',
     'src/Runtime/Window.vala',
-    'src/Runtime/FontCache.vala',
-    'src/Runtime/AudioCache.vala',
     'src/Runtime/GameLoader.vala',
 
     # NOTE: This is a bin fire

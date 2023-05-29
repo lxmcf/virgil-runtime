@@ -23,10 +23,6 @@ namespace Sandbox {
                 TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
                 tr.set_texture (tree_texture);
             }
-
-            for (int i = 0; i < 50; i++) {
-                instantiate (new TestObject ());
-            }
         }
 
         public override void update (float delta_time) {
