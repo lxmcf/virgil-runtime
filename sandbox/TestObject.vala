@@ -10,7 +10,7 @@ namespace Sandbox {
         }
 
         public override void draw () {
-            draw_circle (position, 16, Colour.RED);
+            draw_circle (position, 16, Colour.BLUE);
         }
     }
 }

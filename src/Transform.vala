@@ -16,15 +16,15 @@ namespace Virgil {
             position = Vector2.add (position, vector);
         }
 
-        public Transform copy () {
-            Transform transform = new Transform ();
+        //  public Transform copy () {
+        //      Transform transform = new Transform ();
 
-            transform.position = position;
-            transform.scale = scale;
+        //      transform.position = position;
+        //      transform.scale = scale;
 
-            transform.rotation = rotation;
+        //      transform.rotation = rotation;
 
-            return transform;
-        }
+        //      return transform;
+        //  }
     }
 }

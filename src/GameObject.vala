@@ -13,6 +13,8 @@ namespace Virgil {
         public Transform local_transform;
         public Transform world_transform { get; private set; }
 
+        private Transform _temp_transform;
+
         public GameObject? parent {
             get { return _parent; }
         }
@@ -42,6 +44,8 @@ namespace Virgil {
 
             local_transform = new Transform ();
             world_transform = new Transform ();
+
+            _temp_transform = new Transform ();
 
             _parent = null;
 
@@ -125,16 +129,18 @@ namespace Virgil {
                 return local_transform;
             }
 
-            Transform transform = local_transform.copy ();
+            _temp_transform.position = local_transform.position;
+            _temp_transform.scale = local_transform.scale;
+            _temp_transform.rotation = local_transform.rotation;
 
-            transform.rotation += parent.world_transform.rotation;
-            transform.rotation = transform.rotation % 360;
+            _temp_transform.rotation += parent.world_transform.rotation;
+            _temp_transform.rotation = _temp_transform.rotation % 360;
 
-            transform.position = Vector2.rotate (transform.position, parent.world_transform.rotation);
-            transform.position = Vector2.add (transform.position, parent.world_transform.position);
-            transform.scale = Vector2.multiply (transform.scale, parent.world_transform.scale);
+            _temp_transform.position = Vector2.rotate (_temp_transform.position, parent.world_transform.rotation);
+            _temp_transform.position = Vector2.add (_temp_transform.position, parent.world_transform.position);
+            _temp_transform.scale = Vector2.multiply (_temp_transform.scale, parent.world_transform.scale);
 
-            return transform;
+            return _temp_transform;
         }
 
         [Version (deprecated = true, replacement = "local_to_world_transform")]
