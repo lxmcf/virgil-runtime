@@ -62,7 +62,6 @@ project_source = files (
     'src/Animation2D.vala',
     'src/Shapes.vala',
     'src/Surface2D.vala',
-    # 'src/Asset.vala',
     'src/Game.vala',
 
     # PUBLIC COMPONENTS
@@ -77,6 +76,7 @@ project_source = files (
     'src/Runtime/Main.vala',
     'src/Runtime/Window.vala',
     'src/Runtime/GameLoader.vala',
+    'src/Runtime/RuntimeData.vala',
 
     # NOTE: This is a bin fire
     'src/Runtime/CollisionScene.vala',

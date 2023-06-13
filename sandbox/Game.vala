@@ -5,6 +5,7 @@ using Virgil.Input;
 namespace Sandbox {
     public class TestGame : Game {
         public Texture2D tree_texture;
+        public Font test_font;
 
         public override void start () {
             tree_texture = new Texture2D ("data/sprites/tree.png");
@@ -13,20 +14,18 @@ namespace Sandbox {
             root.add_child (new Player ());
             root.scale = Vector2.multiply_value (root.scale, 3.0f);
 
-            //  for (int i = 0; i < 5; i++) {
-            //      int x = Random.int_range (64, 576);
-            //      int y = Random.int_range (64, 296);
+            for (int i = 0; i < 5; i++) {
+                int x = Random.int_range (64, 576);
+                int y = Random.int_range (64, 296);
 
-            //      Tree tree = root.add_child_return<Tree> (new Tree ());
-            //      tree.position = { x, y };
+                Tree tree = root.add_child_return<Tree> (new Tree ());
+                tree.position = { x, y };
 
-            //      TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
-            //      tr.set_texture (tree_texture);
-            //  }
-
-            for (int i = 0; i < 20000; i++) {
-                instantiate (new TestObject ());
+                TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
+                tr.set_texture (tree_texture);
             }
+
+            test_font = new Font.from_ttf ("data/fonts/Hexcore-w1p4Z.ttf", 32);
         }
 
         public override void update (float delta_time) {
@@ -50,6 +49,10 @@ namespace Sandbox {
 
                 root.local_transform.translate (Vector2.length_direction (200.0f * delta_time, direction));
             }
+        }
+
+        public override void draw () {
+            test_font.draw_text ("Hello world!", { 32, 32 });
         }
     }
 }

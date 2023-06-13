@@ -1,28 +1,28 @@
 namespace Virgil.Runtime {
     internal static int main (string[] args) {
+        RuntimeData.init_default ();
+
+        if (!RuntimeData.parse_arguments (ref args)) return 1;
+
+        if (RuntimeData.show_version) {
+            print ("Virgil %s\n", "DEVEL");
+
+            return 0;
+        }
+
         Raylib.set_trace_log_level (Raylib.TraceLogLevel.ALL);
 
         Window window = new Window ("Virgil Runtime", 640, 360);
-
         GameLoader current_game = new GameLoader ();
+
+        if (RuntimeData.target_fps > 0) {
+            Raylib.set_target_fps (RuntimeData.target_fps);
+        }
 
         CollisionScene.init ();
 
-        Raylib.Font font = Raylib.load_font ("data/fonts/pixantiqua.fnt");
-
-        string game_prefix = "";
-
-        // NOTE: not final, might be worth using OptionEntry
-        for (int i = 0; i < args.length; i++) {
-            if (args[i] == "--test-build") game_prefix = "build/";
-        }
-
         try {
-#if VIRGIL_PLATFORM_WINDOWS // TODO: Need to work out something cleaner and global
-            current_game.register (game_prefix + "game.dll");
-#else
-            current_game.register (game_prefix + "game.so");
-#endif
+            current_game.register (RuntimeData.working_directory + "/" + RuntimeData.game_file);
         } catch (GameRegisterError e) {
             warning ("%s\n", e.message);
         }
@@ -36,7 +36,9 @@ namespace Virgil.Runtime {
 
             current_game.draw ();
 
-            Raylib.draw_fps (8, 8);
+            if (RuntimeData.show_fps) {
+                Raylib.draw_fps (8, 8);
+            }
 
             window.present ();
         }
