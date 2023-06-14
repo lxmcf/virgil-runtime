@@ -74,9 +74,11 @@ project_source = files (
 
     # RUNTIME API
     'src/Runtime/Main.vala',
+    'src/Runtime/Runtime.vala', # NOTE: Designated place for public runtime methods
     'src/Runtime/Window.vala',
     'src/Runtime/GameLoader.vala',
     'src/Runtime/RuntimeData.vala',
+    'src/Runtime/CommandLineIndex.vala',
 
     # NOTE: This is a bin fire
     'src/Runtime/CollisionScene.vala',
