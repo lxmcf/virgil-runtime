@@ -14,18 +14,24 @@ namespace Virgil.Runtime {
             _entry_count = 0;
 
             _group = new OptionGroup (formatted_name.down (), module_name + " Options", help_description);
-            _entries = new OptionEntry[_entry_count + 1]; // NOTE: Consider moving to a list that is converted at registration
+            _entries = new OptionEntry[1]; // NOTE: Consider moving to a list that is converted at registration
         }
 
-        public void add_entry (string long_name, char short_name, OptionFlags flags, OptionArg argument, void* data, string description, string? argument_description) {
+        public OptionEntry[] get_entries () {
+            OptionEntry[] temp = _entries.copy ();
+            temp[_entry_count] = { null };
+
+            return temp;
+        }
+
+        public void add_entry (owned OptionEntry entry) {
             if (_is_registered) {
                 warning ("Cannot add entry to registered command line context!");
                 return;
             }
 
-            _entries[_entry_count] = { long_name, short_name, flags, argument, data, description, argument_description };
-
-            _entries.resize (_entry_count++);
+            _entries[_entry_count++] = entry;
+            _entries.resize (_entry_count + 1);
         }
 
         public void register () {
