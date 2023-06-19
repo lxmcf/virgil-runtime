@@ -38,10 +38,8 @@ namespace Virgil.Runtime {
 
             //  Targets
             target_fps = -1;
-        }
 
-        public static RuntimeConfig get_default () {
-            return _config = new RuntimeConfig ();
+            _config = this;
         }
 
         public static unowned RuntimeConfig get_config () {

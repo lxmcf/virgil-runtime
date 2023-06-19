@@ -143,46 +143,6 @@ namespace Virgil {
             return _temp_transform;
         }
 
-        [Version (deprecated = true, replacement = "local_to_world_transform")]
-        internal Vector2 get_world_position () {
-            if (!enabled) return Vector2.ZERO;
-
-            Vector2 position = local_transform.position;
-
-            if (parent != null) {
-                position = Vector2.rotate (position, get_world_rotation () - local_transform.rotation);
-                position = Vector2.add (position, parent.get_world_position ());
-            }
-
-            return position;
-        }
-
-        [Version (deprecated = true, replacement = "local_to_world_transform")]
-        internal float get_world_rotation () {
-            if (!enabled) return 0.0f;
-
-            float rotation = local_transform.rotation;
-
-            if (parent != null) {
-                rotation += parent.get_world_rotation ();
-            }
-
-            return rotation % 360;
-        }
-
-        [Version (deprecated = true, replacement = "local_to_world_transform")]
-        internal Vector2 get_world_scale () {
-            if (!enabled) return Vector2.ZERO;
-
-            Vector2 scale = local_transform.scale;
-
-            if (parent != null) {
-                scale = Vector2.multiply (scale, parent.get_world_scale ());
-            }
-
-            return scale;
-        }
-
         //  NOTE: API NOT FINAL
         //----------------------------------------------------------------------------------
         // Public API
