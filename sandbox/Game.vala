@@ -34,11 +34,11 @@ namespace Sandbox {
             });
 
             if (check_key (KeyCode.CHAR_E)) {
-                root.local_transform.rotation += 10.0f * delta_time;
+                root.transform.rotation += 10.0f * delta_time;
             }
 
             if (check_key (KeyCode.CHAR_Q)) {
-                root.local_transform.rotation -= 10.0f * delta_time;
+                root.transform.rotation -= 10.0f * delta_time;
             }
 
             int xaxis = check_key_raw (KeyCode.RIGHT) - check_key_raw (KeyCode.LEFT);
@@ -47,7 +47,7 @@ namespace Sandbox {
             if (xaxis != 0 || yaxis != 0) {
                 float direction = Vector2.direction ({ 0.0f, 0.0f }, { xaxis, yaxis });
 
-                root.local_transform.translate (Vector2.length_direction (200.0f * delta_time, direction));
+                root.transform.translate (Vector2.length_direction (200.0f * delta_time, direction));
             }
         }
 

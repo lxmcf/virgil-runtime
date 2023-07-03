@@ -1,12 +1,14 @@
 project (
     'virgil', [ 'vala', 'c' ],
-    version: '1.0.0',
+    version: 'devel',
 )
 
 # Variables
 source_dir = meson.current_source_dir ()
 vapi_dir = source_dir / 'vapi'
 operating_system = build_machine.system ()
+
+config_data = configuration_data ()
 
 # Build variables
 project_source = []
@@ -25,15 +27,24 @@ valac_arguments = [
 cc_arguments = [ ]
 
 if operating_system == 'windows' or operating_system == 'cygwin'
-    valac_arguments += '--define=VIRGIL_PLATFORM_WINDOWS'
+    config_data.set ('RUNTIME_PLATFORM', 'WIN32')
+    config_data.set ('RUNTIME_GAME_FILE', 'game.dll')
 elif operating_system == 'linux'
-    valac_arguments += '--define=VIRGIL_PLATFORM_LINUX'
-elif
-    valac_arguments += '--define=VIRGIL_PLATFORM_UNKNOWN'
+    config_data.set ('RUNTIME_PLATFORM', 'LINUX')
+    config_data.set ('RUNTIME_GAME_FILE', 'game.so')
 endif
+
+config_data.set ('RUNTIME_VERSION', meson.project_version ())
+
+config_header = configure_file (
+    input: 'src/Runtime/Constants.vala.conf',
+    output: 'Constants.vala',
+    configuration: config_data
+)
 
 add_project_arguments (valac_arguments, language: 'vala')
 add_project_arguments (cc_arguments, language: 'c')
+
 
 project_source = files (
     # PUBLIC API
@@ -74,11 +85,9 @@ project_source = files (
 
     # RUNTIME API
     'src/Runtime/Main.vala',
-    'src/Runtime/Runtime.vala', # NOTE: Designated place for public runtime methods
     'src/Runtime/Window.vala',
     'src/Runtime/GameLoader.vala',
     'src/Runtime/RuntimeData.vala',
-    'src/Runtime/CommandLineIndex.vala',
 
     # NOTE: This is a bin fire
     'src/Runtime/CollisionScene.vala',
@@ -98,6 +107,7 @@ project_lib = executable (
     meson.project_name (),
 
     project_source,
+    config_header,
 
     dependencies: [
         project_dependencies

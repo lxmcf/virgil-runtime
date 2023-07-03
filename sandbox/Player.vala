@@ -23,7 +23,7 @@ namespace Sandbox {
             tr.set_texture (texture);
             tr.set_animation (animation);
 
-            local_transform.translate ({ 320, 180 });
+            transform.translate ({ 320, 180 });
         }
 
         public override void update (float delta_time) {
@@ -33,7 +33,7 @@ namespace Sandbox {
             if (xaxis != 0 || yaxis != 0) {
                 float direction = Vector2.direction ({ 0.0f, 0.0f }, { xaxis, yaxis });
 
-                local_transform.translate (Vector2.length_direction (speed * delta_time, direction));
+                transform.translate (Vector2.length_direction (speed * delta_time, direction));
             }
 
             if (check_key (KeyCode.SPACE)) {
@@ -44,7 +44,5 @@ namespace Sandbox {
                 rotation += delta_time * 100.0f;
             }
         }
-
-        public override void collide_2D (Collider2D collider) { }
     }
 }

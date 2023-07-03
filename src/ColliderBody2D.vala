@@ -4,6 +4,7 @@ namespace Virgil {
         private unowned Collider2D _collider;
 
         internal bool update_vertices;
+        internal bool has_collided;
 
         public Colour debug_colour;
 
@@ -17,7 +18,7 @@ namespace Virgil {
 
 
         public Vector2 position {
-            get { return _collider.object.world_transform.position; }
+            get { return _collider.object.position; }
         }
 
         public unowned Collider2D collider {
@@ -51,6 +52,7 @@ namespace Virgil {
             }
 
             update_vertices = true;
+            has_collided = false;
         }
 
         public void set_size (Vector2 vector) {
@@ -78,19 +80,19 @@ namespace Virgil {
 
         public Vector2[] get_transformed_vertices () {
             if (update_vertices) {
-                float cos = Math.cosf (_collider.object.world_transform.rotation * Raylib.DEG2RAD);
-                float sin = Math.sinf (_collider.object.world_transform.rotation * Raylib.DEG2RAD);
+                float cos = Math.cosf (_collider.object.rotation * Raylib.DEG2RAD);
+                float sin = Math.sinf (_collider.object.rotation * Raylib.DEG2RAD);
 
                 float rotation_x;
                 float rotation_y;
 
                 for (int i = 0; i < _vertices.length; i++) {
-                    Vector2 scaled_vertex = Vector2.multiply (_vertices[i], _collider.object.world_transform.scale);
+                    Vector2 scaled_vertex = Vector2.multiply (_vertices[i], _collider.object.scale);
 
                     rotation_x = (cos * scaled_vertex.x) - (sin * scaled_vertex.y);
                     rotation_y = (sin * scaled_vertex.x) + (cos * scaled_vertex.y);
 
-                    _transformed_vertices[i] = Vector2.add ({ rotation_x, rotation_y }, _collider.object.world_transform.position);
+                    _transformed_vertices[i] = Vector2.add ({ rotation_x, rotation_y }, _collider.object.position);
                 }
 
                 update_vertices = false;
@@ -100,14 +102,14 @@ namespace Virgil {
         }
 
         public float get_transformed_radius () {
-            return _radius * Math.fmaxf (_collider.object.world_transform.scale.x, _collider.object.world_transform.scale.y);
+            return _radius * Math.fmaxf (_collider.object.scale.x, _collider.object.scale.y);
         }
 
         public void draw () {
             if (_shape == ColliderShape2D.RECTANGLE) {
                 draw_polygon_outline (get_transformed_vertices (), debug_colour);
             } else {
-                draw_circle_outline (_collider.object.world_transform.position, get_transformed_radius (), debug_colour);
+                draw_circle_outline (_collider.object.position, get_transformed_radius (), debug_colour);
             }
         }
     }

@@ -10,8 +10,8 @@ namespace Virgil {
 
         private GameObject? _parent;
 
-        public Transform local_transform;
-        public Transform world_transform { get; private set; }
+        private Transform _local_transform;
+        private Transform _world_transform;
 
         private Transform _temp_transform;
 
@@ -19,20 +19,24 @@ namespace Virgil {
             get { return _parent; }
         }
 
-        //  NOTE: Need more testing to see if return world transform is best option
         public Vector2 position {
-            get { return world_transform.position; }
-            set { local_transform.position = value; }
+            get { return _world_transform.position; }
+            set { _local_transform.position = value; }
         }
 
         public Vector2 scale {
-            get { return world_transform.scale; }
-            set { local_transform.scale = value; }
+            get { return _world_transform.scale; }
+            set { _local_transform.scale = value; }
         }
 
         public float rotation {
-            get { return world_transform.rotation; }
-            set { local_transform.rotation = value; }
+            get { return _world_transform.rotation; }
+            set { _local_transform.rotation = value; }
+        }
+
+        public Transform transform {
+            get { return _local_transform; }
+            set { _local_transform = value; }
         }
 
         public string name { get; private set; }
@@ -42,8 +46,8 @@ namespace Virgil {
             _components = new List<Component> ();
             _children = new List<GameObject> ();
 
-            local_transform = new Transform ();
-            world_transform = new Transform ();
+            _local_transform = new Transform ();
+            _world_transform = new Transform ();
 
             _temp_transform = new Transform ();
 
@@ -86,7 +90,7 @@ namespace Virgil {
 
             update (Raylib.get_frame_time ());
 
-            world_transform = _local_to_world_transform ();
+            _world_transform = _local_to_world_transform ();
 
             foreach (GameObject child in _children) {
                 child.update_object ();
@@ -126,19 +130,19 @@ namespace Virgil {
             if (!enabled) return new Transform ();
 
             if (parent == null) {
-                return local_transform;
+                return _local_transform;
             }
 
-            _temp_transform.position = local_transform.position;
-            _temp_transform.scale = local_transform.scale;
-            _temp_transform.rotation = local_transform.rotation;
+            _temp_transform.position = _local_transform.position;
+            _temp_transform.scale = _local_transform.scale;
+            _temp_transform.rotation = _local_transform.rotation;
 
-            _temp_transform.rotation += parent.world_transform.rotation;
+            _temp_transform.rotation += parent._world_transform.rotation;
             _temp_transform.rotation = _temp_transform.rotation % 360;
 
-            _temp_transform.position = Vector2.rotate (_temp_transform.position, parent.world_transform.rotation);
-            _temp_transform.position = Vector2.add (_temp_transform.position, parent.world_transform.position);
-            _temp_transform.scale = Vector2.multiply (_temp_transform.scale, parent.world_transform.scale);
+            _temp_transform.position = Vector2.rotate (_temp_transform.position, parent._world_transform.rotation);
+            _temp_transform.position = Vector2.add (_temp_transform.position, parent._world_transform.position);
+            _temp_transform.scale = Vector2.multiply (_temp_transform.scale, parent._world_transform.scale);
 
             return _temp_transform;
         }
@@ -154,7 +158,7 @@ namespace Virgil {
         public virtual void draw () { }
 
         //  NOTE: Not final
-        public virtual void collide_2D (Collider2D collider) { }
+        public virtual void on_collide (Collider2D collider) { }
 
         //----------------------------------------------------------------------------------
         // Public API

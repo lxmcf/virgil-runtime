@@ -22,7 +22,7 @@ namespace Virgil {
         public override void draw () {
             if (_texture == null) return;
 
-            Vector2 position = object.world_transform.position;
+            Vector2 position = object.position;
             Rectangle destination = { position.x, position.y, 0.0f, 0.0f };
 
             Rectangle source;
@@ -31,26 +31,26 @@ namespace Virgil {
             if (_animation == null) {
                 source = _texture.get_rectangle ();
 
-                origin = Vector2.multiply (_texture.origin, object.world_transform.scale);
+                origin = Vector2.multiply (_texture.origin, object.scale);
 
-                destination.width = _texture.width * object.world_transform.scale.x;
-                destination.height = _texture.height * object.world_transform.scale.y;
+                destination.width = _texture.width * object.scale.x;
+                destination.height = _texture.height * object.scale.y;
             } else {
                 source = _animation.get_current_frame_rectange ();
-                origin = Vector2.multiply (_animation.origin, object.world_transform.scale);
+                origin = Vector2.multiply (_animation.origin, object.scale);
 
                 destination = _animation.get_current_frame_rectange ();
                 destination.x = position.x;
                 destination.y = position.y;
 
-                destination = Rectangle.scale_vector (destination, object.world_transform.scale);
+                destination = Rectangle.scale_vector (destination, object.scale);
             }
 
             _texture.draw_ext (
                 source,
                 destination,
                 origin,
-                object.world_transform.rotation,
+                object.rotation,
                 _colour
             );
         }

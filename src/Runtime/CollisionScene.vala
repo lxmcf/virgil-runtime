@@ -10,8 +10,7 @@ namespace Virgil.Runtime {
         }
 
         internal static void update () {
-            //  BUG: Does not update if only 1 body
-            if (_active_colliders.length () == 0) return;
+            if (_active_colliders.length () < 2) return;
 
             for (int i = 0; i < _active_colliders.length (); i++) {
                 if (!update_collision) break;
@@ -27,10 +26,10 @@ namespace Virgil.Runtime {
                     //  TODO: Move collision type checks to bit flags
 
                     if (_check_collisions (body1, body2)) {
-                        body1.collider.object.collide_2D (body2.collider);
+                        body1.collider.object.on_collide (body2.collider);
                         if (!update_collision) break;
 
-                        body2.collider.object.collide_2D (body1.collider);
+                        body2.collider.object.on_collide (body1.collider);
                         if (!update_collision) break;
                     }
 

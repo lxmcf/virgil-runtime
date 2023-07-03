@@ -4,6 +4,8 @@ using Raylib;
 namespace Virgil.Runtime {
     internal class Window {
         public Window (string title, int width, int height) {
+            set_trace_log_level (Raylib.TraceLogLevel.NONE);
+
             init_window (width, height, title);
 
             init_audio_device ();
