@@ -1,13 +1,13 @@
 namespace Virgil.Graphics {
     public enum ShaderDataType {
-        FLOAT = float,
-        VEC2 = Vector2,
-        VEC3 = Vector3,
-        VEC4 = Vector4,
-        INT = int,
-        IVEC2,
-        IVEC3,
-        IVEC4,
-        SAMPLER2D
+        FLOAT = Raylib.ShaderUniformDataType.FLOAT,
+        VEC2 = Raylib.ShaderUniformDataType.VEC2,
+        VEC3 = Raylib.ShaderUniformDataType.VEC3,
+        VEC4 = Raylib.ShaderUniformDataType.VEC4,
+        INT = Raylib.ShaderUniformDataType.INT,
+        IVEC2 = Raylib.ShaderUniformDataType.IVEC2,
+        IVEC3 = Raylib.ShaderUniformDataType.IVEC3,
+        IVEC4 = Raylib.ShaderUniformDataType.IVEC4,
+        SAMPLER2D = Raylib.ShaderUniformDataType.SAMPLER2D,
     }
 }

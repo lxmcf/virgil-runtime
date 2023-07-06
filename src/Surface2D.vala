@@ -18,11 +18,11 @@ namespace Virgil {
             Raylib.unload_render_texture (_render_texture);
         }
 
-        public void set_target () {
+        public void set_target_texture () {
             Raylib.begin_texture_mode (_render_texture);
         }
 
-        public void reset_target () {
+        public void reset_target_texture () {
             Raylib.end_texture_mode ();
         }
 

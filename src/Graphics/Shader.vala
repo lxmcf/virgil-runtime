@@ -21,7 +21,7 @@ namespace Virgil.Graphics {
             FileStream? stream = FileStream.open (adjusted_filename, "r");
 
             if (stream == null) {
-                print ("Shader file %s coiuld not be loaded!\n", adjusted_filename);
+                print ("Shader file %s could not be loaded!\n", adjusted_filename);
 
                 return;
             }
@@ -60,13 +60,13 @@ namespace Virgil.Graphics {
             Raylib.unload_shader (_shader);
         }
 
-        public void set_target () {
+        public void set_target_shader () {
             if (!Raylib.is_shader_ready (_shader)) return;
 
             Raylib.begin_shader_mode (_shader);
         }
 
-        public void reset_target () {
+        public void reset_target_shader () {
             if (!Raylib.is_shader_ready (_shader)) return;
 
             Raylib.end_shader_mode ();
@@ -81,11 +81,11 @@ namespace Virgil.Graphics {
         }
 
         public void set_value (int location, void* value, ShaderDataType type) {
-            Raylib.set_shader_value (_shader, location, value, (Raylib.ShaderUniformDataType)type);
+            Raylib.set_shader_value (_shader, location, value, (int)type);
         }
 
         public void set_value_array (int location, void* value, ShaderDataType type, int count) {
-            Raylib.set_shader_value_vector (_shader, location, value, (Raylib.ShaderUniformDataType)type, count);
+            Raylib.set_shader_value_vector (_shader, location, value, (int)type, count);
         }
 
         public void set_texture (int location, Texture2D texture) {
