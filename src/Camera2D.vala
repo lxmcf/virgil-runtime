@@ -1,8 +1,10 @@
 namespace Virgil {
+    //  FIXME: Completely broken, does not work on non child objects
     public class Camera2D : Component {
         private Raylib.Camera2D _camera;
 
-        private GameObject? _target;
+        private GameObject _target;
+        private bool has_target;
 
         public Vector2 offset {
             get { return { _camera.offset.x, _camera.offset.y }; }
@@ -23,14 +25,11 @@ namespace Virgil {
             _camera.rotation = 0.0f;
             _camera.zoom = 1.0f;
             _camera.target = { 0.0f, 0.0f };
-
-            _target = object;
         }
 
         public override void update () {
-            if (_target != null) {
-                _camera.target.x = _target.position.x;
-                _camera.target.y = _target.position.y;
+            if (has_target) {
+                position = _target.position;
             }
         }
 
@@ -42,8 +41,14 @@ namespace Virgil {
             Raylib.end_mode_2D ();
         }
 
-        public void set_target (GameObject? target) {
+        public void set_target (GameObject target) {
             _target = target;
+
+            has_target = true;
+        }
+
+        public void reset_target () {
+            has_target = false;
         }
 
         public Vector2 get_mouse_position () {

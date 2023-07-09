@@ -10,16 +10,12 @@ namespace Virgil.Runtime {
         }
 
         internal static void update () {
-            if (_active_colliders.length () < 2) return;
-
             for (int i = 0; i < _active_colliders.length (); i++) {
-                if (!update_collision) break;
-
                 ColliderBody2D body1 = _active_colliders.nth_data (i);
 
-                for (int j = i + 1; j < _active_colliders.length (); j++) {
-                    if (!update_collision) break;
+                body1.update_vertices = true;
 
+                for (int j = i + 1; j < _active_colliders.length (); j++) {
                     ColliderBody2D body2 = _active_colliders.nth_data (j);
                     //  TODO: Impliment AABB checking
                     //  TODO: Impliment quad tree's or something?
@@ -30,13 +26,13 @@ namespace Virgil.Runtime {
                         if (!update_collision) break;
 
                         body2.collider.object.on_collide (body1.collider);
-                        if (!update_collision) break;
                     }
 
-                    body1.update_vertices = true;
                     body2.update_vertices = true;
                 }
             }
+
+            update_collision = true;
         }
 
         internal static void register (ColliderBody2D body) {

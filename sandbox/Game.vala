@@ -5,14 +5,17 @@ using Virgil.Input;
 namespace Sandbox {
     public class TestGame : Game {
         public Texture2D tree_texture;
-        public Font test_font;
 
         public override void start () {
             tree_texture = new Texture2D ("data/sprites/tree.png");
             tree_texture.origin.y = tree_texture.height - 4;
 
-            root.add_child (new Player ());
+            Player player = root.add_child_return<Player> (new Player ());
             root.scale = Vector2.multiply_value (root.scale, 3.0f);
+
+            Camera2D camera = root.add_component_return<Camera2D> (new Camera2D ());
+            camera.set_target (player);
+            camera.offset = { 320, 180 };
 
             for (int i = 0; i < 5; i++) {
                 int x = Random.int_range (64, 576);
@@ -24,8 +27,6 @@ namespace Sandbox {
                 TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
                 tr.set_texture (tree_texture);
             }
-
-            test_font = new Font.from_ttf ("data/fonts/Hexcore-w1p4Z.ttf", 32);
         }
 
         public override void update (float delta_time) {
@@ -49,10 +50,6 @@ namespace Sandbox {
 
                 root.transform.translate (Vector2.length_direction (200.0f * delta_time, direction));
             }
-        }
-
-        public override void draw () {
-            test_font.draw_text ("Hello world!", { 32, 32 });
         }
     }
 }

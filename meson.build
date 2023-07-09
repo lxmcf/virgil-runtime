@@ -35,6 +35,8 @@ elif operating_system == 'linux'
 endif
 
 config_data.set ('RUNTIME_VERSION', meson.project_version ())
+config_data.set ('RUNTIME_COMPILER', cc.get_id ())
+config_data.set ('RUNTIME_COMPILER_VERSION', cc.version ())
 
 config_header = configure_file (
     input: 'src/Runtime/Constants.vala.conf',

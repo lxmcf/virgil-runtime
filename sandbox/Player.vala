@@ -44,5 +44,9 @@ namespace Sandbox {
                 rotation += delta_time * 100.0f;
             }
         }
+
+        //  public override void on_collide (Collider2D collider) {
+        //      destroy (collider.object);
+        //  }
     }
 }

@@ -21,6 +21,8 @@ if [ $? = 0 ]; then
     # Clean up build
     rm build/game.h build/game.vapi
 
+    build/virgil --build-info
+
     build/virgil --directory=build --show-fps
 else
     echo "$BUILD_OUTPUT"

@@ -252,7 +252,9 @@ namespace Virgil {
 
             _children.remove (object);
 
+            warning ("start");
             root.add_child (object);
+            warning ("end");
         }
 
         public void sort_children (SortFunction sort_function) {
@@ -272,7 +274,7 @@ namespace Virgil {
         public void destroy (GameObject object) {
             if (object.parent == null) return;
 
-            object.parent.remove_child (object);
+            object.parent._children.remove (object);
         }
 
         public void destroy_self () {

@@ -10,6 +10,13 @@ namespace Virgil.Runtime {
             return 0;
         }
 
+        if (config.show_build_info) {
+            //  NOTE: Need to add more information
+            print ("%s\n", RUNTIME_BUILD_INFO);
+
+            return 0;
+        }
+
         Window window = new Window ("Virgil Runtime", 640, 360);
         GameLoader current_game = new GameLoader ();
 
@@ -53,16 +60,17 @@ namespace Virgil.Runtime {
     internal RuntimeConfig? handle_command_line (string[] arguments) {
         bool show_version = false;
         bool show_fps = false;
+        bool show_build_info = false;
 
         string working_directory = "";
         string game_file = RUNTIME_GAME_FILE;
 
         int target_fps = -1;
 
-
         OptionEntry[] cli_entry = {
             { "version", '\0', OptionFlags.NONE, OptionArg.NONE, ref show_version, "Display version number", null },
-            { "show-fps", '\0', OptionFlags.HIDDEN, OptionArg.NONE, ref show_fps, "Show FPS in game", null },
+            { "show-fps", '\0', OptionFlags.NONE, OptionArg.NONE, ref show_fps, "Show FPS in game", null },
+            { "build-info", '\0', OptionFlags.NONE, OptionArg.NONE, ref show_build_info, "Display build info", null },
 
             { "directory", 'd', OptionFlags.NONE, OptionArg.FILENAME, ref working_directory, "Set working directory", "DIRECTORY" },
             { "game", 'g', OptionFlags.NONE, OptionArg.FILENAME, ref game_file, "Load game file", "FILE" },
@@ -89,6 +97,7 @@ namespace Virgil.Runtime {
             //  Flags
             show_version,
             show_fps,
+            show_build_info,
 
             //  Files
             working_directory,

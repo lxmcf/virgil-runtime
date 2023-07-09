@@ -3,6 +3,7 @@ namespace Virgil.Runtime {
         //  Flags
         public bool show_version { get; internal set; }
         public bool show_fps { get; internal set; }
+        public bool show_build_info { get; internal set; }
 
         //  Files
         public string working_directory { get; internal set; }

@@ -33,8 +33,8 @@ namespace Virgil {
         public void draw_ext (Rectangle source, Rectangle destination, Vector2 origin, float rotation, Colour colour = Colour.WHITE) {
             Raylib.draw_texture_pro (
                 _render_texture.texture,
-                { source.x, source.y, source.width, source.height},
-                { destination.x, destination.y, destination.width, destination.height},
+                { source.x, source.y, source.width, source.height },
+                { destination.x, destination.y, destination.width, destination.height },
                 { origin.x, origin.y },
                 rotation,
                 { colour.r, colour.g, colour.b, colour.a }
