@@ -8,6 +8,8 @@ namespace Virgil {
         public const Colour GREEN = { 0, 255, 0, 255 };
         public const Colour BLUE = { 0, 0, 255, 255 };
 
+        public const Colour VIRGIL_GREY = { 32, 32, 32, 255 };
+
         public uchar r;
         public uchar g;
         public uchar b;

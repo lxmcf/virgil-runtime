@@ -1,6 +1,6 @@
 using Virgil;
-using Virgil.Graphics;
 using Virgil.Input;
+using Virgil.Shell;
 
 namespace Sandbox {
     public class TestGame : Game {
@@ -27,6 +27,8 @@ namespace Sandbox {
                 TextureRenderer2D tr = tree.add_component_return<TextureRenderer2D> (new TextureRenderer2D ());
                 tr.set_texture (tree_texture);
             }
+
+            set_window_title ("Sandbox");
         }
 
         public override void update (float delta_time) {

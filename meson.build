@@ -59,6 +59,10 @@ project_source = files (
     'src/Graphics/ShaderDataType.vala',
     'src/Graphics/Font.vala',
 
+    'src/Shell/Window.vala',
+    'src/Shell/WindowFlag.vala',
+    'src/Shell/Cursor.vala',
+
     'src/Audio/Sound.vala',
     'src/Audio/Music.vala',
 
