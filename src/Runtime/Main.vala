@@ -12,7 +12,7 @@ namespace Virgil.Runtime {
 
         if (config.show_build_info) {
             //  NOTE: Need to add more information
-            print ("%s\n", RUNTIME_BUILD_INFO);
+            print ("%s\n%s\n", RUNTIME_C_INFO, RUNTIME_VALA_INFO);
 
             return 0;
         }
