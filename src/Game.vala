@@ -50,23 +50,5 @@ namespace Virgil {
         public static void quit () {
             should_close = true;
         }
-
-        public static void set_window_size (int width, int height) {
-            Raylib.set_window_size (width, height);
-        }
-
-        public static void set_window_position (int x, int y) {
-            Raylib.set_window_position (x, y);
-        }
-
-        public static void set_window_title (string title) {
-            Raylib.set_window_title (title);
-        }
-
-        public static Rectangle get_window_rectangle () {
-            Raylib.Vector2 position = Raylib.get_window_position ();
-
-            return { position.x, position.y, Raylib.get_screen_width (), Raylib.get_screen_height () };
-        }
     }
 }
