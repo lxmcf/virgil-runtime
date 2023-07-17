@@ -26,8 +26,8 @@ namespace Virgil.Graphics {
                 return;
             }
 
-            string vertex_string = "";
-            string fragment_string = "";
+            string? vertex_string = "";
+            string? fragment_string = "";
 
             string? current_line = "";
             int mode = 0;
@@ -50,6 +50,9 @@ namespace Virgil.Graphics {
                     break;
                 }
             }
+
+            if (vertex_string == "") vertex_string = null;
+            if (fragment_string == "") fragment_string = null;
 
             _shader = Raylib.load_shader_from_memory (vertex_string, fragment_string);
         }

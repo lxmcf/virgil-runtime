@@ -1,12 +1,17 @@
 using Virgil;
 using Virgil.Input;
 using Virgil.Shell;
+using Virgil.Graphics;
+using Virgil.GUI;
 
 namespace Sandbox {
     public class TestGame : Game {
         public Texture2D tree_texture;
+        public Shader shader;
 
         public override void start () {
+            shader = new Shader.from_file ("data/shaders/test_greyscale.glsl");
+
             tree_texture = new Texture2D ("data/sprites/tree.png");
             tree_texture.origin.y = tree_texture.height - 4;
 
@@ -52,6 +57,20 @@ namespace Sandbox {
 
                 root.transform.translate (Vector2.length_direction (200.0f * delta_time, direction));
             }
+        }
+
+        public override void begin_draw () {
+            //  shader.set_target_shader ();
+        }
+
+        public override void draw () {
+            if (button ({ 8, 32, 48, 24 })) {
+                warning ("YEET");
+            }
+        }
+
+        public override void end_draw () {
+            //  shader.reset_target_shader ();
         }
     }
 }

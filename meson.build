@@ -69,9 +69,12 @@ project_source = files (
     'src/Audio/Sound.vala',
     'src/Audio/Music.vala',
 
+    'src/GUI/GUI.vala',
+
     'src/ColliderBody2D.vala',
     'src/GameObject.vala',
     'src/Component.vala',
+    'src/Collision.vala',
     'src/Vector2.vala',
     'src/Vector3.vala',
     'src/Vector4.vala',

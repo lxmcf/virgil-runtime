@@ -23,7 +23,7 @@ if [ $? = 0 ]; then
 
     build/virgil --build-info
 
-    build/virgil --directory=build --show-fps
+    build/virgil --directory=build --show-fps --target-fps=60
 else
     echo "$BUILD_OUTPUT"
 fi
