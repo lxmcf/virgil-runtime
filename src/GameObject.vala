@@ -62,7 +62,7 @@ namespace Virgil {
         }
 
         ~GameObject () {
-            print ("Object type %s deleting!\n", name);
+            //  print ("Object type %s deleting!\n", name);
 
             while (_components.length () > 0) {
                 Component component = _components.nth_data (0);
@@ -70,10 +70,10 @@ namespace Virgil {
 
                 _components.remove (component);
 
-                print ("\tComponent type %s deleted!\n", component_name);
+                //  print ("\tComponent type %s deleted!\n", component_name);
             }
 
-            print ("Object type %s deleted!\n\n", name);
+            //  print ("Object type %s deleted!\n\n", name);
         }
 
         //----------------------------------------------------------------------------------

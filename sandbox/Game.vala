@@ -9,6 +9,8 @@ namespace Sandbox {
         public Texture2D tree_texture;
         public Shader shader;
 
+        public bool active;
+
         public override void start () {
             shader = new Shader.from_file ("data/shaders/test_greyscale.glsl");
 
@@ -64,9 +66,7 @@ namespace Sandbox {
         }
 
         public override void draw () {
-            if (button ({ 8, 32, 48, 24 })) {
-                warning ("YEET");
-            }
+            toggle ({ 8, 32, 48, 24 }, ref active);
         }
 
         public override void end_draw () {
