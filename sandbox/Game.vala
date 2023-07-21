@@ -66,7 +66,11 @@ namespace Sandbox {
         }
 
         public override void draw () {
-            toggle ({ 8, 32, 48, 24 }, ref active);
+            if (toggle ({ 8, 32, 48, 24 }, ref active)) {
+                if (button ({ 8, 64, 48, 24 })) {
+                    print ("We GUI'ing bois!\n");
+                }
+            }
         }
 
         public override void end_draw () {

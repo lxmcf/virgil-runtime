@@ -12,6 +12,6 @@ namespace Virgil.Shell {
     }
 
     public inline static bool is_cursor_on_screen () {
-        return Raylib.is_cursor_hidden ();
+        return Raylib.is_cursor_on_screen ();
     }
 }

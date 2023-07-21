@@ -29,6 +29,12 @@ namespace Virgil {
             end_draw ();
         }
 
+        internal void do_draw_gui () {
+            root.draw_object_gui ();
+
+            draw_gui ();
+        }
+
         //----------------------------------------------------------------------------------
         // Public API
         //----------------------------------------------------------------------------------
@@ -38,6 +44,8 @@ namespace Virgil {
         public virtual void begin_draw () { }
         public virtual void draw () { }
         public virtual void end_draw () { }
+
+        public virtual void draw_gui () { }
 
         //----------------------------------------------------------------------------------
         // Public functions

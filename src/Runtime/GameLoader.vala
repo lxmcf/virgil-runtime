@@ -67,6 +67,8 @@ namespace Virgil.Runtime {
             if (!_did_register) return;
 
             _registered_game.do_draw ();
+
+            _registered_game.do_draw_gui ();
         }
     }
 }

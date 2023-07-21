@@ -18,7 +18,7 @@ namespace Virgil.GUI {
     }
 
     [Version (experimental = true)]
-    public static void toggle (Rectangle bounds, ref bool active) {
+    public static bool toggle (Rectangle bounds, ref bool active) {
         Vector2 mouse = get_mouse_position ();
 
         if (point_in_rectangle (mouse, bounds)) {
@@ -32,5 +32,7 @@ namespace Virgil.GUI {
         } else {
             draw_rectangle (bounds, Colour.BLUE);
         }
+
+        return active;
     }
 }

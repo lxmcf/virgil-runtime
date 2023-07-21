@@ -19,5 +19,7 @@ namespace Virgil {
 
         public virtual void begin_draw () { }
         public virtual void end_draw () { }
+
+        public virtual void draw_gui () { }
     }
 }

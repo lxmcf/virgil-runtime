@@ -57,6 +57,10 @@ project_source = files (
     'src/Input/MouseButton.vala',
     'src/Input/KeyboardInput.vala',
     'src/Input/MouseInput.vala',
+    'src/Input/GamepadInput.vala',
+    'src/Input/GamepadButton.vala',
+    'src/Input/GamepadAxis.vala',
+    'src/Input/GamepadStick.vala',
 
     'src/Graphics/Shader.vala',
     'src/Graphics/ShaderDataType.vala',

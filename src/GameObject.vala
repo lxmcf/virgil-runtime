@@ -125,6 +125,22 @@ namespace Virgil {
             }
         }
 
+        internal void draw_object_gui () {
+            if (!enabled) return;
+
+            foreach (Component component in _components) {
+                if (!component.enabled) continue;
+
+                component.draw_gui ();
+            }
+
+            draw_gui ();
+
+            foreach (GameObject child in _children) {
+                child.draw_object_gui ();
+            }
+        }
+
         //  FIXME: This is conciderably slower than calling each relative function individually...
         private Transform _local_to_world_transform () {
             if (!enabled) return new Transform ();
@@ -156,6 +172,8 @@ namespace Virgil {
         public virtual void update (float delta_time) { }
 
         public virtual void draw () { }
+
+        public virtual void draw_gui () { }
 
         //  NOTE: Not final
         public virtual void on_collide (Collider2D collider) { }

@@ -33,6 +33,7 @@ To install raylib, follow the instructions [HERE](https://www.raylib.com/) then 
 
 Compiling will output the main runtime executable as well as the C header and Vala VAPI for game module development, you can follow the below steps on any supported platform to build Virgil:
 
+<!-- Powershell is just for syntax highlighting -->
 ```powershell
 meson setup build
 meson compile -C build
@@ -43,6 +44,7 @@ build/virgil --test-build
 
 Alternatively you can simply run:
 
+<!-- Powershell is just for syntax highlighting -->
 ```powershell
 ./build.sh
 ```
