@@ -23,7 +23,13 @@ namespace Virgil.Input {
         return { position.x, position.y };
     }
 
-    public inline float get_mouse_scroll () {
+    public inline static float get_mouse_scroll () {
         return Raylib.get_mouse_wheel_move ();
+    }
+
+    public inline static Vector2 get_mouse_delta () {
+        Raylib.Vector2 delta = Raylib.get_mouse_delta ();
+
+        return { delta.x, delta.y };
     }
 }

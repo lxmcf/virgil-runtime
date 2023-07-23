@@ -50,4 +50,17 @@ namespace Virgil {
             Raylib.draw_line_vector ({ start.x, start.y }, { end.x, end.y }, { colour.r, colour.g, colour.b, colour.a });
         }
     }
+
+    public static void draw_clear (Colour colour) {
+        int width = Raylib.get_screen_width ();
+        int height = Raylib.get_screen_height ();
+
+        Raylib.draw_rectangle (0, 0, width, height, { colour.r, colour.g, colour.b, colour.a });
+    }
+
+    public static void draw_clear_alpha (Colour colour, float alpha) {
+        float adjusted_alpha = alpha * 255;
+
+        draw_clear ({ colour.r, colour.g, colour.g, (uchar)adjusted_alpha });
+    }
 }

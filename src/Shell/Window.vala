@@ -3,8 +3,19 @@ namespace Virgil.Shell {
         Raylib.set_window_title (title);
     }
 
-    public static void set_window_size (int width, int height) {
+    public static void set_window_size (int width, int height, bool relative = false) {
         Raylib.set_window_size (width, height);
+
+        if (relative) {
+            Raylib.Vector2 position = Raylib.get_window_position ();
+
+            Vector2 adjusted_position = {
+                position.x - width / 2,
+                position.y - height / 2
+            };
+
+            Raylib.set_window_position ((int)adjusted_position.x, (int)adjusted_position.y);
+        }
     }
 
     public static void set_window_position (int x, int y) {

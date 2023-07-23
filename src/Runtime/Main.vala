@@ -35,6 +35,12 @@ namespace Virgil.Runtime {
             warning ("%s\n", e.message);
         }
 
+        if (Raylib.file_exists ("icon.png")) {
+            Raylib.Image icon = Raylib.load_image ("icon.png");
+
+            Raylib.set_window_icon (icon);
+        }
+
         //----------------------------------------------------------------------------------
         // Main loop
         //----------------------------------------------------------------------------------

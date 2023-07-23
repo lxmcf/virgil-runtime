@@ -2,6 +2,7 @@ build/
 builddir/
 build-aux/
 subprojects/
+release/
 
 .vscode/
 
