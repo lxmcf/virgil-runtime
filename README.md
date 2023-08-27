@@ -1,4 +1,5 @@
 <h1 align="center">Virgil</h1>
+<p align="center">:rotating_light: Virgil development is currently on hold :rotating_light:</p>
 <p align="center">:construction: API is not yet final, API changes are to be expected :construction:</p>
 
 <p align="center">
